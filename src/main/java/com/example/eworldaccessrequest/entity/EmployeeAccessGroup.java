@@ -21,21 +21,19 @@ public class EmployeeAccessGroup {
     @Column(name = "ID")
     private Long ID;
 
-    @Column(name = "EMPLOYEE_ID")
-    private Long employeeID;
+    @ManyToOne
+    @JoinColumn(name = "EMPLOYEE_ID")
+    private Employee employee;
 
-    @Column(name = "ACCESS_GROUP_ID")
-    private Long accessGroupID;
-
-//    @ManyToOne
-//    @JoinColumn(name = "EMPLOYEE_ID")
-//    private Employee employee;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "ACCESS_GROUP_ID")
-//    private AccessGroup accessGroup;
+    @ManyToOne
+    @JoinColumn(name = "ACCESS_GROUP_ID")
+    private AccessGroup accessGroup;
 
     @Column(name = "EXPIRATION")
     private LocalDateTime expiration;
+
+    public String toString() {
+        return "ID: " + this.ID + ", Name: " + this.getEmployee().getID() + ", Type: " + this.getAccessGroup().getID();
+    }
 
 }

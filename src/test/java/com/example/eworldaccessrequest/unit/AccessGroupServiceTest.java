@@ -1,4 +1,5 @@
 package com.example.eworldaccessrequest.unit;
+import com.example.eworldaccessrequest.dto.AccessGroupDTO;
 import com.example.eworldaccessrequest.entity.AccessGroup;
 import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.EmptyStringException;
@@ -7,19 +8,24 @@ import com.example.eworldaccessrequest.repository.AccessGroupRepository;
 import com.example.eworldaccessrequest.service.AccessGroupService;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import static org.mockito.Mockito.times;
 
 
 @SpringBootTest
 public class AccessGroupServiceTest {
 
     Long randomNumber = RandomUtils.nextLong(0, 30);
+    Long randomNumber2 = RandomUtils.nextLong(0, 30);
 
     @Mock
     private AccessGroupRepository accessGroupRepository;
@@ -27,49 +33,53 @@ public class AccessGroupServiceTest {
     @InjectMocks
     AccessGroupService accessGroupService = new AccessGroupService();
 
-    @Test
-    public void WhenSaveAccessGroup_GivenNormalInput_ShouldWork() throws EmptyStringException {
-
-        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<EmployeeAccessGroup>());
-
-        Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
-
-        AccessGroup actual = accessGroupService.saveAccessGroup(expected);
-        System.out.println(actual.getName());
-        System.out.println(expected.getName());
-
-        Assert.assertEquals(actual.getName(), expected.getName());
-
+    @Before
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void WhenSaveAccessGroup_GivenAnIncorrectType_ShouldThrowInvalidAccessGroupTypeException () throws InvalidAccessGroupTypeException {
+    public void WhenSaveAccessGroup_GivenNormalInput_ShouldWork() {
 
-        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "ADD", new ArrayList<EmployeeAccessGroup>());
-
+        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<EmployeeAccessGroup>());
         Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
+        AccessGroupDTO expectedDTO = accessGroupService.convertToDto(expected);
 
-        AccessGroup actual = accessGroupService.saveAccessGroup(expected);
-        System.out.println(actual.getName());
-        System.out.println(expected.getName());
+        AccessGroupDTO actual = accessGroupService.saveAccessGroup(expected);
 
-        Assert.assertEquals(actual.getName(), expected.getName());
+        Mockito.verify(accessGroupRepository).save(expected);
+        Assert.assertEquals(actual, expectedDTO);
 
     }
 
     @Test
     public void WhenUpdateAccessGroup_GivenEmptyString_ShouldNotUpdateThoseFieldsButStillWork() throws EmptyStringException {
 
-        AccessGroup expected = new AccessGroup(randomNumber, "", "AD", new ArrayList<EmployeeAccessGroup>());
+        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<EmployeeAccessGroup>());
+
 
         Mockito.doReturn(Optional.of(expected)).when(accessGroupRepository).findById(randomNumber);
         Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
+        AccessGroupDTO expectedDTO = accessGroupService.convertToDto(expected);
 
-        AccessGroup actual = accessGroupService.updateAccessGroup(expected, randomNumber);
-        System.out.println(actual.getID());
-        System.out.println(expected.getID());
+        AccessGroupDTO actual = accessGroupService.updateAccessGroup((new AccessGroup(randomNumber, "Stuff", "",
+                new ArrayList<EmployeeAccessGroup>())), randomNumber);
 
-        Assert.assertEquals(actual.getID(), expected.getID());
+        Mockito.verify(accessGroupRepository).save(expected);
+
+        Assert.assertEquals(actual.getName(), "Stuff");
+        Assert.assertEquals(actual.getType(), "AD");
 
     }
+
+    @Test(expected = InvalidAccessGroupTypeException.class)
+    public void WhenSaveAccessGroup_GivenAnIncorrectType_ShouldThrowInvalidAccessGroupTypeException () throws InvalidAccessGroupTypeException {
+
+        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "ADD", new ArrayList<EmployeeAccessGroup>());
+        accessGroupService.saveAccessGroup(expected);
+        Mockito.verify(accessGroupRepository, times(0)).save(expected);
+
+    }
+
+
 }

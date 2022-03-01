@@ -36,13 +36,12 @@ public class Employee {
     @Column(name = "FULL_TIME")
     private boolean fullTime;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "Employee_Access_Group",
-            joinColumns = {@JoinColumn(name = "EMPLOYEE_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ACCESS_GROUP_ID")}
-    )
-    private List<AccessGroup> accessGroups = new ArrayList<>();
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<EmployeeAccessGroup> employeeAccessGroups;
 
+
+    public String toString() {
+        return "ID: " + this.ID + ", Full Name: " + this.fullName + ", Email: " + this.email + ", US Resident: " + this.usResident + ", Full Time: " + this.fullTime;
+    }
 }
 

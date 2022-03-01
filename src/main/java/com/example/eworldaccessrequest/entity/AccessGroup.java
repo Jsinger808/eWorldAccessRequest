@@ -32,11 +32,10 @@ public class AccessGroup {
     @Column(name = "TYPE")
     private String type;
 
-//    @Transient
-//    private LocalDateTime expiration;
+    @OneToMany(mappedBy = "accessGroup", cascade = CascadeType.ALL)
+    List<EmployeeAccessGroup> employeeAccessGroups;
 
-    @OneToMany
-    @JoinColumn(name = "ACCESS_GROUP_ID")
-    private List<EmployeeAccessGroup> employeeAccessGroups = new ArrayList<>();
-
+    public String toString() {
+        return "ID: " + this.ID + ", Name: " + this.name + ", Type: " + this.type;
+    }
 }

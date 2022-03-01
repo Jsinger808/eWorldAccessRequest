@@ -1,13 +1,14 @@
 package com.example.eworldaccessrequest.service;
 
-import com.example.eworldaccessrequest.entity.Employee;
+import com.example.eworldaccessrequest.dto.AccessGroupDTO;
+import com.example.eworldaccessrequest.dto.EmployeeAccessGroupDTO;
+import com.example.eworldaccessrequest.entity.AccessGroup;
 import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
-import com.example.eworldaccessrequest.entity.EmployeeAccessGroupResponse;
 import com.example.eworldaccessrequest.exception.EmptyStringException;
 import com.example.eworldaccessrequest.repository.EmployeeAccessGroupRepository;
-import com.example.eworldaccessrequest.repository.EmployeeRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,17 +24,38 @@ public class EmployeeAccessGroupService {
     @Autowired
     private EmployeeAccessGroupRepository employeeAccessGroupRepository;
 
+    public static EmployeeAccessGroupDTO convertToDto(EmployeeAccessGroup employeeAccessGroup) {
+
+        EmployeeAccessGroupDTO employeeAccessGroupDTO = new EmployeeAccessGroupDTO();
+        employeeAccessGroupDTO.setExpiration(employeeAccessGroup.getExpiration());
+        employeeAccessGroupDTO.setAccessGroupDTO(AccessGroupService.convertToDto(employeeAccessGroup.getAccessGroup()));
+
+        return employeeAccessGroupDTO;
+
+    }
+
     // Save operation
     public EmployeeAccessGroup saveEmployeeAccessGroup(EmployeeAccessGroup employeeAccessGroup) throws EmptyStringException {
-        if (employeeAccessGroup.getEmployeeID() == null || employeeAccessGroup.getAccessGroupID() == null) {
+        if (employeeAccessGroup.getEmployee() == null || employeeAccessGroup.getAccessGroup() == null) {
             throw new EmptyStringException();
+        }
+        if (!employeeAccessGroup.getAccessGroup().getType().equals("DHS_FORM")) {
+            employeeAccessGroup.setExpiration(null);
         }
         return employeeAccessGroupRepository.save(employeeAccessGroup);
     }
 
     // Read operation
-    public List<EmployeeAccessGroup> fetchEmployeeAccessGroupList() {
-        return employeeAccessGroupRepository.findAll();
+    public List<EmployeeAccessGroupDTO> fetchEmployeeAccessGroupList() {
+
+        List<EmployeeAccessGroup> employeeAccessGroups = employeeAccessGroupRepository.findAll();
+        List<EmployeeAccessGroupDTO> employeeAccessGroupDTOs = new ArrayList();
+
+        for (EmployeeAccessGroup employeeAccessGroup : employeeAccessGroups) {
+            employeeAccessGroupDTOs.add(convertToDto(employeeAccessGroup));
+        }
+
+        return employeeAccessGroupDTOs;
     }
 
 //    public EmployeeAccessGroupResponse findByEmail(String email) {
@@ -44,16 +66,19 @@ public class EmployeeAccessGroupService {
     public EmployeeAccessGroup updateEmployeeAccessGroup(EmployeeAccessGroup employeeAccessGroup, Long ID) throws DataIntegrityViolationException {
         EmployeeAccessGroup depDB = employeeAccessGroupRepository.findById(ID).get();
 
-        if (Objects.nonNull(depDB.getEmployeeID()) && depDB.getEmployeeID() == (Long) depDB.getEmployeeID()) {
-            depDB.setEmployeeID(depDB.getEmployeeID());
+        if (Objects.nonNull(employeeAccessGroup.getEmployee().getID()) && employeeAccessGroup.getEmployee().getID() == (Long) employeeAccessGroup.getEmployee().getID()) {
+            depDB.getEmployee().setID(employeeAccessGroup.getEmployee().getID());
         }
 
-        if (Objects.nonNull(depDB.getAccessGroupID()) && depDB.getAccessGroupID() == (Long) depDB.getAccessGroupID()) {
-            depDB.setAccessGroupID(depDB.getAccessGroupID());
+        if (Objects.nonNull(employeeAccessGroup.getAccessGroup().getID()) && employeeAccessGroup.getAccessGroup().getID() == (Long) employeeAccessGroup.getAccessGroup().getID()) {
+            depDB.getAccessGroup().setID(employeeAccessGroup.getAccessGroup().getID());
         }
 
-        if (depDB.getExpiration() == (LocalDateTime) depDB.getExpiration()) {
-            depDB.setExpiration(depDB.getExpiration());
+        if (employeeAccessGroup.getExpiration() == (LocalDateTime) employeeAccessGroup.getExpiration()) {
+            depDB.setExpiration(employeeAccessGroup.getExpiration());
+        }
+        if (!employeeAccessGroup.getAccessGroup().getType().equals("DHS_FORM")) {
+            employeeAccessGroup.setExpiration(null);
         }
 
         return employeeAccessGroupRepository.save(depDB);

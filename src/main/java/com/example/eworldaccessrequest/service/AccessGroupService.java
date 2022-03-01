@@ -1,10 +1,16 @@
 package com.example.eworldaccessrequest.service;
 
+import com.example.eworldaccessrequest.dto.AccessGroupDTO;
+import com.example.eworldaccessrequest.dto.EmployeeAccessGroupDTO;
+import com.example.eworldaccessrequest.dto.EmployeeDTO;
 import com.example.eworldaccessrequest.entity.AccessGroup;
+import com.example.eworldaccessrequest.entity.Employee;
+import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.EmptyStringException;
 import com.example.eworldaccessrequest.exception.InvalidAccessGroupTypeException;
 import com.example.eworldaccessrequest.repository.AccessGroupRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -19,36 +25,50 @@ public class AccessGroupService {
     @Autowired
     private AccessGroupRepository accessGroupRepository;
 
+    public static AccessGroupDTO convertToDto(AccessGroup accessGroup) {
+
+        AccessGroupDTO accessGroupDTO = new AccessGroupDTO();
+        accessGroupDTO.setName(accessGroup.getName());
+        accessGroupDTO.setType(accessGroup.getType());
+
+        return accessGroupDTO;
+    }
+
     // Save operation
-    public AccessGroup saveAccessGroup(AccessGroup accessGroup) throws EmptyStringException {
+    public AccessGroupDTO saveAccessGroup(AccessGroup accessGroup) throws EmptyStringException {
         if ("".equalsIgnoreCase(accessGroup.getName()) || "".equalsIgnoreCase(accessGroup.getType())) {
             throw new EmptyStringException();
         }
         if (!Arrays.asList("AD", "SECURELINK", "OUTLOOK_EMAIL", "DHS_FORM").contains(accessGroup.getType())) {
             throw new InvalidAccessGroupTypeException();
         }
-        return accessGroupRepository.save(accessGroup);
+        return convertToDto(accessGroupRepository.save(accessGroup));
     }
 
     // Read operation
-    public List<AccessGroup> fetchAccessGroupList() {
-        return (List<AccessGroup>) accessGroupRepository.findAll();
+    public List<AccessGroupDTO> fetchAccessGroupList() {
+        List<AccessGroup> accessGroups = accessGroupRepository.findAll();
+        List<AccessGroupDTO> accessGroupDTOs = new ArrayList();
+
+        for (AccessGroup accessGroup : accessGroups) {
+            accessGroupDTOs.add(convertToDto(accessGroup));
+        }
+        return accessGroupDTOs;
     }
 
     // Update operation
-    public AccessGroup
-    updateAccessGroup(AccessGroup accessGroup, Long ID) {
+    public AccessGroupDTO updateAccessGroup(AccessGroup accessGroup, Long ID) {
         AccessGroup depDB = accessGroupRepository.findById(ID).get();
 
-        if (Objects.nonNull(depDB.getName()) && !"".equalsIgnoreCase(depDB.getName())) {
-            depDB.setName(depDB.getName());
+        if (Objects.nonNull(accessGroup.getName()) && !"".equalsIgnoreCase(accessGroup.getName())) {
+            depDB.setName(accessGroup.getName());
         }
 
-        if (Objects.nonNull(depDB.getType()) && !"".equalsIgnoreCase(depDB.getType())) {
-            depDB.setType(depDB.getType());
+        if (Objects.nonNull(accessGroup.getType()) && !"".equalsIgnoreCase(accessGroup.getType())) {
+            depDB.setType(accessGroup.getType());
         }
 
-        return accessGroupRepository.save(depDB);
+        return convertToDto(accessGroupRepository.save(depDB));
     }
 
     // Delete operation

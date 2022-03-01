@@ -1,8 +1,9 @@
 package com.example.eworldaccessrequest.controller;
 
-import com.example.eworldaccessrequest.dto.EmployeeResponse;
+import com.example.eworldaccessrequest.dto.AccessGroupDTO;
+import com.example.eworldaccessrequest.dto.EmployeeAccessGroupDTO;
+import com.example.eworldaccessrequest.dto.EmployeeDTO;
 import com.example.eworldaccessrequest.entity.Employee;
-import com.example.eworldaccessrequest.entity.EmployeeAccessGroupResponse;
 import com.example.eworldaccessrequest.service.EmployeeService;
 import com.example.eworldaccessrequest.entity.AccessGroup;
 import com.example.eworldaccessrequest.service.AccessGroupService;
@@ -32,25 +33,25 @@ public class AccessController {
 
     // Save operation
     @PostMapping("/access/employee")
-    public Employee saveEmployee(@Valid @RequestBody Employee employee) {
+    public EmployeeDTO saveEmployee(@Valid @RequestBody Employee employee) {
         return employeeService.saveEmployee(employee);
     }
 
     // Read all operation
     @GetMapping("/access/employee")
-    public List<Employee> fetchEmployeeList() {
+    public List<EmployeeDTO> fetchEmployeeList() {
         return employeeService.fetchEmployeeList();
     }
 
     //Read specific employee operation
     @GetMapping("/access/employee/{email}")
-    public Employee findByEmail(@PathVariable("email") String email) {
+    public EmployeeDTO findByEmail(@PathVariable("email") String email) {
         return employeeService.findByEmail(email);
     }
     
     // Update operation
     @PutMapping("/access/employee/{id}")
-    public Employee updateEmployee(@RequestBody Employee employee, @PathVariable("id") Long ID) {
+    public EmployeeDTO updateEmployee(@RequestBody Employee employee, @PathVariable("id") Long ID) {
         return employeeService.updateEmployee(employee, ID);
     }
 
@@ -64,19 +65,19 @@ public class AccessController {
 //ACCESS_GROUP Table
 
     @PostMapping("/access/access_group")
-    public AccessGroup saveAccessGroup(@Valid @RequestBody AccessGroup accessGroup) {
+    public AccessGroupDTO saveAccessGroup(@Valid @RequestBody AccessGroup accessGroup) {
         return accessGroupService.saveAccessGroup(accessGroup);
     }
 
     // Read operation
     @GetMapping("/access/access_group")
-    public List<AccessGroup> fetchAccessGroupList() {
+    public List<AccessGroupDTO> fetchAccessGroupList() {
         return accessGroupService.fetchAccessGroupList();
     }
 
     // Update operation
     @PutMapping("/access/access_group/{id}")
-    public AccessGroup updateAccessGroup(@RequestBody AccessGroup accessGroup, @PathVariable("id") Long ID) {
+    public AccessGroupDTO updateAccessGroup(@RequestBody AccessGroup accessGroup, @PathVariable("id") Long ID) {
         return accessGroupService.updateAccessGroup(accessGroup, ID);
     }
 
@@ -96,16 +97,11 @@ public class AccessController {
     }
 
     // Read all operation
-//    @GetMapping("/access/employee_access_group")
-//    public List<EmployeeAccessGroup> fetchEmployeeAccessGroupList() {
-//        return employeeAccessGroupService.fetchEmployeeAccessGroupList();
-//    }
+    @GetMapping("/access/employee_access_group")
+    public List<EmployeeAccessGroupDTO> fetchEmployeeAccessGroupList() {
+        return employeeAccessGroupService.fetchEmployeeAccessGroupList();
+    }
 
-    //Read specific employee operation
-//    @GetMapping("/access/employee_access_group/{email}")
-//    public EmployeeAccessGroupResponse findByEmail(@PathVariable("email") String email) {
-//        return employeeAccessGroupService.findByEmail(email);
-//    }
 
     // Update operation
     @PutMapping("/access/employee_access_group/{id}")
