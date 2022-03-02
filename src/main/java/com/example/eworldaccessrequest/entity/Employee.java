@@ -37,7 +37,7 @@ public class Employee {
     private boolean fullTime;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<EmployeeAccessGroup> employeeAccessGroups;
+    List<EmployeeAccessGroup> employeeAccessGroups;
 
 
     public String toString() {

@@ -14,8 +14,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -37,7 +35,7 @@ public class AccessController {
         return employeeService.saveEmployee(employee);
     }
 
-    // Read all operation
+    // Read operation
     @GetMapping("/access/employee")
     public List<EmployeeDTO> fetchEmployeeList() {
         return employeeService.fetchEmployeeList();
@@ -64,6 +62,7 @@ public class AccessController {
 
 //ACCESS_GROUP Table
 
+    // Save operation
     @PostMapping("/access/access_group")
     public AccessGroupDTO saveAccessGroup(@Valid @RequestBody AccessGroup accessGroup) {
         return accessGroupService.saveAccessGroup(accessGroup);
@@ -90,13 +89,13 @@ public class AccessController {
 
 //EMPLOYEE_ACCESS_GROUP Table
 
+    // Save operation
     @PostMapping("/access/employee_access_group")
-    @ResponseBody
-    public ResponseEntity<?> saveEmployeeAccessGroup(@Valid @RequestBody EmployeeAccessGroup employeeAccessGroup) {
-        return new ResponseEntity<EmployeeAccessGroup>(employeeAccessGroup, HttpStatus.OK);
+    public EmployeeAccessGroupDTO saveEmployeeAccessGroup(@Valid @RequestBody EmployeeAccessGroup employeeAccessGroup) {
+        return employeeAccessGroupService.saveEmployeeAccessGroup(employeeAccessGroup);
     }
 
-    // Read all operation
+    // Read operation
     @GetMapping("/access/employee_access_group")
     public List<EmployeeAccessGroupDTO> fetchEmployeeAccessGroupList() {
         return employeeAccessGroupService.fetchEmployeeAccessGroupList();
@@ -105,11 +104,11 @@ public class AccessController {
 
     // Update operation
     @PutMapping("/access/employee_access_group/{id}")
-    public ResponseEntity<?> updateEmployeeAccessGroup(@RequestBody EmployeeAccessGroup employeeAccessGroup, @PathVariable("id") Long ID) {
-        return new ResponseEntity<EmployeeAccessGroup>(employeeAccessGroup, HttpStatus.OK);
+    public EmployeeAccessGroupDTO updateEmployeeAccessGroup(@RequestBody EmployeeAccessGroup employeeAccessGroup, @PathVariable("id") Long ID) {
+        return employeeAccessGroupService.updateEmployeeAccessGroup(employeeAccessGroup, ID);
     }
-//
-//    // Delete operation
+
+    // Delete operation
     @DeleteMapping("/access/employee_access_group/{id}")
     public String deleteEmployeeAccessGroupById(@PathVariable("id") Long ID) {
         employeeAccessGroupService.deleteEmployeeAccessGroupById(ID);

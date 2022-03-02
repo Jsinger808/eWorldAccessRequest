@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccessGroupDTO {
 
+    private Long ID;
+
     private String name;
 
     private String type;

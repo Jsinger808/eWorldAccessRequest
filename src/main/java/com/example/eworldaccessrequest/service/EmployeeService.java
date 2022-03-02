@@ -6,6 +6,7 @@ import com.example.eworldaccessrequest.entity.Employee;
 import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.EmployeeNotFoundException;
 import com.example.eworldaccessrequest.exception.EmptyStringException;
+import com.example.eworldaccessrequest.exception.InvalidEmailException;
 import com.example.eworldaccessrequest.repository.EmployeeRepository;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.text.WordUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +27,16 @@ public class EmployeeService {
     public EmployeeDTO convertToDto(Employee employee) {
 
         EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setID(employee.getID());
         employeeDTO.setFullName(employee.getFullName());
         employeeDTO.setEmail(employee.getEmail());
         employeeDTO.setFullTime(employee.isFullTime());
         employeeDTO.setUsResident(employee.isUsResident());
         List<EmployeeAccessGroupDTO> employeeAccessGroupDTOs = new ArrayList();
-        for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
-            employeeAccessGroupDTOs.add(EmployeeAccessGroupService.convertToDto(employeeAccessGroup));
+        if (employee.getEmployeeAccessGroups() != null) {
+            for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
+                employeeAccessGroupDTOs.add(EmployeeAccessGroupService.convertToDto(employeeAccessGroup));
+            }
         }
         employeeDTO.setEmployeeAccessGroupDTOs(employeeAccessGroupDTOs);
 
@@ -42,9 +45,12 @@ public class EmployeeService {
     }
 
     // Save operation
-    public EmployeeDTO saveEmployee(Employee employee) throws EmptyStringException {
+    public EmployeeDTO saveEmployee(Employee employee) throws EmptyStringException, InvalidEmailException {
         if ("".equalsIgnoreCase(employee.getFullName()) || "".equalsIgnoreCase(employee.getEmail())) {
             throw new EmptyStringException();
+        }
+        if (!employee.getEmail().contains("@eworldes.com")) {
+            throw new InvalidEmailException();
         }
 
         //Uppercases first letter of each word in FullName.
@@ -80,7 +86,7 @@ public class EmployeeService {
             depDB.setFullName(WordUtils.capitalize(employee.getFullName().toLowerCase()));
         }
 
-        if (Objects.nonNull(employee.getEmail()) && !"".equalsIgnoreCase(employee.getEmail())) {
+        if (Objects.nonNull(employee.getEmail()) && !"".equalsIgnoreCase(employee.getEmail()) && employee.getEmail().contains("@eworldes.com")) {
             depDB.setEmail(employee.getEmail().toLowerCase());
         }
 

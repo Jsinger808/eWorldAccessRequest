@@ -1,8 +1,6 @@
 package com.example.eworldaccessrequest.service;
 
-import com.example.eworldaccessrequest.dto.AccessGroupDTO;
 import com.example.eworldaccessrequest.dto.EmployeeAccessGroupDTO;
-import com.example.eworldaccessrequest.entity.AccessGroup;
 import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.EmptyStringException;
 import com.example.eworldaccessrequest.repository.EmployeeAccessGroupRepository;
@@ -35,14 +33,14 @@ public class EmployeeAccessGroupService {
     }
 
     // Save operation
-    public EmployeeAccessGroup saveEmployeeAccessGroup(EmployeeAccessGroup employeeAccessGroup) throws EmptyStringException {
+    public EmployeeAccessGroupDTO saveEmployeeAccessGroup(EmployeeAccessGroup employeeAccessGroup) throws EmptyStringException {
         if (employeeAccessGroup.getEmployee() == null || employeeAccessGroup.getAccessGroup() == null) {
             throw new EmptyStringException();
         }
         if (!employeeAccessGroup.getAccessGroup().getType().equals("DHS_FORM")) {
             employeeAccessGroup.setExpiration(null);
         }
-        return employeeAccessGroupRepository.save(employeeAccessGroup);
+        return convertToDto(employeeAccessGroupRepository.save(employeeAccessGroup));
     }
 
     // Read operation
@@ -63,25 +61,32 @@ public class EmployeeAccessGroupService {
 //    }
 
     // Update operation
-    public EmployeeAccessGroup updateEmployeeAccessGroup(EmployeeAccessGroup employeeAccessGroup, Long ID) throws DataIntegrityViolationException {
+    public EmployeeAccessGroupDTO updateEmployeeAccessGroup(EmployeeAccessGroup employeeAccessGroup, Long ID) throws DataIntegrityViolationException {
         EmployeeAccessGroup depDB = employeeAccessGroupRepository.findById(ID).get();
 
         if (Objects.nonNull(employeeAccessGroup.getEmployee().getID()) && employeeAccessGroup.getEmployee().getID() == (Long) employeeAccessGroup.getEmployee().getID()) {
-            depDB.getEmployee().setID(employeeAccessGroup.getEmployee().getID());
+//            depDB.getEmployee().setID(employeeAccessGroup.getEmployee().getID());
+            depDB.setEmployee(employeeAccessGroup.getEmployee());
+
         }
 
         if (Objects.nonNull(employeeAccessGroup.getAccessGroup().getID()) && employeeAccessGroup.getAccessGroup().getID() == (Long) employeeAccessGroup.getAccessGroup().getID()) {
-            depDB.getAccessGroup().setID(employeeAccessGroup.getAccessGroup().getID());
+//            depDB.getAccessGroup().setID(employeeAccessGroup.getAccessGroup().getID());
+            depDB.setAccessGroup(employeeAccessGroup.getAccessGroup());
         }
 
-        if (employeeAccessGroup.getExpiration() == (LocalDateTime) employeeAccessGroup.getExpiration()) {
+//        if (employeeAccessGroup.getExpiration() == (LocalDateTime) employeeAccessGroup.getExpiration()) {
+//
+//        }
+
+        if (!employeeAccessGroup.getAccessGroup().getType().equals("DHS_FORM")) {
+           depDB.setExpiration(null);
+        }
+        else {
             depDB.setExpiration(employeeAccessGroup.getExpiration());
         }
-        if (!employeeAccessGroup.getAccessGroup().getType().equals("DHS_FORM")) {
-            employeeAccessGroup.setExpiration(null);
-        }
 
-        return employeeAccessGroupRepository.save(depDB);
+        return convertToDto(employeeAccessGroupRepository.save(depDB));
     }
 
     // Delete operation

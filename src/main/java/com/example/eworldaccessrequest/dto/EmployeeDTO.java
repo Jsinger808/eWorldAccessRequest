@@ -8,6 +8,8 @@ import java.util.List;
 @Component
 public class EmployeeDTO {
 
+    private Long ID;
+
     private String fullName;
 
     private String email;

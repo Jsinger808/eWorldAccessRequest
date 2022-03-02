@@ -28,14 +28,14 @@ public class AccessGroupService {
     public static AccessGroupDTO convertToDto(AccessGroup accessGroup) {
 
         AccessGroupDTO accessGroupDTO = new AccessGroupDTO();
+        accessGroupDTO.setID(accessGroup.getID());
         accessGroupDTO.setName(accessGroup.getName());
         accessGroupDTO.setType(accessGroup.getType());
-
         return accessGroupDTO;
     }
 
     // Save operation
-    public AccessGroupDTO saveAccessGroup(AccessGroup accessGroup) throws EmptyStringException {
+    public AccessGroupDTO saveAccessGroup(AccessGroup accessGroup) throws EmptyStringException, InvalidAccessGroupTypeException {
         if ("".equalsIgnoreCase(accessGroup.getName()) || "".equalsIgnoreCase(accessGroup.getType())) {
             throw new EmptyStringException();
         }

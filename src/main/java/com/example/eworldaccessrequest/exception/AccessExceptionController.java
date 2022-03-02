@@ -37,6 +37,11 @@ public class AccessExceptionController extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>("Employee not found. Please enter a different email.", HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InvalidEmailException.class)
+    public ResponseEntity<Object> handleInvalidEmailException(InvalidEmailException invalidEmailException){
+        return new ResponseEntity<>("Non-eWorld emnail entered. Please enter an eWorld email address.", HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(SQLException.class)
     public ResponseEntity<Object> handleSQLException(SQLException sQLException){
         return new ResponseEntity<>("SQL Error.", HttpStatus.INTERNAL_SERVER_ERROR);
