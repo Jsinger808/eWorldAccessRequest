@@ -14,9 +14,9 @@ public class EmployeeDTO {
 
     private String email;
 
-    private boolean fullTime;
+    private boolean bes;
 
-    private boolean usResident;
+    private boolean offshore;
 
     private List<EmployeeAccessGroupDTO> employeeAccessGroupDTOs;
 

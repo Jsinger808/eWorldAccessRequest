@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
+@Entity(name = "Employee")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,18 +30,18 @@ public class Employee {
     @Column(unique = true, name = "EMAIL")
     private String email;
 
-    @Column(name = "US_RESIDENT")
-    private boolean usResident;
+    @Column(name = "OFFSHORE")
+    private boolean offshore;
 
-    @Column(name = "FULL_TIME")
-    private boolean fullTime;
+    @Column(name = "BES")
+    private boolean bes;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     List<EmployeeAccessGroup> employeeAccessGroups;
 
 
     public String toString() {
-        return "ID: " + this.ID + ", Full Name: " + this.fullName + ", Email: " + this.email + ", US Resident: " + this.usResident + ", Full Time: " + this.fullTime;
+        return "ID: " + this.ID + ", Full Name: " + this.fullName + ", Email: " + this.email + ", Offshore: " + this.offshore + ", BES: " + this.bes;
     }
 }
 

@@ -21,6 +21,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -81,7 +82,7 @@ public class EmployeeAccessGroupServiceTest {
     @Test
     public void WhenUpdateEmployeeAccessGroup_GivenUpdatedAccessGroupToDHSFormAndExpiration_ShouldUpdateBothInEmployeeAccessGroup() {
 
-        LocalDateTime rightNow = LocalDateTime.now();
+        LocalDate rightNow = LocalDate.now();
 
         Employee employee = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@GMAIL.COM", true, true, new ArrayList<>());
         AccessGroup accessGroup = new AccessGroup(randomNumber2, "Test-AD", "AD", new ArrayList<>());
@@ -105,7 +106,7 @@ public class EmployeeAccessGroupServiceTest {
     @Test
     public void WhenUpdateEmployeeAccessGroup_GivenUpdatedAccessGroupAndExpiration_ShouldUpdateOnlyAccessGroupInEmployeeAccessGroup() {
 
-        LocalDateTime rightNow = LocalDateTime.now();
+        LocalDate rightNow = LocalDate.now();
 
         Employee employee = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@GMAIL.COM", true, true, new ArrayList<>());
         AccessGroup accessGroup = new AccessGroup(randomNumber2, "Test-AD", "AD", new ArrayList<>());

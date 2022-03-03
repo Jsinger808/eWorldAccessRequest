@@ -34,12 +34,22 @@ public class AccessExceptionController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EmployeeNotFoundException.class)
     public ResponseEntity<Object> handleEmployeeNotFoundException(EmployeeNotFoundException employeeNotFoundException){
-        return new ResponseEntity<>("Employee not found. Please enter a different email.", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Employee not found. Please re-enter a new value.", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidEmailException.class)
     public ResponseEntity<Object> handleInvalidEmailException(InvalidEmailException invalidEmailException){
         return new ResponseEntity<>("Non-eWorld emnail entered. Please enter an eWorld email address.", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoEmployeesWithExpiredAccessGroupsException.class)
+    public ResponseEntity<Object> handleNoEmployeesWithExpiredAccessGroupsException(NoEmployeesWithExpiredAccessGroupsException noEmployeesWithExpiredAccessGroupsException){
+        return new ResponseEntity<>("No Employees with expired forms.", HttpStatus.OK);
+    }
+
+    @ExceptionHandler(NoEmployeesWithSoonToBeExpiredAccessGroupsException.class)
+    public ResponseEntity<Object> handleNoEmployeesWithSoonToBeExpiredAccessGroupsException(NoEmployeesWithSoonToBeExpiredAccessGroupsException noEmployeesWithSoonToBeExpiredAccessGroupsException){
+        return new ResponseEntity<>("No Employees with soon-to-be expired forms.", HttpStatus.OK);
     }
 
     @ExceptionHandler(SQLException.class)

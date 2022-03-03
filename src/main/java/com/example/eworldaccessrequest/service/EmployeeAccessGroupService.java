@@ -1,7 +1,9 @@
 package com.example.eworldaccessrequest.service;
 
 import com.example.eworldaccessrequest.dto.EmployeeAccessGroupDTO;
+import com.example.eworldaccessrequest.dto.EmployeeDTO;
 import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
+import com.example.eworldaccessrequest.exception.EmployeeNotFoundException;
 import com.example.eworldaccessrequest.exception.EmptyStringException;
 import com.example.eworldaccessrequest.repository.EmployeeAccessGroupRepository;
 
@@ -56,6 +58,18 @@ public class EmployeeAccessGroupService {
         return employeeAccessGroupDTOs;
     }
 
+//    public List<EmployeeAccessGroupDTO> findByAccessGroupIDHelper(Long accessGroupID) throws EmployeeNotFoundException {
+//        if (employeeAccessGroupRepository.findAllByAccessGroup_ID(accessGroupID) == null) {
+//            throw new EmployeeNotFoundException();
+//        }
+//        List<EmployeeAccessGroup> employeeAccessGroups = employeeAccessGroupRepository.findAllByAccessGroup_ID(accessGroupID);
+//        ArrayList employeeAccessGroupDTOs = new ArrayList();
+//        for (EmployeeAccessGroup employeeAccessGroup : employeeAccessGroups) {
+//            employeeAccessGroupDTOs.add(convertToDto(employeeAccessGroup));
+//        }
+//        return employeeAccessGroupDTOs;
+//    }
+
 //    public EmployeeAccessGroupResponse findByEmail(String email) {
 //        return employeeAccessGroupRepository.findByEmail(email);
 //    }
@@ -65,19 +79,13 @@ public class EmployeeAccessGroupService {
         EmployeeAccessGroup depDB = employeeAccessGroupRepository.findById(ID).get();
 
         if (Objects.nonNull(employeeAccessGroup.getEmployee().getID()) && employeeAccessGroup.getEmployee().getID() == (Long) employeeAccessGroup.getEmployee().getID()) {
-//            depDB.getEmployee().setID(employeeAccessGroup.getEmployee().getID());
             depDB.setEmployee(employeeAccessGroup.getEmployee());
 
         }
 
         if (Objects.nonNull(employeeAccessGroup.getAccessGroup().getID()) && employeeAccessGroup.getAccessGroup().getID() == (Long) employeeAccessGroup.getAccessGroup().getID()) {
-//            depDB.getAccessGroup().setID(employeeAccessGroup.getAccessGroup().getID());
             depDB.setAccessGroup(employeeAccessGroup.getAccessGroup());
         }
-
-//        if (employeeAccessGroup.getExpiration() == (LocalDateTime) employeeAccessGroup.getExpiration()) {
-//
-//        }
 
         if (!employeeAccessGroup.getAccessGroup().getType().equals("DHS_FORM")) {
            depDB.setExpiration(null);

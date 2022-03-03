@@ -5,9 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "EmployeeAccessGroup")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,7 +37,7 @@ public class EmployeeAccessGroup {
     AccessGroup accessGroup;
 
     @Column(name = "EXPIRATION")
-    private LocalDateTime expiration;
+    private LocalDate expiration;
 
     public String toString() {
         return "ID: " + this.ID + ", Name: " + this.getEmployee().getID() + ", Type: " + this.getAccessGroup().getID();

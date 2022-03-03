@@ -41,10 +41,34 @@ public class AccessController {
         return employeeService.fetchEmployeeList();
     }
 
+//    @GetMapping("/access/employee/whatever/{id}")
+//    public List<EmployeeDTO> fetchTest(@PathVariable("id") Long id) {
+//        return employeeService.fetchTest(id);
+//    }
+
     //Read specific employee operation
     @GetMapping("/access/employee/{email}")
     public EmployeeDTO findByEmail(@PathVariable("email") String email) {
         return employeeService.findByEmail(email);
+    }
+
+
+    // Find All Employees With Specific Access Group
+    @GetMapping("/access/employee/accessGroup/{accessGroupID}")
+    public List<EmployeeDTO> findByAccessGroupID(@PathVariable("accessGroupID") Long accessGroupID) {
+        return employeeService.findByAccessGroupID(accessGroupID);
+    }
+
+    // Find All Employees with Expired Access Groups
+    @GetMapping("/access/employee/expired")
+    public List<EmployeeDTO> findEmployeesWithExpiredDHSForms() {
+        return employeeService.findEmployeesWithExpiredDHSForms();
+    }
+
+    // Find All Employees with Soon-to-Be Expired Access Groups
+    @GetMapping("/access/employee/soon-expired")
+    public List<EmployeeDTO> findEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() {
+        return employeeService.findEmployeesWithSoonToBeExpiredDHSFormsInOneMonth();
     }
     
     // Update operation
@@ -101,6 +125,10 @@ public class AccessController {
         return employeeAccessGroupService.fetchEmployeeAccessGroupList();
     }
 
+//    @GetMapping("/access/employee_access_group/{accessGroupID}")
+//    public List<EmployeeAccessGroupDTO> findByAccessGroup(@PathVariable("accessGroupID") Long accessGroupID) {
+//        return employeeAccessGroupService.findByAccessGroupIDHelper(accessGroupID);
+//    }
 
     // Update operation
     @PutMapping("/access/employee_access_group/{id}")
