@@ -48,27 +48,27 @@ public class AccessController {
 
     //Read specific employee operation
     @GetMapping("/employee/{email}")
-    public EmployeeDTO findByEmail(@PathVariable("email") String email) {
-        return employeeService.findByEmail(email);
+    public EmployeeDTO fetchEmployeeByEmail(@PathVariable("email") String email) {
+        return employeeService.fetchEmployeeByEmail(email);
     }
 
 
     // Find All Employees With Specific Access Group
     @GetMapping("/employee/accessGroup/{accessGroupID}")
-    public List<EmployeeDTO> findByAccessGroupID(@PathVariable("accessGroupID") Long accessGroupID) {
-        return employeeService.findByAccessGroupID(accessGroupID);
+    public List<EmployeeDTO> fetchEmployeesByAccessGroupID(@PathVariable("accessGroupID") Long accessGroupID) {
+        return employeeService.fetchEmployeesByAccessGroupID(accessGroupID);
     }
 
     // Find All Employees with Expired Access Groups
     @GetMapping("/employee/expired")
-    public List<EmployeeDTO> findEmployeesWithExpiredDHSForms() {
-        return employeeService.findEmployeesWithExpiredDHSForms();
+    public List<EmployeeDTO> fetchEmployeesWithExpiredDHSForms() {
+        return employeeService.fetchEmployeesWithExpiredDHSForms();
     }
 
     // Find All Employees with Soon-to-Be Expired Access Groups
     @GetMapping("/employee/soon-expired")
-    public List<EmployeeDTO> findEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() {
-        return employeeService.findEmployeesWithSoonToBeExpiredDHSFormsInOneMonth();
+    public List<EmployeeDTO> fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() {
+        return employeeService.fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth();
     }
     
     // Update operation

@@ -52,14 +52,14 @@ public class EmployeeServiceTest {
 
         Mockito.doReturn(expected).when(employeeRepository).save(expected);
 
-        EmployeeDTO actual = employeeService.saveEmployee(expected);
+        EmployeeDTO actualDTO = employeeService.saveEmployee(expected);
 
-        System.out.println(actual.getFullName());
-        System.out.println(actual.getEmail());
+        System.out.println(actualDTO.getFullName());
+        System.out.println(actualDTO.getEmail());
 
         Mockito.verify(employeeRepository).save(expected);
-        Assert.assertEquals(actual.getFullName(), "Buggirl Yogurt Johnson");
-        Assert.assertEquals(actual.getEmail(), "buggirl@eworldes.com");
+        Assert.assertEquals("Buggirl Yogurt Johnson", actualDTO.getFullName()) ;
+        Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
     }
 
     @Test
@@ -71,14 +71,14 @@ public class EmployeeServiceTest {
         Mockito.doReturn(expected).when(employeeRepository).save(expected);
         EmployeeDTO expectedDTO = employeeService.convertToDto(expected);
 
-        EmployeeDTO actual = employeeService.updateEmployee(new Employee(randomNumber, "BUg GIRl", "BUGGIRL@eworldes.com",
+        EmployeeDTO actualDTO = employeeService.updateEmployee(new Employee(randomNumber, "BUg GIRl", "BUGGIRL@eworldes.com",
                 true, true, new ArrayList<>()), randomNumber);
 
-        System.out.println(actual);
+        System.out.println(actualDTO);
         System.out.println(expectedDTO);
 
         Mockito.verify(employeeRepository).save(expected);
-        Assert.assertEquals(actual, expectedDTO);
+        Assert.assertEquals(expectedDTO, actualDTO);
     }
 
     @Test
@@ -91,15 +91,15 @@ public class EmployeeServiceTest {
         Mockito.doReturn(expected).when(employeeRepository).save(expected);
         EmployeeDTO expectedDTO = employeeService.convertToDto(expected);
 
-        EmployeeDTO actual = employeeService.updateEmployee(new Employee(randomNumber, "Wonderbug", "", true,
+        EmployeeDTO actualDTO = employeeService.updateEmployee(new Employee(randomNumber, "Wonderbug", "", true,
                 true, new ArrayList<>()), randomNumber);
 
-        System.out.println(actual);
+        System.out.println(actualDTO);
         System.out.println(expectedDTO);
 
         Mockito.verify(employeeRepository).save(expected);
-        Assert.assertEquals(actual.getFullName(), "Wonderbug");
-        Assert.assertEquals(actual.getEmail(), "buggirl@eworldes.com");
+        Assert.assertEquals("Wonderbug", actualDTO.getFullName());
+        Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
 
     }
 

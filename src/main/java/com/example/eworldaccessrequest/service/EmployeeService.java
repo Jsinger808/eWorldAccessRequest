@@ -51,7 +51,7 @@ public class EmployeeService {
             throw new EmptyStringException();
         }
 
-        // Capitalize each word in FullName.
+        // Format fullName and email fields.
         employee.setEmail(employee.getEmail().toLowerCase());
         employee.setFullName(WordUtils.capitalize(employee.getFullName().toLowerCase()));
 
@@ -73,7 +73,7 @@ public class EmployeeService {
     }
 
     // List specific employee
-    public EmployeeDTO findByEmail(String email) throws EmployeeNotFoundException{
+    public EmployeeDTO fetchEmployeeByEmail(String email) throws EmployeeNotFoundException{
         if (email == null || employeeRepository.findByEmail(email) == null) {
             throw new EmployeeNotFoundException();
         }
@@ -81,7 +81,7 @@ public class EmployeeService {
     }
 
     // List employees by specific access group
-    public List<EmployeeDTO> findByAccessGroupID(Long accessGroupID) throws EmployeeNotFoundException {
+    public List<EmployeeDTO> fetchEmployeesByAccessGroupID(Long accessGroupID) throws EmployeeNotFoundException {
         if (employeeRepository.findEmployeesByAccessGroupID(accessGroupID).size() == 0){
             throw new EmployeeNotFoundException();
         }
@@ -94,7 +94,7 @@ public class EmployeeService {
     }
 
     // List employees with expired DHS_Forms
-    public List<EmployeeDTO> findEmployeesWithExpiredDHSForms() throws NoEmployeesWithExpiredAccessGroupsException {
+    public List<EmployeeDTO> fetchEmployeesWithExpiredDHSForms() throws NoEmployeesWithExpiredAccessGroupsException {
         LocalDate rightNow = LocalDate.now();
         if (employeeRepository.findEmployeesWithExpiredDHSForms(rightNow).size() == 0){
             throw new NoEmployeesWithExpiredAccessGroupsException();
@@ -104,23 +104,11 @@ public class EmployeeService {
                 .distinct()
                 .collect(Collectors.toList());
 
-        ArrayList employeeDTOs = new ArrayList();
-        ArrayList invalidEmployeeAccessGroups = new ArrayList();
-        for (Employee employee : employees) {
-            for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
-                if (employeeAccessGroup.getExpiration() == null) {
-                    invalidEmployeeAccessGroups.add(employeeAccessGroup);
-                }
-            }
-            employee.getEmployeeAccessGroups().removeAll(invalidEmployeeAccessGroups);
-            invalidEmployeeAccessGroups.clear();
-            employeeDTOs.add(convertToDto(employee));
-        }
-        return employeeDTOs;
+        return getEmployeeDTOS(employees);
     }
 
     // List employees with soon-to-be expired DHS_Forms
-    public List<EmployeeDTO> findEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() throws NoEmployeesWithSoonToBeExpiredAccessGroupsException {
+    public List<EmployeeDTO> fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() throws NoEmployeesWithSoonToBeExpiredAccessGroupsException {
         LocalDate rightNow = LocalDate.now();
         LocalDate oneMonth = rightNow.plusMonths(1);
         if (employeeRepository.findEmployeesWithSoonToBeExpiredDHSFormsInOneMonth(rightNow, oneMonth).size() == 0){
@@ -130,19 +118,7 @@ public class EmployeeService {
                 .distinct()
                 .collect(Collectors.toList());
 
-        ArrayList employeeDTOs = new ArrayList();
-        ArrayList invalidEmployeeAccessGroups = new ArrayList();
-        for (Employee employee : employees) {
-            for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
-                if (employeeAccessGroup.getExpiration() == null) {
-                    invalidEmployeeAccessGroups.add(employeeAccessGroup);
-                }
-            }
-            employee.getEmployeeAccessGroups().removeAll(invalidEmployeeAccessGroups);
-            invalidEmployeeAccessGroups.clear();
-            employeeDTOs.add(convertToDto(employee));
-        }
-        return employeeDTOs;
+        return getEmployeeDTOS(employees);
     }
 
     // Update
@@ -167,6 +143,23 @@ public class EmployeeService {
     // Delete
     public void deleteEmployeeById(Long ID) {
         employeeRepository.deleteById(ID);
+    }
+
+    // Helper method
+    private List<EmployeeDTO> getEmployeeDTOS(List<Employee> employees) {
+        ArrayList employeeDTOs = new ArrayList();
+        ArrayList invalidEmployeeAccessGroups = new ArrayList();
+        for (Employee employee : employees) {
+            for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
+                if (employeeAccessGroup.getExpiration() == null) {
+                    invalidEmployeeAccessGroups.add(employeeAccessGroup);
+                }
+            }
+            employee.getEmployeeAccessGroups().removeAll(invalidEmployeeAccessGroups);
+            invalidEmployeeAccessGroups.clear();
+            employeeDTOs.add(convertToDto(employee));
+        }
+        return employeeDTOs;
     }
 
 }

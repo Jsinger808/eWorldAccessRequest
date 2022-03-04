@@ -42,21 +42,21 @@ public class AccessGroupServiceTest {
     @Test
     public void WhenSaveAccessGroup_GivenNormalInput_ShouldSave() {
 
-        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<EmployeeAccessGroup>());
+        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<>());
         Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
         AccessGroupDTO expectedDTO = accessGroupService.convertToDto(expected);
 
-        AccessGroupDTO actual = accessGroupService.saveAccessGroup(expected);
+        AccessGroupDTO actualDTO = accessGroupService.saveAccessGroup(expected);
 
         Mockito.verify(accessGroupRepository).save(expected);
-        Assert.assertEquals(actual, expectedDTO);
+        Assert.assertEquals(expectedDTO, actualDTO);
 
     }
 
     @Test(expected = EmptyStringException.class)
     public void WhenSaveAccessGroup_GivenEmptyString_ShouldThrowEmptyStringException() throws EmptyStringException {
 
-        AccessGroup expected = new AccessGroup(randomNumber, "", "AD", new ArrayList<EmployeeAccessGroup>());
+        AccessGroup expected = new AccessGroup(randomNumber, "", "AD", new ArrayList<>());
         Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
 
         Mockito.verify(accessGroupRepository).save(expected);
@@ -66,7 +66,7 @@ public class AccessGroupServiceTest {
     @Test(expected = InvalidAccessGroupTypeException.class)
     public void WhenSaveAccessGroup_GivenAnIncorrectType_ShouldThrowInvalidAccessGroupTypeException() throws InvalidAccessGroupTypeException {
 
-        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "ADD", new ArrayList<EmployeeAccessGroup>());
+        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "ADD", new ArrayList<>());
         accessGroupService.saveAccessGroup(expected);
 
         Mockito.verify(accessGroupRepository, times(0)).save(expected);
@@ -76,37 +76,37 @@ public class AccessGroupServiceTest {
     @Test
     public void WhenUpdateAccessGroup_GivenEmptyType_ShouldUpdateNameButNotUpdateType() throws EmptyStringException {
 
-        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<EmployeeAccessGroup>());
+        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<>());
 
 
         Mockito.doReturn(Optional.of(expected)).when(accessGroupRepository).findById(randomNumber);
         Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
 
-        AccessGroupDTO actual = accessGroupService.updateAccessGroup((new AccessGroup(randomNumber, "Stuff", "",
+        AccessGroupDTO actualDTO = accessGroupService.updateAccessGroup((new AccessGroup(randomNumber, "Stuff", "",
                 new ArrayList<>())), randomNumber);
 
         Mockito.verify(accessGroupRepository).save(expected);
 
-        Assert.assertEquals(actual.getName(), "Stuff");
-        Assert.assertEquals(actual.getType(), "AD");
+        Assert.assertEquals("Stuff", actualDTO.getName());
+        Assert.assertEquals("AD", actualDTO.getType());
 
     }
 
     @Test
     public void WhenUpdateAccessGroup_GivenNormalInput_ShouldUpdateNameAndType() throws EmptyStringException {
 
-        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<EmployeeAccessGroup>());
+        AccessGroup expected = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<>());
 
         Mockito.doReturn(Optional.of(expected)).when(accessGroupRepository).findById(randomNumber);
         Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
 
-        AccessGroupDTO actual = accessGroupService.updateAccessGroup((new AccessGroup(randomNumber, "Stuff", "SECURELINK",
+        AccessGroupDTO actualDTO = accessGroupService.updateAccessGroup((new AccessGroup(randomNumber, "Stuff", "SECURELINK",
                 new ArrayList<>())), randomNumber);
 
         Mockito.verify(accessGroupRepository).save(expected);
 
-        Assert.assertEquals(actual.getName(), "Stuff");
-        Assert.assertEquals(actual.getType(), "SECURELINK");
+        Assert.assertEquals("Stuff", actualDTO.getName());
+        Assert.assertEquals("SECURELINK", actualDTO.getType());
 
     }
 

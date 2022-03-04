@@ -1,64 +1,64 @@
-
-package com.example.eworldaccessrequest.integration;
-
-import com.example.eworldaccessrequest.controller.AccessController;
-import com.example.eworldaccessrequest.service.EmployeeService;
-import com.example.eworldaccessrequest.service.AccessGroupService;
-import com.example.eworldaccessrequest.service.EmployeeAccessGroupService;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@SpringBootTest
-@WebMvcTest(AccessController.class)
-public class AccessControllerIntegrationTest {
-
-    @Autowired
-    private MockMvc mvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private EmployeeService employeeService;
-    @Autowired
-    private AccessGroupService accessGroupService;
-    @Autowired
-    private EmployeeAccessGroupService employeeAccessGroupService;
-    @Autowired
-    private WebApplicationContext context;
-
-    @Before
-    public void setup() {
-        mvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .build();
-    }
-
-    @Test
-    public void WhenGetEmployees_ShouldStatus200() throws Exception {
-
-        RequestBuilder request = MockMvcRequestBuilders.get("/access/employee/");
-        MvcResult result = mvc.perform(request).andExpect(status().isOk()).andReturn();
+//
+//package com.example.eworldaccessrequest.integration;
+//
+//import com.example.eworldaccessrequest.controller.AccessController;
+//import com.example.eworldaccessrequest.service.EmployeeService;
+//import com.example.eworldaccessrequest.service.AccessGroupService;
+//import com.example.eworldaccessrequest.service.EmployeeAccessGroupService;
+//
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import org.junit.Assert;
+//import org.junit.Before;
+//import org.junit.Test;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.web.servlet.MockMvc;
+//import org.springframework.test.web.servlet.MvcResult;
+//import org.springframework.test.web.servlet.RequestBuilder;
+//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+//import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+//import org.springframework.web.context.WebApplicationContext;
+//
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+//
+//@SpringBootTest
+//@WebMvcTest(AccessController.class)
+//public class AccessControllerIntegrationTest {
+//
+//    @Autowired
+//    private MockMvc mvc;
+//
+//    @Autowired
+//    private ObjectMapper objectMapper;
+//
+//    @Autowired
+//    private EmployeeService employeeService;
+//    @Autowired
+//    private AccessGroupService accessGroupService;
+//    @Autowired
+//    private EmployeeAccessGroupService employeeAccessGroupService;
+//    @Autowired
+//    private WebApplicationContext context;
+//
+//    @Before
+//    public void setup() {
+//        mvc = MockMvcBuilders
+//                .webAppContextSetup(context)
+//                .build();
+//    }
+//
+//    @Test
+//    public void WhenGetEmployees_ShouldStatus200() throws Exception {
+//
+//        RequestBuilder request = MockMvcRequestBuilders.get("/access/employee/");
+//        MvcResult result = mvc.perform(request).andExpect(status().isOk()).andReturn();
 
 //        EmployeeService employeeService = new EmployeeService(employeeService);
 
 
-        Assert.assertEquals(employeeService.fetchEmployeeList(), result);
-    }
+//        Assert.assertEquals(employeeService.fetchEmployeeList(), result);
+//    }
 ////EMPLOYEE Table
 //
 //    // Save operation
@@ -174,4 +174,4 @@ public class AccessControllerIntegrationTest {
 //        employeeAccessGroupService.deleteEmployeeAccessGroupById(ID);
 //        return "Deleted Successfully";
 //    }
-}
+//}

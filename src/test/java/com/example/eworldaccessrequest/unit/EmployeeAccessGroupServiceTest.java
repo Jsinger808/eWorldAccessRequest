@@ -31,9 +31,8 @@ import static org.mockito.Mockito.times;
 public class EmployeeAccessGroupServiceTest {
 
     Long randomNumber = RandomUtils.nextLong(0, 30);
-    Long randomNumber2 = RandomUtils.nextLong(0, 30);
-    Long randomNumber3 = RandomUtils.nextLong(30, 60);
-    Long randomNumber4 = RandomUtils.nextLong(0, 30);
+    Long randomNumber2 = RandomUtils.nextLong(30, 60);
+    Long randomNumber3 = RandomUtils.nextLong(0, 30);
 
     @Mock
     private EmployeeAccessGroupRepository employeeAccessGroupRepository;
@@ -56,9 +55,9 @@ public class EmployeeAccessGroupServiceTest {
     public void WhenSaveEmployeeAccessGroup_GivenNormalInput_ShouldReferenceEmployeeToAccessGroup() throws EmptyStringException {
 
         Employee employee = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@GMAIL.COM", true, true, new ArrayList<>());
-        AccessGroup accessGroup = new AccessGroup(randomNumber2, "Test-AD", "AD", new ArrayList<>());
+        AccessGroup accessGroup = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<>());
         EmployeeAccessGroup actual = new EmployeeAccessGroup(randomNumber, employee, accessGroup, null);
-        ArrayList<EmployeeAccessGroup> employeeAccessGroupArrayList = new ArrayList<EmployeeAccessGroup>();
+        ArrayList<EmployeeAccessGroup> employeeAccessGroupArrayList = new ArrayList<>();
         employeeAccessGroupArrayList.add(actual);
 
         Mockito.doReturn(actual).when(employeeAccessGroupRepository).save(actual);
@@ -83,21 +82,21 @@ public class EmployeeAccessGroupServiceTest {
         LocalDate rightNow = LocalDate.now();
 
         Employee employee = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@GMAIL.COM", true, true, new ArrayList<>());
-        AccessGroup accessGroup = new AccessGroup(randomNumber2, "Test-AD", "AD", new ArrayList<>());
-        AccessGroup accessGroupUpdated = new AccessGroup(randomNumber3, "Updated-DHS", "DHS_FORM", new ArrayList<>());
+        AccessGroup accessGroup = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<>());
+        AccessGroup accessGroupUpdated = new AccessGroup(randomNumber2, "Updated-DHS", "DHS_FORM", new ArrayList<>());
         AccessGroupDTO accessGroupUpdatedDTO = accessGroupService.convertToDto(accessGroupUpdated);
 
-        EmployeeAccessGroup actual = new EmployeeAccessGroup(randomNumber4, employee, accessGroup, null);
-        EmployeeAccessGroup actualUpdated = new EmployeeAccessGroup(randomNumber4, employee, accessGroupUpdated, rightNow);
+        EmployeeAccessGroup actual = new EmployeeAccessGroup(randomNumber3, employee, accessGroup, null);
+        EmployeeAccessGroup actualUpdated = new EmployeeAccessGroup(randomNumber3, employee, accessGroupUpdated, rightNow);
 
-        Mockito.doReturn(Optional.of(actual)).when(employeeAccessGroupRepository).findById(randomNumber4);
+        Mockito.doReturn(Optional.of(actual)).when(employeeAccessGroupRepository).findById(randomNumber3);
         Mockito.doReturn(actual).when(employeeAccessGroupRepository).save(actual);
 
-        EmployeeAccessGroupDTO actualUpdatedDTO = employeeAccessGroupService.updateEmployeeAccessGroup(actualUpdated, randomNumber4);
+        EmployeeAccessGroupDTO actualUpdatedDTO = employeeAccessGroupService.updateEmployeeAccessGroup(actualUpdated, randomNumber3);
 
         Mockito.verify(employeeAccessGroupRepository).save(actual);
-        Assert.assertEquals(actualUpdatedDTO.getAccessGroupDTO(), accessGroupUpdatedDTO);
-        Assert.assertEquals(actualUpdatedDTO.getExpiration(), rightNow);
+        Assert.assertEquals(accessGroupUpdatedDTO, actualUpdatedDTO.getAccessGroupDTO());
+        Assert.assertEquals(rightNow, actualUpdatedDTO.getExpiration()) ;
 
     }
 
@@ -107,21 +106,21 @@ public class EmployeeAccessGroupServiceTest {
         LocalDate rightNow = LocalDate.now();
 
         Employee employee = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@GMAIL.COM", true, true, new ArrayList<>());
-        AccessGroup accessGroup = new AccessGroup(randomNumber2, "Test-AD", "AD", new ArrayList<>());
-        AccessGroup accessGroupUpdated = new AccessGroup(randomNumber3, "Updated-SECURELINK", "SECURELINK", new ArrayList<>());
+        AccessGroup accessGroup = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<>());
+        AccessGroup accessGroupUpdated = new AccessGroup(randomNumber2, "Updated-SECURELINK", "SECURELINK", new ArrayList<>());
         AccessGroupDTO accessGroupUpdatedDTO = accessGroupService.convertToDto(accessGroupUpdated);
 
-        EmployeeAccessGroup actual = new EmployeeAccessGroup(randomNumber4, employee, accessGroup, null);
-        EmployeeAccessGroup actualUpdated = new EmployeeAccessGroup(randomNumber4, employee, accessGroupUpdated, rightNow);
+        EmployeeAccessGroup actual = new EmployeeAccessGroup(randomNumber3, employee, accessGroup, null);
+        EmployeeAccessGroup actualUpdated = new EmployeeAccessGroup(randomNumber3, employee, accessGroupUpdated, rightNow);
 
-        Mockito.doReturn(Optional.of(actual)).when(employeeAccessGroupRepository).findById(randomNumber4);
+        Mockito.doReturn(Optional.of(actual)).when(employeeAccessGroupRepository).findById(randomNumber3);
         Mockito.doReturn(actual).when(employeeAccessGroupRepository).save(actual);
 
-        EmployeeAccessGroupDTO actualUpdatedDTO = employeeAccessGroupService.updateEmployeeAccessGroup(actualUpdated, randomNumber4);
+        EmployeeAccessGroupDTO actualUpdatedDTO = employeeAccessGroupService.updateEmployeeAccessGroup(actualUpdated, randomNumber3);
 
         Mockito.verify(employeeAccessGroupRepository).save(actual);
-        Assert.assertEquals(actualUpdatedDTO.getAccessGroupDTO(), accessGroupUpdatedDTO);
-        Assert.assertEquals(actualUpdatedDTO.getExpiration(), null);
+        Assert.assertEquals(accessGroupUpdatedDTO, actualUpdatedDTO.getAccessGroupDTO());
+        Assert.assertEquals(null, actualUpdatedDTO.getExpiration());
 
     }
 
@@ -129,7 +128,7 @@ public class EmployeeAccessGroupServiceTest {
     public void WhenSaveEmployeeAccessGroup_GivenEmployeeWithEmptyFullName_ShouldThrowEmptyStringException() throws EmptyStringException {
 
         Employee employee = new Employee(randomNumber, "", "BUGGIRL@GMAIL.COM", true, true, new ArrayList<>());
-        AccessGroup accessGroup = new AccessGroup(randomNumber2, "Test-AD", "AD", new ArrayList<>());
+        AccessGroup accessGroup = new AccessGroup(randomNumber, "Test-AD", "AD", new ArrayList<>());
         EmployeeAccessGroup actual = new EmployeeAccessGroup(randomNumber, employee, accessGroup, null);
         ArrayList<EmployeeAccessGroup> employeeAccessGroupArrayList = new ArrayList<EmployeeAccessGroup>();
         employeeAccessGroupArrayList.add(actual);
@@ -145,8 +144,8 @@ public class EmployeeAccessGroupServiceTest {
         Mockito.verify(employeeAccessGroupRepository, times(0)).save(actual);
         Assert.assertEquals(null, actualDTO.getExpiration());
         Assert.assertEquals(accessGroupDTO, actualDTO.getAccessGroupDTO());
-        Assert.assertEquals(actual.getEmployee(), employee);
-        Assert.assertEquals(actual.getAccessGroup(), accessGroup);
+        Assert.assertEquals(employee, actual.getEmployee());
+        Assert.assertEquals(accessGroup, actual.getAccessGroup());
         Assert.assertTrue(employeeDTO.getEmployeeAccessGroupDTOs().contains(actualDTO));
     }
 }
