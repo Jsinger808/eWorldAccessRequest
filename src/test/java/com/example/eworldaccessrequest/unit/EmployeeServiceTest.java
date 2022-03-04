@@ -5,6 +5,7 @@ import com.example.eworldaccessrequest.entity.Employee;
 import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.EmptyStringException;
 import com.example.eworldaccessrequest.exception.InvalidEmailException;
+import com.example.eworldaccessrequest.repository.EmployeeAccessGroupRepository;
 import com.example.eworldaccessrequest.repository.EmployeeRepository;
 import com.example.eworldaccessrequest.service.EmployeeService;
 import junit.framework.Assert;
@@ -32,6 +33,9 @@ public class EmployeeServiceTest {
     @Mock
     private EmployeeRepository employeeRepository;
 
+    @Mock
+    private EmployeeAccessGroupRepository employeeAccessGroupRepository;
+
     @InjectMocks
     EmployeeService employeeService = new EmployeeService();
 
@@ -44,7 +48,7 @@ public class EmployeeServiceTest {
     @Test
     public void WhenSaveEmployee_GivenUnformattedFullNameAndEmail_ShouldFormatFullNameAndEmail() throws EmptyStringException {
 
-        Employee expected = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@GMAIL.COM", true, true, new ArrayList<>());
+        Employee expected = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@EWORLDES.COM", true, true, new ArrayList<>());
 
         Mockito.doReturn(expected).when(employeeRepository).save(expected);
 
@@ -55,7 +59,7 @@ public class EmployeeServiceTest {
 
         Mockito.verify(employeeRepository).save(expected);
         Assert.assertEquals(actual.getFullName(), "Buggirl Yogurt Johnson");
-        Assert.assertEquals(actual.getEmail(), "buggirl@gmail.com");
+        Assert.assertEquals(actual.getEmail(), "buggirl@eworldes.com");
     }
 
     @Test
@@ -74,7 +78,7 @@ public class EmployeeServiceTest {
         System.out.println(expectedDTO);
 
         Mockito.verify(employeeRepository).save(expected);
-        Assert.assertEquals(actual, expected);
+        Assert.assertEquals(actual, expectedDTO);
     }
 
     @Test
@@ -111,7 +115,7 @@ public class EmployeeServiceTest {
     }
 
     @Test(expected = InvalidEmailException.class)
-    public void WhenSaveEmployee_GivenNonEWorldEmail_ShouldThrowInvalidEmailException() throws EmptyStringException {
+    public void WhenSaveEmployee_GivenNonEWorldEmail_ShouldThrowInvalidEmailException() throws InvalidEmailException {
 
         Employee expected = new Employee(randomNumber, "Bug Girl", "buggirl@buggirl.com", true, true, new ArrayList<EmployeeAccessGroup>());
         employeeService.saveEmployee(expected);

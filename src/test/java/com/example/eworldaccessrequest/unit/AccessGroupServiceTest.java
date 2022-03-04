@@ -27,7 +27,6 @@ import static org.mockito.Mockito.times;
 public class AccessGroupServiceTest {
 
     Long randomNumber = RandomUtils.nextLong(0, 30);
-    Long randomNumber2 = RandomUtils.nextLong(0, 30);
 
     @Mock
     private AccessGroupRepository accessGroupRepository;
@@ -59,9 +58,6 @@ public class AccessGroupServiceTest {
 
         AccessGroup expected = new AccessGroup(randomNumber, "", "AD", new ArrayList<EmployeeAccessGroup>());
         Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
-        AccessGroupDTO expectedDTO = accessGroupService.convertToDto(expected);
-
-        AccessGroupDTO actual = accessGroupService.saveAccessGroup(expected);
 
         Mockito.verify(accessGroupRepository).save(expected);
 
@@ -85,10 +81,9 @@ public class AccessGroupServiceTest {
 
         Mockito.doReturn(Optional.of(expected)).when(accessGroupRepository).findById(randomNumber);
         Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
-        AccessGroupDTO expectedDTO = accessGroupService.convertToDto(expected);
 
         AccessGroupDTO actual = accessGroupService.updateAccessGroup((new AccessGroup(randomNumber, "Stuff", "",
-                new ArrayList<EmployeeAccessGroup>())), randomNumber);
+                new ArrayList<>())), randomNumber);
 
         Mockito.verify(accessGroupRepository).save(expected);
 
@@ -104,10 +99,9 @@ public class AccessGroupServiceTest {
 
         Mockito.doReturn(Optional.of(expected)).when(accessGroupRepository).findById(randomNumber);
         Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
-        AccessGroupDTO expectedDTO = accessGroupService.convertToDto(expected);
 
         AccessGroupDTO actual = accessGroupService.updateAccessGroup((new AccessGroup(randomNumber, "Stuff", "SECURELINK",
-                new ArrayList<EmployeeAccessGroup>())), randomNumber);
+                new ArrayList<>())), randomNumber);
 
         Mockito.verify(accessGroupRepository).save(expected);
 

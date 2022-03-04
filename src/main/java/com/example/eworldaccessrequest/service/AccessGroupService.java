@@ -25,6 +25,7 @@ public class AccessGroupService {
     @Autowired
     private AccessGroupRepository accessGroupRepository;
 
+    // DTO Converter
     public static AccessGroupDTO convertToDto(AccessGroup accessGroup) {
 
         AccessGroupDTO accessGroupDTO = new AccessGroupDTO();

@@ -12,7 +12,4 @@ import java.util.List;
 
 public interface EmployeeAccessGroupRepository extends JpaRepository<EmployeeAccessGroup, Long> {
 
-//    @Query("SELECT EmployeeAccessGroup FROM EmployeeAccessGroup WHERE EmployeeAccessGroup.accessGroup.ID = ?1")
-    public List<EmployeeAccessGroup> findAllByAccessGroup_ID(Long accessGroupID);
-
 }

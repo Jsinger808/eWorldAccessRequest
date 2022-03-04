@@ -1,7 +1,6 @@
 package com.example.eworldaccessrequest.service;
 
 import com.example.eworldaccessrequest.dto.EmployeeDTO;
-import com.example.eworldaccessrequest.dto.EmployeeExpiredDTO;
 import com.example.eworldaccessrequest.entity.Employee;
 import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.*;
@@ -25,9 +24,7 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Autowired
-    private EmployeeAccessGroupRepository employeeAccessGroupRepository;
-
+    // DTO Converter
     public EmployeeDTO convertToDto(Employee employee) {
 
         EmployeeDTO employeeDTO = new EmployeeDTO();
@@ -48,29 +45,24 @@ public class EmployeeService {
 
     }
 
-    public EmployeeExpiredDTO convertToExpiredDto(Employee employee) {
-        EmployeeExpiredDTO employeeExpiredDTO = new EmployeeExpiredDTO();
-        employeeExpiredDTO.setFullName(employee.getFullName());
-        return employeeExpiredDTO;
-    }
-
-    // Save operation
+    // Save
     public EmployeeDTO saveEmployee(Employee employee) throws EmptyStringException, InvalidEmailException {
         if ("".equalsIgnoreCase(employee.getFullName()) || "".equalsIgnoreCase(employee.getEmail())) {
             throw new EmptyStringException();
         }
+
+        // Capitalize each word in FullName.
+        employee.setEmail(employee.getEmail().toLowerCase());
+        employee.setFullName(WordUtils.capitalize(employee.getFullName().toLowerCase()));
+
         if (!employee.getEmail().contains("@eworldes.com")) {
             throw new InvalidEmailException();
         }
 
-        //Uppercases first letter of each word in FullName.
-        employee.setEmail(employee.getEmail().toLowerCase());
-        employee.setFullName(WordUtils.capitalize(employee.getFullName().toLowerCase()));
-
         return convertToDto(employeeRepository.save(employee));
     }
 
-    // List all operation
+    // List all
     public List<EmployeeDTO> fetchEmployeeList() {
         List<Employee> employees = employeeRepository.findAll();
         ArrayList employeeDTOs = new ArrayList();
@@ -80,7 +72,7 @@ public class EmployeeService {
         return employeeDTOs;
     }
 
-    // List specific employee operation
+    // List specific employee
     public EmployeeDTO findByEmail(String email) throws EmployeeNotFoundException{
         if (email == null || employeeRepository.findByEmail(email) == null) {
             throw new EmployeeNotFoundException();
@@ -101,12 +93,13 @@ public class EmployeeService {
         return employeeDTOs;
     }
 
-    // List employees with expired DHS_Forms and only shows those access groups
+    // List employees with expired DHS_Forms
     public List<EmployeeDTO> findEmployeesWithExpiredDHSForms() throws NoEmployeesWithExpiredAccessGroupsException {
         LocalDate rightNow = LocalDate.now();
         if (employeeRepository.findEmployeesWithExpiredDHSForms(rightNow).size() == 0){
             throw new NoEmployeesWithExpiredAccessGroupsException();
         }
+
         List<Employee> employees = employeeRepository.findEmployeesWithExpiredDHSForms(rightNow).stream()
                 .distinct()
                 .collect(Collectors.toList());
@@ -126,7 +119,7 @@ public class EmployeeService {
         return employeeDTOs;
     }
 
-    // List employees with DHS_Forms that are about to expire
+    // List employees with soon-to-be expired DHS_Forms
     public List<EmployeeDTO> findEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() throws NoEmployeesWithSoonToBeExpiredAccessGroupsException {
         LocalDate rightNow = LocalDate.now();
         LocalDate oneMonth = rightNow.plusMonths(1);
@@ -152,23 +145,7 @@ public class EmployeeService {
         return employeeDTOs;
     }
 
-//    public List<EmployeeDTO> findByAccessGroupID(Long accessGroupID) throws EmployeeNotFoundException{
-//        if (employeeAccessGroupRepository.findAllByAccessGroup_ID(accessGroupID) == null) {
-//            throw new EmployeeNotFoundException();
-//        }
-//        List<EmployeeAccessGroup> employeeAccessGroups = employeeAccessGroupRepository.findAllByAccessGroup_ID(accessGroupID);
-//        List<Employee> employees = new ArrayList<>();
-//        for (EmployeeAccessGroup employeeAccessGroup : employeeAccessGroups) {
-//            employees.add(employeeRepository.findByEmployeeAccessGroupsContaining(employeeAccessGroup));
-//        }
-//        ArrayList employeeDTOs = new ArrayList();
-//        for (Employee employee : employees) {
-//            employeeDTOs.add(convertToDto(employee));
-//        }
-//        return employeeDTOs;
-//    }
-
-    // Update operation
+    // Update
     public EmployeeDTO updateEmployee(Employee employee, Long ID) {
         Employee depDB = employeeRepository.findById(ID).get();
 
@@ -187,7 +164,7 @@ public class EmployeeService {
         return convertToDto(employeeRepository.save(depDB));
     }
 
-    // Delete operation
+    // Delete
     public void deleteEmployeeById(Long ID) {
         employeeRepository.deleteById(ID);
     }

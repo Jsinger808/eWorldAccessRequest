@@ -1,0 +1,17 @@
+# eWorldES Employee Access Tracking Service
+
+A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and Business Analysts at eWorldES update, add, and track the DHS access of all eWorldES employees across many DHS projects. 
+
+
+Goals: \
+Replace the current tracking system in which the DHS access PDFs are stored in a SharePoint and cannot be queried \
+Reduce back-and-forth between DHS Internal Access Coordinators and Project Managers/Business Analysts \
+Improve programming skills
+
+
+Personal note: \
+First Spring Boot project \
+First project with Unit & Integration Tests\
+First project with DTOs\
+
+Created by an Internal Access Coordinator as a side project.

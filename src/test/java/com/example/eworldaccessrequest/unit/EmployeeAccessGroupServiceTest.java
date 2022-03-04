@@ -22,9 +22,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import static org.mockito.Mockito.times;
 
 @SpringBootTest
 public class EmployeeAccessGroupServiceTest {
@@ -36,9 +37,6 @@ public class EmployeeAccessGroupServiceTest {
 
     @Mock
     private EmployeeAccessGroupRepository employeeAccessGroupRepository;
-
-    @Mock
-    private EmployeeRepository employeeRepository;
 
     @InjectMocks
     EmployeeAccessGroupService employeeAccessGroupService = new EmployeeAccessGroupService();
@@ -125,5 +123,30 @@ public class EmployeeAccessGroupServiceTest {
         Assert.assertEquals(actualUpdatedDTO.getAccessGroupDTO(), accessGroupUpdatedDTO);
         Assert.assertEquals(actualUpdatedDTO.getExpiration(), null);
 
+    }
+
+    @Test (expected = EmptyStringException.class)
+    public void WhenSaveEmployeeAccessGroup_GivenEmployeeWithEmptyFullName_ShouldThrowEmptyStringException() throws EmptyStringException {
+
+        Employee employee = new Employee(randomNumber, "", "BUGGIRL@GMAIL.COM", true, true, new ArrayList<>());
+        AccessGroup accessGroup = new AccessGroup(randomNumber2, "Test-AD", "AD", new ArrayList<>());
+        EmployeeAccessGroup actual = new EmployeeAccessGroup(randomNumber, employee, accessGroup, null);
+        ArrayList<EmployeeAccessGroup> employeeAccessGroupArrayList = new ArrayList<EmployeeAccessGroup>();
+        employeeAccessGroupArrayList.add(actual);
+
+        Mockito.doReturn(actual).when(employeeAccessGroupRepository).save(actual);
+
+        EmployeeAccessGroupDTO actualDTO = employeeAccessGroupService.saveEmployeeAccessGroup(actual);
+        employee.setEmployeeAccessGroups(employeeAccessGroupArrayList);
+
+        EmployeeDTO employeeDTO = employeeService.convertToDto(employee);
+        AccessGroupDTO accessGroupDTO = accessGroupService.convertToDto(accessGroup);
+
+        Mockito.verify(employeeAccessGroupRepository, times(0)).save(actual);
+        Assert.assertEquals(null, actualDTO.getExpiration());
+        Assert.assertEquals(accessGroupDTO, actualDTO.getAccessGroupDTO());
+        Assert.assertEquals(actual.getEmployee(), employee);
+        Assert.assertEquals(actual.getAccessGroup(), accessGroup);
+        Assert.assertTrue(employeeDTO.getEmployeeAccessGroupDTOs().contains(actualDTO));
     }
 }
