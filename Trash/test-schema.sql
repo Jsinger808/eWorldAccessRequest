@@ -1,6 +1,6 @@
 -- INSERT INTO employee VALUES (1,'Burger SMITH','Burgersmith@eworldes.com',true,true);
 
-SELECT * FROM EMPLOYEE;
+-- SELECT * FROM EMPLOYEE;
 
 -- DROP TABLE IF EXISTS `employee`;
 -- CREATE TABLE `Employee` (
