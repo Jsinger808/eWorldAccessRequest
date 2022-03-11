@@ -2,7 +2,6 @@ package com.example.eworldaccessrequest.unit;
 
 import com.example.eworldaccessrequest.dto.AccessGroupDTO;
 import com.example.eworldaccessrequest.entity.AccessGroup;
-import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.EmptyStringException;
 import com.example.eworldaccessrequest.exception.InvalidAccessGroupTypeException;
 import com.example.eworldaccessrequest.repository.AccessGroupRepository;

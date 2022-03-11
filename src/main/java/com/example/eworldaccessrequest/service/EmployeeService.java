@@ -4,7 +4,6 @@ import com.example.eworldaccessrequest.dto.EmployeeDTO;
 import com.example.eworldaccessrequest.entity.Employee;
 import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.*;
-import com.example.eworldaccessrequest.repository.EmployeeAccessGroupRepository;
 import com.example.eworldaccessrequest.repository.EmployeeRepository;
 
 import java.time.LocalDate;
@@ -23,6 +22,14 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+//    @Autowired
+//    private final EmployeeRepository employeeRepository;
+//
+//    public EmployeeService(EmployeeRepository employeeRepository) {
+//        this.employeeRepository = employeeRepository;
+//    }
+
 
     // DTO Converter
     public EmployeeDTO convertToDto(Employee employee) {

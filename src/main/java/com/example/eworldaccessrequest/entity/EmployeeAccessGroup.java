@@ -39,6 +39,7 @@ public class EmployeeAccessGroup {
     @Column(name = "EXPIRATION")
     private LocalDate expiration;
 
+    @Override
     public String toString() {
         return "ID: " + this.ID + ", Name: " + this.getEmployee().getID() + ", Type: " + this.getAccessGroup().getID();
     }

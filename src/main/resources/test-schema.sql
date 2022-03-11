@@ -1,0 +1,36 @@
+-- INSERT INTO employee VALUES (1,'Burger SMITH','Burgersmith@eworldes.com',true,true);
+
+SELECT * FROM EMPLOYEE;
+
+-- DROP TABLE IF EXISTS `employee`;
+-- CREATE TABLE `Employee` (
+-- --         ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE ,
+-- --         FULL_NAME VARCHAR(200) NOT NULL,
+-- --         EMAIL VARCHAR(60) NOT NULL UNIQUE,
+-- --         OFFSHORE BOOLEAN NOT NULL,
+-- --         BES BOOLEAN NOT NULL
+-- );
+-- --     UNIQUE KEY `employee_id_UNIQUE` (`ID`),
+-- --     UNIQUE KEY `eWorld_email_UNIQUE` (`EMAIL`)
+--
+--
+-- -- DROP TABLE IF EXISTS `access_group`;
+-- -- CREATE TABLE IF NOT EXISTS `access_group` (
+-- --     `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
+-- --     `NAME` varchar(100) NOT NULL,
+-- --     `TYPE` varchar(100) NOT NULL,
+-- --     CONSTRAINT access_group UNIQUE (`NAME`,`TYPE`)
+-- -- );
+--
+-- -- DROP TABLE IF EXISTS `employee_access_group`;
+-- -- CREATE TABLE IF NOT EXISTS `employee_access_group` (
+-- --      `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT UNIQUE,
+-- --      `EMPLOYEE_ID` int NOT NULL,
+-- --      `ACCESS_GROUP_ID` int NOT NULL,
+-- --      `EXPIRATION` date DEFAULT NULL,
+-- -- --      UNIQUE KEY `EMPLOYEE_ID` (`EMPLOYEE_ID`,`ACCESS_GROUP_ID`),
+-- --      CONSTRAINT  employee_access_group UNIQUE (`EMPLOYEE_ID`,`ACCESS_GROUP_ID`),
+-- -- --      UNIQUE KEY `ID` (`ID`),
+-- --      CONSTRAINT `employee_access_group` FOREIGN KEY (`EMPLOYEE_ID`) REFERENCES `employee` (`ID`),
+-- --      CONSTRAINT `employee_access_group` FOREIGN KEY (`ACCESS_GROUP_ID`) REFERENCES `access_group` (`ID`)
+-- -- );

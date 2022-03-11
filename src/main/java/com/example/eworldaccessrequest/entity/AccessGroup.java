@@ -35,6 +35,7 @@ public class AccessGroup {
     @OneToMany(mappedBy = "accessGroup", cascade = CascadeType.ALL)
     List<EmployeeAccessGroup> employeeAccessGroups;
 
+    @Override
     public String toString() {
         return "ID: " + this.ID + ", Name: " + this.name + ", Type: " + this.type;
     }

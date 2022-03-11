@@ -39,9 +39,19 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     List<EmployeeAccessGroup> employeeAccessGroups;
 
+    public Employee(String fullName, String email, boolean offshore, boolean bes, List<EmployeeAccessGroup> employeeAccessGroups) {
+        this.fullName = fullName;
+        this.email = email;
+        this.offshore = offshore;
+        this.bes = bes;
+        this.employeeAccessGroups = employeeAccessGroups;
+    }
 
+    @Override
     public String toString() {
         return "ID: " + this.ID + ", Full Name: " + this.fullName + ", Email: " + this.email + ", Offshore: " + this.offshore + ", BES: " + this.bes;
     }
+
+
 }
 

@@ -1,62 +1,213 @@
-//
-//package com.example.eworldaccessrequest.integration;
-//
-//import com.example.eworldaccessrequest.controller.AccessController;
-//import com.example.eworldaccessrequest.service.EmployeeService;
-//import com.example.eworldaccessrequest.service.AccessGroupService;
-//import com.example.eworldaccessrequest.service.EmployeeAccessGroupService;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import org.junit.Assert;
-//import org.junit.Before;
-//import org.junit.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.MvcResult;
-//import org.springframework.test.web.servlet.RequestBuilder;
-//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-//import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-//import org.springframework.web.context.WebApplicationContext;
-//
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//
-//@SpringBootTest
+
+package com.example.eworldaccessrequest.integration;
+
+import com.example.eworldaccessrequest.EWorldAccessRequestApplication;
+import com.example.eworldaccessrequest.controller.AccessController;
+import com.example.eworldaccessrequest.dto.EmployeeDTO;
+import com.example.eworldaccessrequest.entity.Employee;
+import com.example.eworldaccessrequest.exception.AccessExceptionController;
+import com.example.eworldaccessrequest.exception.InvalidAccessGroupTypeException;
+import com.example.eworldaccessrequest.service.EmployeeService;
+import com.example.eworldaccessrequest.service.AccessGroupService;
+import com.example.eworldaccessrequest.service.EmployeeAccessGroupService;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.RandomUtils;
+import org.hamcrest.Matchers;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.*;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest(classes = EWorldAccessRequestApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
+//@Transactional
+//@TestExecutionListeners({
+//        DependencyInjectionTestExecutionListener.class,
+//        DirtiesContextTestExecutionListener.class,
+//        TransactionalTestExecutionListener.class,
+//        DbUnitTestExecutionListener.class
+//})
 //@WebMvcTest(AccessController.class)
-//public class AccessControllerIntegrationTest {
-//
-//    @Autowired
-//    private MockMvc mvc;
-//
-//    @Autowired
-//    private ObjectMapper objectMapper;
-//
-//    @Autowired
-//    private EmployeeService employeeService;
-//    @Autowired
-//    private AccessGroupService accessGroupService;
-//    @Autowired
-//    private EmployeeAccessGroupService employeeAccessGroupService;
-//    @Autowired
-//    private WebApplicationContext context;
-//
-//    @Before
-//    public void setup() {
-//        mvc = MockMvcBuilders
-//                .webAppContextSetup(context)
-//                .build();
-//    }
-//
-//    @Test
-//    public void WhenGetEmployees_ShouldStatus200() throws Exception {
-//
-//        RequestBuilder request = MockMvcRequestBuilders.get("/access/employee/");
-//        MvcResult result = mvc.perform(request).andExpect(status().isOk()).andReturn();
-
-//        EmployeeService employeeService = new EmployeeService(employeeService);
+@AutoConfigureMockMvc
+@TestPropertySource("classpath:/application-test.properties")
+public class AccessControllerIntegrationTest {
 
 
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private EmployeeService employeeService;
+    @Autowired
+    private AccessGroupService accessGroupService;
+    @Autowired
+    private EmployeeAccessGroupService employeeAccessGroupService;
+    @Autowired
+    private AccessController accessController;
+    @Autowired
+    private ObjectMapper objectMapper;
+
+
+    Long randomNumber = RandomUtils.nextLong(0, 30);
+    Long randomNumber2 = RandomUtils.nextLong(30, 60);
+
+
+    @Test
+    public void  WhenPostEmployee_ShouldStatus200() throws Exception {
+
+        Employee expected = new Employee("Johnny Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>());
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/v1/access/employee")
+                                .content(asJsonString(expected))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/v1/access/employee")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].fullName", Matchers.is("Johnny Smith")));
+
+    }
+
+    @Test
+    public void WhenPostDuplicateEmployee_ShouldThrowDataIntegrityViolationException() throws Exception {
+
+        Employee expected = new Employee("Johnny Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>());
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/v1/access/employee")
+                                .content(asJsonString(expected))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/v1/access/employee")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].fullName").exists());
+
+        Employee expected2 = new Employee(randomNumber, "Johnny Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>());
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/v1/access/employee")
+                                .content(asJsonString(expected2))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isConflict())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof DataIntegrityViolationException))
+                .andExpect(content().string("Duplicate entry."));
+
+    }
+
+
+
+
+    @Test
+    public void WhenUpdateEmployees_ShouldStatus200() throws Exception {
+        Employee expected = new Employee(randomNumber, "Johnny Smith", "johnnysmith@eworldes.com", true, true, new ArrayList<>());
+
+        MvcResult result = mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/v1/access/employee")
+                                .content(asJsonString(expected))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                        .andReturn();
+
+        String contentAsString = result.getResponse().getContentAsString();
+        EmployeeDTO employeeDTO = objectMapper.readValue(contentAsString, EmployeeDTO.class);
+
+        System.out.println(employeeDTO);
+
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/v1/access/employee")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].fullName").exists());
+
+        expected.setFullName("Formerly-Johnny Smith");
+        expected.setEmail("formerllyjohnnysmith@eworldes.com");
+        expected.setBes(false);
+        expected.setOffshore(false);
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put("/api/v1/access/employee/" + employeeDTO.getID())
+                                .content(asJsonString(expected))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/v1/access/employee")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].fullName").exists());
+
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+//                    .andExpect(MockMvcResultMatchers.jsonPath("$.[*]").exists());
+
+//
+//            System.out.println(employeeService.fetchEmployeeList());
+//
+//            Assert.assertEquals(accessController., mvcResult);
+
+
+
+//        MvcResult result = mvc.perform(
+//                MockMvcRequestBuilders.get("api/v1/access/employee")
+//                        .accept(MediaType.APPLICATION_JSON)
+//        ).andReturn();
+//
+//
 //        Assert.assertEquals(employeeService.fetchEmployeeList(), result);
 //    }
 ////EMPLOYEE Table
@@ -174,4 +325,4 @@
 //        employeeAccessGroupService.deleteEmployeeAccessGroupById(ID);
 //        return "Deleted Successfully";
 //    }
-//}
+}

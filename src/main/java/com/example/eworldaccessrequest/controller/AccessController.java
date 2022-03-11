@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/access/")
+@RequestMapping("/api/v1/access/")
 public class AccessController {
 
 

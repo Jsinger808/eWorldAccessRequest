@@ -1,11 +1,7 @@
 package com.example.eworldaccessrequest.service;
 
 import com.example.eworldaccessrequest.dto.AccessGroupDTO;
-import com.example.eworldaccessrequest.dto.EmployeeAccessGroupDTO;
-import com.example.eworldaccessrequest.dto.EmployeeDTO;
 import com.example.eworldaccessrequest.entity.AccessGroup;
-import com.example.eworldaccessrequest.entity.Employee;
-import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.EmptyStringException;
 import com.example.eworldaccessrequest.exception.InvalidAccessGroupTypeException;
 import com.example.eworldaccessrequest.repository.AccessGroupRepository;
@@ -24,6 +20,12 @@ public class AccessGroupService {
 
     @Autowired
     private AccessGroupRepository accessGroupRepository;
+
+//    private final AccessGroupRepository accessGroupRepository;
+//
+//    public AccessGroupService(AccessGroupRepository accessGroupRepository) {
+//        this.accessGroupRepository = accessGroupRepository;
+//    }
 
     // DTO Converter
     public static AccessGroupDTO convertToDto(AccessGroup accessGroup) {

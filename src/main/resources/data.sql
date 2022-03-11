@@ -1,0 +1,8 @@
+-- # LOCK TABLES `employee` WRITE;
+-- #
+-- # INSERT INTO `employee` VALUES (1,'JOHN SMITH','Johnsmith@eworldes.com',1,1),(2,'JANE SMITH','Janesmith@eworldes.com',1,0),(4,'Donkey Boy','donkeyboy@eworldes.com',1,0),(13,'Worm Child','wormchild@eworldes.com',1,0),(17,'Worm Child2','wormchild2@eworldes.com',1,0),(33,'Jumanji World','joshuasinger@eworldes.com',1,0),(37,'Marble','marcheebpoy@eworldes.com',1,1),(39,'Another Test','atest@eworldes.com',1,1),(40,'Another Test2','atest2@eworldes.com',1,1),(41,'Another Test3','atest3@eworldes.com',1,1),(42,'Another Test4','atest4@eworldes.com',1,1),(44,'Johnny Smith','johnnysmith@eworldes.com',1,1);
+--
+--
+-- INSERT INTO `EMPLOYEE` VALUES (1,'Burger SMITH','Burgersmith@eworldes.com',true,true);
+-- # UNLOCK TABLES;
+-- # /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
