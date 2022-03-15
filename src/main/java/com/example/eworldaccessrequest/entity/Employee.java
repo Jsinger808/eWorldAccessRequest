@@ -1,5 +1,8 @@
 package com.example.eworldaccessrequest.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,6 +40,10 @@ public class Employee {
     private boolean bes;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
+    @JsonBackReference
+    @JsonManagedReference
     List<EmployeeAccessGroup> employeeAccessGroups;
 
     public Employee(String fullName, String email, boolean offshore, boolean bes, List<EmployeeAccessGroup> employeeAccessGroups) {

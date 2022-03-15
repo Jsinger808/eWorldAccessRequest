@@ -62,6 +62,14 @@ public class EmployeeService {
         employee.setEmail(employee.getEmail().toLowerCase());
         employee.setFullName(WordUtils.capitalize(employee.getFullName().toLowerCase()));
 
+        //        if (employee.getEmployeeAccessGroups() != null) {
+//            for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
+//                employeeAccessGroup.setAccessGroup(
+//                        accessGroupRepository.findById(employeeAccessGroup.getAccessGroup().getID()).get()
+//                );
+//            }
+//        }
+
         if (!employee.getEmail().contains("@eworldes.com")) {
             throw new InvalidEmailException();
         }

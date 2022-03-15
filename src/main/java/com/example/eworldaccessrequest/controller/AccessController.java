@@ -52,7 +52,6 @@ public class AccessController {
         return employeeService.fetchEmployeeByEmail(email);
     }
 
-
     // Find All Employees With Specific Access Group
     @GetMapping("/employee/accessGroup/{accessGroupID}")
     public List<EmployeeDTO> fetchEmployeesByAccessGroupID(@PathVariable("accessGroupID") Long accessGroupID) {
