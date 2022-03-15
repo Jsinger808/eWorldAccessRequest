@@ -36,16 +36,15 @@ public class EmployeeAccessGroup {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "EMPLOYEE_ID")
+//    @JsonBackReference
+//    @JsonManagedReference
     @JsonIgnore
-    @JsonBackReference
-    @JsonManagedReference
     private Employee employee;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "ACCESS_GROUP_ID")
-    @JsonIgnore
-    @JsonBackReference
-    @JsonManagedReference
+//    @JsonBackReference
+//    @JsonManagedReference
     private AccessGroup accessGroup;
 
     @Column(name = "EXPIRATION")
@@ -78,10 +77,10 @@ public class EmployeeAccessGroup {
 //    }
 
 
-    @Override
-    public String toString() {
-        return "ID: " + this.ID + ", Name: " + this.getEmployee().getID() + ", Type: " + this.getAccessGroup().getID();
-    }
+//    @Override
+//    public String toString() {
+//        return "ID: " + this.ID + ", Name: " + this.getEmployee().getID() + ", Type: " + this.getAccessGroup().getID();
+//    }
 
 
 }

@@ -41,9 +41,9 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 //    @OneToMany(mappedBy = "employee")
-    @JsonIgnore
-    @JsonBackReference
-    @JsonManagedReference
+//    @JsonIgnore
+//    @JsonBackReference
+//    @JsonManagedReference
     List<EmployeeAccessGroup> employeeAccessGroups;
 
     public Employee(String fullName, String email, boolean offshore, boolean bes, List<EmployeeAccessGroup> employeeAccessGroups) {

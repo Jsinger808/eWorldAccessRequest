@@ -46,7 +46,7 @@ import java.util.Set;
 
 
 import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -161,6 +161,36 @@ public class AccessControllerIntegrationTest {
 
     }
 
+    @Test
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+    public void WhenPostEmployee_GivenEmployeeWithEmployeeAccessGroup_ShouldStatus200() throws Exception {
+
+        Employee expectedEmployee = new Employee((long) 1,"Johnny Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>());
+
+        AccessGroup expectedAccessGroup = new AccessGroup((long) 1, "Test-DHS_FORM", "DHS_FORM", new ArrayList<>());
+
+        mockMvc.perform(post("/api/v1/access/access_group")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedAccessGroup)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        LocalDate rightNow = LocalDate.now();
+        rightNow.toString();
+
+        EmployeeAccessGroup expectedEmployeeAccessGroup = new EmployeeAccessGroup((long) 1, expectedEmployee, expectedAccessGroup, rightNow);
+
+        expectedEmployee.getEmployeeAccessGroups().add(expectedEmployeeAccessGroup);
+
+        mockMvc.perform(post("/api/v1/access/employee")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedEmployee)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeAccessGroupDTOs.[0].expiration", Matchers.is(rightNow.toString())));
+    }
+
     //Gets
     @Test
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -201,10 +231,46 @@ public class AccessControllerIntegrationTest {
 
     }
 
+    @Test
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+    public void WhenGetEmployeeByExpired_GivenEmployeeWithPastExpirationDate_ShouldReturnEmployeeWithStatus200() throws Exception {
+
+        Employee expectedEmployee = new Employee((long) 1, "Johnny Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>());
+
+        AccessGroup expectedAccessGroup = new AccessGroup((long) 1, "Test-DHS_FORM", "DHS_FORM", new ArrayList<>());
+
+        mockMvc.perform(post("/api/v1/access/access_group")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedAccessGroup)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        LocalDate rightNow = LocalDate.now();
+        LocalDate monthAgo = rightNow.minusMonths(1);
+
+        EmployeeAccessGroup expectedEmployeeAccessGroup = new EmployeeAccessGroup((long) 1, expectedEmployee, expectedAccessGroup, monthAgo);
+
+        expectedEmployee.getEmployeeAccessGroups().add(expectedEmployeeAccessGroup);
+
+        mockMvc.perform(post("/api/v1/access/employee")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedEmployee)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/v1/access/employee/expired")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedEmployee)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].employeeAccessGroupDTOs.[0].expiration", Matchers.is(monthAgo.toString())));
+    }
+
     //Puts
     @Test
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-    public void WhenUpdateEmployee_GivenNewValuesForEverything_ShouldStatus200() throws Exception {
+    public void WhenPutEmployee_GivenNewValuesForEverything_ShouldStatus200() throws Exception {
         Employee expected = new Employee(randomNumber, "Johnny Smith", "johnnysmith@eworldes.com", true, true, new ArrayList<>());
 
         MvcResult result = mockMvc.perform(
@@ -233,7 +299,7 @@ public class AccessControllerIntegrationTest {
         expected.setOffshore(false);
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.put("/api/v1/access/employee/" + employeeDTO.getID())
+                        put("/api/v1/access/employee/" + employeeDTO.getID())
                                 .content(asJsonString(expected))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -252,7 +318,7 @@ public class AccessControllerIntegrationTest {
 
     @Test
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-    public void WhenUpdateEmployee_GivenEmployeeWithEmptyNameAndEmployee_ShouldKeepPreviousValuesWithStatus200() throws Exception {
+    public void WhenPutEmployee_GivenEmployeeWithEmptyNameAndEmployee_ShouldKeepPreviousValuesWithStatus200() throws Exception {
         Employee expected = new Employee(randomNumber, "Johnny Smith", "johnnysmith@eworldes.com",
                 true, true, new ArrayList<>());
 
@@ -274,7 +340,7 @@ public class AccessControllerIntegrationTest {
         expected.setOffshore(false);
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.put("/api/v1/access/employee/" + employeeDTO.getID())
+                        put("/api/v1/access/employee/" + employeeDTO.getID())
                                 .content(asJsonString(expected))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -293,6 +359,91 @@ public class AccessControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].bes", Matchers.is(false)));
 
     }
+
+    @Test
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+    public void WhenPutEmployee_GivenEmployeeWithSameEmail_ShouldThrowDataIntegrityViolationException() throws Exception {
+
+        Employee expected = new Employee("Johnny Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>());
+        mockMvc.perform(
+                        post("/api/v1/access/employee")
+                                .content(asJsonString(expected))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk());
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/v1/access/employee")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].fullName").exists());
+
+        Employee expected2 = new Employee(randomNumber, "Frank Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>());
+
+        mockMvc.perform(
+                        post("/api/v1/access/employee")
+                                .content(asJsonString(expected2))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isConflict())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof DataIntegrityViolationException))
+                .andExpect(content().string("Duplicate entry."));
+
+    }
+
+    @Test
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+    public void WhenPutEmployee_GivenEmployeeWithUpdatedEmployeeAccessGroup_ShouldUpdateWithStatus200() throws Exception {
+
+        Employee expectedEmployee = new Employee((long) 1,"Johnny Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>());
+
+        AccessGroup expectedAccessGroup = new AccessGroup((long) 1, "Test-DHS_FORM", "DHS_FORM", new ArrayList<>());
+        AccessGroup expectedAccessGroup2 = new AccessGroup((long) 2, "Test-AD Group", "AD", new ArrayList<>());
+
+        mockMvc.perform(post("/api/v1/access/access_group")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedAccessGroup)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/api/v1/access/access_group")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedAccessGroup2)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        LocalDate rightNow = LocalDate.now();
+        rightNow.toString();
+
+        EmployeeAccessGroup expectedEmployeeAccessGroup = new EmployeeAccessGroup((long) 1, expectedEmployee, expectedAccessGroup, rightNow);
+        expectedEmployee.getEmployeeAccessGroups().add(expectedEmployeeAccessGroup);
+
+        mockMvc.perform(post("/api/v1/access/employee")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedEmployee)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeAccessGroupDTOs.[0].expiration", Matchers.is(rightNow.toString())));
+
+        EmployeeAccessGroup expectedEmployeeAccessGroup2 = new EmployeeAccessGroup((long) 2, expectedEmployee, expectedAccessGroup2, rightNow);
+        expectedEmployee.getEmployeeAccessGroups().add(expectedEmployeeAccessGroup2);
+
+        mockMvc.perform(put("/api/v1/access/employee/" + 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedEmployee)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeAccessGroupDTOs.[1].accessGroupDTO.name", Matchers.is("Test-AD Group")))
+                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeeAccessGroupDTOs.[1].expiration", Matchers.nullValue()));
+    }
+
 
     //Deletes
     @Test
@@ -407,7 +558,7 @@ public class AccessControllerIntegrationTest {
         expected.setType("SECURELINK");
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.put("/api/v1/access/access_group/" + accessGroupDTO.getID())
+                        put("/api/v1/access/access_group/" + accessGroupDTO.getID())
                                 .content(asJsonString(expected))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -445,59 +596,6 @@ public class AccessControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Deleted Successfully"));
 
-    }
-
-//EmployeeAccessGroup APIs
-
-    //Posts
-    @Test
-    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-    public void  WhenPostEmployeeAccessGroup_GivenNormalEmployeeAndAccessGroup_ShouldStatus200() throws Exception {
-
-        Employee expectedEmployee = new Employee("Johnny Smith", "johnnysmith@eworldes.com",
-                true, true, new ArrayList<>());
-
-//        MvcResult resultEmployee = mockMvc.perform(
-//                        post("/api/v1/access/employee")
-//                                .content(asJsonString(expectedEmployee))
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .accept(MediaType.APPLICATION_JSON)
-//                )
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//        String contentAsString = resultEmployee.getResponse().getContentAsString();
-//        EmployeeDTO employeeDTO = objectMapper.readValue(contentAsString, EmployeeDTO.class);
-
-        AccessGroup expectedAccessGroup = new AccessGroup("Test-DHS_FORM", "DHS_FORM", new ArrayList<>());
-
-
-//        MvcResult resultAccessGroup = mockMvc.perform(
-//                        post("/api/v1/access/access_group")
-//                                .content(asJsonString(expectedAccessGroup))
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .accept(MediaType.APPLICATION_JSON)
-//                )
-//                .andExpect(status().isOk())
-//                .andReturn();
-
-//        contentAsString = resultAccessGroup.getResponse().getContentAsString();
-//        AccessGroupDTO accessGroupDTO = objectMapper.readValue(contentAsString, AccessGroupDTO.class);
-
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Test-AD")))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.type", Matchers.is("AD")));
-
-        LocalDate rightNow = LocalDate.now();
-        rightNow.toString();
-
-        EmployeeAccessGroup expectedEmployeeAccessGroup = new EmployeeAccessGroup(randomNumber, expectedEmployee, expectedAccessGroup, rightNow);
-
-        mockMvc.perform(post("/api/v1/access/employee_access_group")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedEmployeeAccessGroup)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.expiration", Matchers.is(rightNow.toString())));
     }
 
     public static String asJsonString(final Object obj) {

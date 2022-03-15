@@ -4,6 +4,8 @@ import com.example.eworldaccessrequest.dto.EmployeeDTO;
 import com.example.eworldaccessrequest.entity.Employee;
 import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
 import com.example.eworldaccessrequest.exception.*;
+import com.example.eworldaccessrequest.repository.AccessGroupRepository;
+import com.example.eworldaccessrequest.repository.EmployeeAccessGroupRepository;
 import com.example.eworldaccessrequest.repository.EmployeeRepository;
 
 import java.time.LocalDate;
@@ -22,6 +24,12 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private AccessGroupRepository accessGroupRepository;
+
+    @Autowired
+    private EmployeeAccessGroupRepository employeeAccessGroupRepository;
 
 //    @Autowired
 //    private final EmployeeRepository employeeRepository;
@@ -62,13 +70,16 @@ public class EmployeeService {
         employee.setEmail(employee.getEmail().toLowerCase());
         employee.setFullName(WordUtils.capitalize(employee.getFullName().toLowerCase()));
 
-        //        if (employee.getEmployeeAccessGroups() != null) {
-//            for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
-//                employeeAccessGroup.setAccessGroup(
-//                        accessGroupRepository.findById(employeeAccessGroup.getAccessGroup().getID()).get()
-//                );
-//            }
-//        }
+        if (employee.getEmployeeAccessGroups() != null) {
+            for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
+                employeeAccessGroup.setAccessGroup(accessGroupRepository.findById(employeeAccessGroup.getAccessGroup().getID()).get());
+                employeeAccessGroup.setEmployee(employee);
+                if (!employeeAccessGroup.getAccessGroup().getType().equals("DHS_FORM")) {
+                    employeeAccessGroup.setExpiration(null);
+                }
+                employeeAccessGroupRepository.save(employeeAccessGroup);
+            }
+        }
 
         if (!employee.getEmail().contains("@eworldes.com")) {
             throw new InvalidEmailException();
@@ -146,6 +157,17 @@ public class EmployeeService {
 
         if (Objects.nonNull(employee.getEmail()) && !"".equalsIgnoreCase(employee.getEmail()) && employee.getEmail().contains("@eworldes.com")) {
             depDB.setEmail(employee.getEmail().toLowerCase());
+        }
+
+        if (employee.getEmployeeAccessGroups() != null) {
+            for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
+                employeeAccessGroup.setAccessGroup(accessGroupRepository.findById(employeeAccessGroup.getAccessGroup().getID()).get());
+                employeeAccessGroup.setEmployee(employee);
+                if (!employeeAccessGroup.getAccessGroup().getType().equals("DHS_FORM")) {
+                    employeeAccessGroup.setExpiration(null);
+                }
+                employeeAccessGroupRepository.save(employeeAccessGroup);
+            }
         }
 
         depDB.setOffshore(employee.isOffshore());
