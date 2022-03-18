@@ -113,27 +113,27 @@ public class AccessController {
 //EMPLOYEE_ACCESS_GROUP Table
 
     // Save operation
-    @PostMapping("/employee_access_group")
-    public EmployeeAccessGroupDTO saveEmployeeAccessGroup(@Valid @RequestBody EmployeeAccessGroup employeeAccessGroup) {
-        return employeeAccessGroupService.saveEmployeeAccessGroup(employeeAccessGroup);
-    }
+//    @PostMapping("/employee_access_group")
+//    public EmployeeAccessGroupDTO saveEmployeeAccessGroup(@Valid @RequestBody EmployeeAccessGroup employeeAccessGroup) {
+//        return employeeAccessGroupService.saveEmployeeAccessGroup(employeeAccessGroup);
+//    }
 
     // Read operation
-    @GetMapping("/employee_access_group")
-    public List<EmployeeAccessGroupDTO> fetchEmployeeAccessGroupList() {
-        return employeeAccessGroupService.fetchEmployeeAccessGroupList();
-    }
-
-    // Update operation
-    @PutMapping("/employee_access_group/{id}")
-    public EmployeeAccessGroupDTO updateEmployeeAccessGroup(@RequestBody EmployeeAccessGroup employeeAccessGroup, @PathVariable("id") Long ID) {
-        return employeeAccessGroupService.updateEmployeeAccessGroup(employeeAccessGroup, ID);
-    }
-
-    // Delete operation
-    @DeleteMapping("/employee_access_group/{id}")
-    public String deleteEmployeeAccessGroupById(@PathVariable("id") Long ID) {
-        employeeAccessGroupService.deleteEmployeeAccessGroupById(ID);
-        return "Deleted Successfully";
-    }
+//    @GetMapping("/employee_access_group")
+//    public List<EmployeeAccessGroupDTO> fetchEmployeeAccessGroupList() {
+//        return employeeAccessGroupService.fetchEmployeeAccessGroupList();
+//    }
+//
+//    // Update operation
+//    @PutMapping("/employee_access_group/{id}")
+//    public EmployeeAccessGroupDTO updateEmployeeAccessGroup(@RequestBody EmployeeAccessGroup employeeAccessGroup, @PathVariable("id") Long ID) {
+//        return employeeAccessGroupService.updateEmployeeAccessGroup(employeeAccessGroup, ID);
+//    }
+//
+//    // Delete operation
+//    @DeleteMapping("/employee_access_group/{id}")
+//    public String deleteEmployeeAccessGroupById(@PathVariable("id") Long ID) {
+//        employeeAccessGroupService.deleteEmployeeAccessGroupById(ID);
+//        return "Deleted Successfully";
+//    }
 }

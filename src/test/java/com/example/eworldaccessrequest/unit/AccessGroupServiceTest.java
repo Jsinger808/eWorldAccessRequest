@@ -56,9 +56,9 @@ public class AccessGroupServiceTest {
     public void WhenSaveAccessGroup_GivenEmptyString_ShouldThrowEmptyStringException() throws EmptyStringException {
 
         AccessGroup expected = new AccessGroup(randomNumber, "", "AD", new ArrayList<>());
-        Mockito.doReturn(expected).when(accessGroupRepository).save(expected);
+        accessGroupService.saveAccessGroup(expected);
 
-        Mockito.verify(accessGroupRepository).save(expected);
+        Mockito.verify(accessGroupRepository, times(0)).save(expected);
 
     }
 
