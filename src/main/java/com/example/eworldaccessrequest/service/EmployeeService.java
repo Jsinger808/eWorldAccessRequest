@@ -88,7 +88,7 @@ public class EmployeeService {
         return convertToDto(employeeRepository.save(employee));
     }
 
-    // List all
+    // List all employees
     public List<EmployeeDTO> fetchEmployeeList() {
         List<Employee> employees = employeeRepository.findAll();
         ArrayList employeeDTOs = new ArrayList();

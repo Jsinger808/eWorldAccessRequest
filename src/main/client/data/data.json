@@ -1,0 +1,282 @@
+{
+  "data": [
+    {
+      "fullName": "JOHN SMITH",
+      "email": "Johnsmith@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "Inspire",
+            "type": "AD",
+            "id": 6
+          }
+        },
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "EDM_Prod_Admins",
+            "type": "AD",
+            "id": 7
+          }
+        },
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "EDM_Test_Admins",
+            "type": "AD",
+            "id": 8
+          }
+        },
+        {
+          "expiration": "1996-03-31",
+          "accessGroupDTO": {
+            "name": "ECF_Imagine_Solutions",
+            "type": "SECURELINK",
+            "id": 13
+          }
+        },
+        {
+          "expiration": "1996-12-31",
+          "accessGroupDTO": {
+            "name": "PST",
+            "type": "SECURELINK",
+            "id": 18
+          }
+        },
+        {
+          "expiration": "1996-01-31",
+          "accessGroupDTO": {
+            "name": "`HANA_M&O`",
+            "type": "SECURELINK",
+            "id": 20
+          }
+        }
+      ],
+      "id": 1
+    },
+    {
+      "fullName": "JANE SMITH",
+      "email": "Janesmith@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "Unisys_Loqate_Admin",
+            "type": "AD",
+            "id": 3
+          }
+        },
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "REPL3_Vormetric",
+            "type": "AD",
+            "id": 5
+          }
+        },
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "Inspire",
+            "type": "AD",
+            "id": 6
+          }
+        }
+      ],
+      "id": 2
+    },
+    {
+      "fullName": "Donkey Boy",
+      "email": "donkeyboy@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 4
+    },
+    {
+      "fullName": "Worm Child",
+      "email": "wormchild@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 13
+    },
+    {
+      "fullName": "Another Test4",
+      "email": "wormchild2@eworldes.com",
+      "bes": false,
+      "offshore": false,
+      "employeeAccessGroupDTOs": [
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "RRRRREEEE",
+            "type": "AD",
+            "id": 2
+          }
+        }
+      ],
+      "id": 17
+    },
+    {
+      "fullName": "Jumanji World",
+      "email": "joshuasinger@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 33
+    },
+    {
+      "fullName": "Marble",
+      "email": "marcheebpoy@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 37
+    },
+    {
+      "fullName": "Another Test",
+      "email": "atest@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 39
+    },
+    {
+      "fullName": "Another Test2",
+      "email": "atest2@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 40
+    },
+    {
+      "fullName": "Another Test3",
+      "email": "atest3@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 41
+    },
+    {
+      "fullName": "Another Test4",
+      "email": "atest4@eworldes.com",
+      "bes": false,
+      "offshore": false,
+      "employeeAccessGroupDTOs": [
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "RRRRREEEE",
+            "type": "AD",
+            "id": 2
+          }
+        },
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "Inspire",
+            "type": "AD",
+            "id": 6
+          }
+        },
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "TEST",
+            "type": "OUTLOOK_EMAIL",
+            "id": 29
+          }
+        },
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "POKER",
+            "type": "AD",
+            "id": 30
+          }
+        }
+      ],
+      "id": 42
+    },
+    {
+      "fullName": "Johnny Smith",
+      "email": "johnnysmith@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 44
+    },
+    {
+      "fullName": "Cross Test",
+      "email": "crosstest@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 46
+    },
+    {
+      "fullName": "Cross Test7",
+      "email": "crosstest7@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [
+        {
+          "expiration": "1996-03-31",
+          "accessGroupDTO": {
+            "name": "CAPS",
+            "type": "SECURELINK",
+            "id": 19
+          }
+        }
+      ],
+      "id": 47
+    },
+    {
+      "fullName": "Cross Test8",
+      "email": "crosstest8@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 48
+    },
+    {
+      "fullName": "Cross Test8",
+      "email": "crosstest9@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 50
+    },
+    {
+      "fullName": "Cross Test8",
+      "email": "crosstest10@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [],
+      "id": 53
+    },
+    {
+      "fullName": "Cross Test8",
+      "email": "bigtest@eworldes.com",
+      "bes": true,
+      "offshore": true,
+      "employeeAccessGroupDTOs": [
+        {
+          "expiration": null,
+          "accessGroupDTO": {
+            "name": "ECF_Imagine_Solutions",
+            "type": "SECURELINK",
+            "id": 13
+          }
+        }
+      ],
+      "id": 55
+    }
+  ]
+}
