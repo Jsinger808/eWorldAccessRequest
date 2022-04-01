@@ -1,18 +1,15 @@
 package com.example.eworldaccessrequest.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Optional;
 
 @Entity(name = "EmployeeAccessGroup")
 @Data
@@ -34,17 +31,15 @@ public class EmployeeAccessGroup {
 //    @Column(name = "ACCESS_GROUP_ID")
 //    private Long accessGroupID;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EMPLOYEE_ID")
-//    @JsonBackReference
-//    @JsonManagedReference
     @JsonIgnore
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private Employee employee;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ACCESS_GROUP_ID")
-//    @JsonBackReference
-//    @JsonManagedReference
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private AccessGroup accessGroup;
 
     @Column(name = "EXPIRATION")

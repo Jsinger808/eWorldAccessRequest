@@ -81,6 +81,10 @@ a.editor-create {
   margin-bottom: 0.5em;
 }
 
+.button-right {
+  text-align: right;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

@@ -1,101 +1,66 @@
 
-var editor;
 
 $(document).ready(function() {
 
-    // editor = new $.fn.dataTable.Editor( {
-    //     ajax: {
-    //         url: "http://localhost:8082/api/v1/access/employee/",
-    //         dataSrc: ""
-    //     },
-    //     table: "#example",
-    //     fields: [ {
-    //         "label": "Full Name:",
-    //         "name": "fullName"
-    //     }, {
-    //         "label": "Email:",
-    //         "name": "email"
-    //     }, {
-    //         "label": "BES:",
-    //         "name": "bes"
-    //     }, {
-    //         "label": "Offshore:",
-    //         "name": "offshore"
-    //     },
-    //         {
-    //         "label" : "Access Groups:",
-    //         "name": "employeeAccessGroupDTOs[, ].accessGroupDTO.name"
-    //         }
-    //     ]
-    // } );
-
-    // New record
-    $('a.editor-create').on('click', function (e) {
-        e.preventDefault();
-
-        editor.create( {
-            title: 'Create new record',
-            buttons: 'Add'
-        } );
-    } );
-
-    // Edit record
-    $('#example').on('click', 'td.editor-edit', function (e) {
-        e.preventDefault();
-
-        editor.edit( $(this).closest('tr'), {
-            title: 'Edit record',
-            buttons: 'Update'
-        } );
-    } );
-
-    // Delete a record
-    $('#example').on('click', 'td.editor-delete', function (e) {
-        e.preventDefault();
-
-        editor.remove( $(this).closest('tr'), {
-            title: 'Delete record',
-            message: 'Are you sure you wish to remove this record?',
-            buttons: 'Delete'
-        } );
-    } );
 
         $('#example').DataTable({
-            ajax: {
-                // url: "http://localhost:8082/api/v1/access/employee/",
-                // dataSrc: ""
-            },
             dom: 'Bfrtip',
             buttons: [
-                {
+                'copy', 'csv', 'excel', 'pdf', 'print',                 {
                     text: 'Add New Employee',
                     action: function ( e, dt, node, config ) {
-                        alert( 'Button activated' );
+                        document.location.href ="../html/employeeAdd.html";
                     }
                 }
             ],
+            ajax: {
+                url: "http://localhost:8082/api/v1/access/employee/",
+                dataSrc: ""
+            },
             "columns": [
                 { data : "fullName"},
                 { data : "email"},
                 { data : "bes"},
                 { data : "offshore"},
                 { data : "employeeAccessGroupDTOs[, ].accessGroupDTO.name"},
-                {
-                    data: null,
-                    className: "dt-center editor-edit",
-                    defaultContent: '<i class="fa fa-pencil"/>',
-                    orderable: false
-                },
-                {
-                    data: null,
-                    className: "dt-center editor-delete",
-                    defaultContent: '<i class="fa fa-trash"/>',
-                    orderable: false
-                }
-            ]
+                { render : function (data, type, row) {
+                    return '<button class="employee-addbtn" onclick="document.location.href=\'employeeAdd.html\';" >Update</button>';
+                    }}
+            ],
         })
+
 } );
 
+$(".employee-addbtn").on("click",function(){
+    document.location.href ="/html/employeeAdd.html";
+});
+
+
+// {
+//     data: null,
+//     className: "dt-center editor-edit",
+//     defaultContent: '<i class="fa fa-pencil"/>',
+//     orderable: false
+// },
+// {
+//     data: null,
+//     className: "dt-center editor-delete",
+//     defaultContent: '<i class="fa fa-trash"/>',
+//     orderable: false
+// }
+// var table = $('#myTable').DataTable();
+//
+// table.rows( { selected: true } ).data();
+// table.cells( { selected: true } ).data();
+//
+// $('#example').on( 'click', 'tbody tr', function () {
+//     if ( table.row( this, { selected: true } ).any() ) {
+//         table.row( this ).deselect();
+//     }
+//     else {
+//         table.row( this ).select();
+//     }
+// } );
 //
 //
 //

@@ -59,9 +59,10 @@ $(function() {
     });
 });
 
-$(function() {
-    $("#employee-addbtn").on("click",function(){
-        document.location.href ="html/employeeAdd.html";
-    });
-});
+
+// $(function() {
+//     $(".employee-addbtn").on("click",function(){
+//         document.location.href ="html/employeeAdd.html";
+//     });
+// });
 

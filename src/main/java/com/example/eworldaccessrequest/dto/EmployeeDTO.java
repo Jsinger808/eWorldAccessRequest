@@ -19,6 +19,8 @@ public class EmployeeDTO {
 
     private boolean offshore;
 
+    private List<Long> accessGroupIDs;
+
     private List<EmployeeAccessGroupDTO> employeeAccessGroupDTOs;
 
 

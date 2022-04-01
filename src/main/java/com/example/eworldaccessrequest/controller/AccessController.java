@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/access/")
-@CrossOrigin
+@CrossOrigin(origins = "http:://localhost:63342")
 public class AccessController {
 
 
@@ -37,8 +37,8 @@ public class AccessController {
 
     // Save operation
     @PostMapping("/employee")
-    public EmployeeDTO saveEmployee(@Valid @RequestBody Employee employee) {
-        return employeeService.saveEmployee(employee);
+    public EmployeeDTO saveEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.saveEmployee(employeeDTO);
     }
 
     // Read operation
@@ -73,8 +73,8 @@ public class AccessController {
     
     // Update operation
     @PutMapping("/employee/{id}")
-    public EmployeeDTO updateEmployee(@RequestBody Employee employee, @PathVariable("id") Long ID) {
-        return employeeService.updateEmployee(employee, ID);
+    public EmployeeDTO updateEmployee(@RequestBody EmployeeDTO employeeDTO, @PathVariable("id") Long ID) {
+        return employeeService.updateEmployee(employeeDTO, ID);
     }
 
     // Delete operation
