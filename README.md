@@ -15,9 +15,9 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 - AWS (not started)
 
 ## Screenshots
-##### POST Request formats fullName & email field and returns detailed descriptions of assigned Access Groups:
+##### POST Request formats fullName & email fields and returns detailed descriptions of assigned Access Groups:
   
-* Response Body is a GET of Access Groups, which shows Name and Type fields. Notice how Employee Body only lists Access Group IDs.
+* Response Body is a GET of Access Groups, which shows Name and Type fields. Notice how Employee's JSON Body only lists Access Group IDs.
 
 ![POST1](screenshots/POST1.jpg)
 
@@ -31,9 +31,9 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 
 ![POST4](screenshots/POST4.jpg)
 
-##### PUT Request preserves previous legitimate entry and updates Employee by removing absent Access Group from DB while adding new Access Group:
+##### PUT Request preserves previous legitimate fields and updates Employee by removing absent Access Groups from DB while adding a new Access Group:
 
-* In this PUT, Access Group 37 & 38 have been removed, but Access Group 39 is added.
+* In this PUT, Access Group 37 & 38 have been removed, but Access Group 39 has been added.
 
 ![PUT1](screenshots/PUT1.jpg)
 
@@ -45,7 +45,7 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 
 ![DUPLICATE_ERROR](screenshots/DUPLICATE_ERROR.jpg)
 
-##### POSTing a Employee w/ a non-eWorldES email returns an "Invalid Email" error:
+##### POSTing an Employee w/ a non-eWorldES email returns an "Invalid Email" error:
 
 ![INVALID_EMAIL_ERROR](screenshots/INVALID_EMAIL_ERROR.jpg)
 
@@ -63,6 +63,7 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 - First project with Unit & Integration Tests
 - First project with custom error handling
 - First project with DTOs 
-- Includes an expiration field tied to Employee_Access_Group that is no longer relevant due to eWorld policy changes but is still present in case of future changes
+- Includes an expiration field tied to Employee_Access_Group that is no longer relevant due to eWorld policy changes but
+is still present to exemplify my understanding of joined tables
 
 Created by an Internal Access Coordinator as a side project.
