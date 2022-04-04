@@ -6,38 +6,50 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 ## Technology
 
 ### Backend
-- Spring Boot (in progress)
+- Spring Boot (need to fix tests)
 - MySQL (done)
 ### Frontend
+- HTML/CSS (in progress)
 - JavaScript (in progress)
 ### Cloud Services
 - AWS (not started)
 
-## Visuals
-- POST Request formats fullName & email field and returns detailed descriptions of assigned Access Groups:
+## Screenshots
+##### POST Request formats fullName & email field and returns detailed descriptions of assigned Access Groups:
+  
+* Response Body is a GET of Access Groups, which shows Name and Type fields. Notice how Employee Body only lists Access Group IDs.
 
 ![POST1](screenshots/POST1.jpg)
+
+* POST Response returns with detailed Access Group information. Employee's ID is 107.
 
 ![POST2](screenshots/POST2.jpg)
 
 ![POST3](screenshots/POST3.jpg)
 
+* POST is reflected in MySQL DB.
+
 ![POST4](screenshots/POST4.jpg)
 
-- PUT Request preserves previous legitimate entry and updates Employee by removing non-existing Access Group while adding new Access Group (Access Group 37 & 38 are gone. Access Group 39 is added):
+##### PUT Request preserves previous legitimate entry and updates Employee by removing absent Access Group from DB while adding new Access Group:
+
+* In this PUT, Access Group 37 & 38 have been removed, but Access Group 39 is added.
 
 ![PUT1](screenshots/PUT1.jpg)
 
+* PUT is reflected in MySQL DB.
+
 ![PUT2](screenshots/PUT2.jpg)
 
-- POSTing the same email returns a "Duplicate Entry" error:
+##### POSTing the same email returns a "Duplicate Entry" error:
 
 ![DUPLICATE_ERROR](screenshots/DUPLICATE_ERROR.jpg)
 
-- POSTing a Employee w/ a non-eWorldES email returns an "Invalid Email" error:
+##### POSTing a Employee w/ a non-eWorldES email returns an "Invalid Email" error:
 
+![INVALID_EMAIL_ERROR](screenshots/INVALID_EMAIL_ERROR.jpg)
 
-- A list of all custom exceptions:
+##### A list of all custom exceptions:
 
 ![ALL_ERRORS](screenshots/ALL_ERRORS.jpg)
 
