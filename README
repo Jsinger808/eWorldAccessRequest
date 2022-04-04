@@ -16,15 +16,30 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 ## Visuals
 - POST Request formats fullName & email field and returns detailed descriptions of assigned Access Groups:
 
-![POST](https://github.com/Jsinger808/eWorldAccessRequest/tree/master/screenshots/POST1.jpg?raw=true)
+![POST1](https://github.com/Jsinger808/eWorldAccessRequest/tree/master/screenshots/POST1.jpg?raw=true)
+
+![POST2](https://github.com/Jsinger808/eWorldAccessRequest/tree/master/screenshots/POST2.jpg?raw=true)
+
+![POST3](https://github.com/Jsinger808/eWorldAccessRequest/tree/master/screenshots/POST3.jpg?raw=true)
+
+![POST4](https://github.com/Jsinger808/eWorldAccessRequest/tree/master/screenshots/POST4.jpg?raw=true)
 
 - PUT Request preserves previous legitimate entry and updates Employee by removing non-existing Access Group while adding new Access Group (Access Group 37 & 38 are gone. Access Group 39 is added):
 
+![PUT1](https://github.com/Jsinger808/eWorldAccessRequest/tree/master/screenshots/PUT1.jpg?raw=true)
+
+![PUT2](https://github.com/Jsinger808/eWorldAccessRequest/tree/master/screenshots/PUT2.jpg?raw=true)
+
 - POSTing the same email returns a "Duplicate Entry" error:
+
+![DUPLICATE_ERROR](https://github.com/Jsinger808/eWorldAccessRequest/tree/master/screenshots/DUPLICATE_ERROR.jpg?raw=true)
 
 - POSTing a Employee w/ a non-eWorldES email returns an "Invalid Email" error:
 
+
 - A list of all custom exceptions:
+
+![ALL_ERRORS](https://github.com/Jsinger808/eWorldAccessRequest/tree/master/screenshots/ALL_ERRORS.jpg?raw=true)
 
 ## Goals: 
 - Replace the current tracking system in which the DHS access PDFs are stored in a SharePoint and cannot be queried 
