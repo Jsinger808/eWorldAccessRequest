@@ -1,4 +1,4 @@
-package com.example.eworldaccessrequest.unit;
+package com.example.eworldaccessrequest.service;
 
 import com.example.eworldaccessrequest.dto.AccessGroupDTO;
 import com.example.eworldaccessrequest.entity.AccessGroup;

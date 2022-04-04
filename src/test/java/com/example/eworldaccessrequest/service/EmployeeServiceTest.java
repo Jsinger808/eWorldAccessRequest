@@ -1,4 +1,4 @@
-package com.example.eworldaccessrequest.unit;
+package com.example.eworldaccessrequest.service;
 
 import com.example.eworldaccessrequest.dto.EmployeeDTO;
 import com.example.eworldaccessrequest.entity.Employee;
@@ -12,16 +12,14 @@ import junit.framework.Assert;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 //import org.junit.jupiter.api.Test;
 
 
@@ -45,22 +43,35 @@ public class EmployeeServiceTest {
     }
 
 
-//    @Test
-//    public void WhenSaveEmployee_GivenUnformattedFullNameAndEmail_ShouldFormatFullNameAndEmail() throws EmptyStringException {
-//
-//        Employee expected = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@EWORLDES.COM", true, true, new ArrayList<>());
-//
-//        Mockito.doReturn(expected).when(employeeRepository).save(expected);
-//
-//        EmployeeDTO actualDTO = employeeService.saveEmployee(expected);
-//
-//        System.out.println(actualDTO.getFullName());
-//        System.out.println(actualDTO.getEmail());
-//
-//        Mockito.verify(employeeRepository).save(expected);
-//        Assert.assertEquals("Buggirl Yogurt Johnson", actualDTO.getFullName()) ;
-//        Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
-//    }
+    @Test
+    public void WhenSaveEmployee_GivenUnformattedFullNameAndEmail_ShouldFormatFullNameAndEmail() throws EmptyStringException {
+
+//        EmployeeDTO expected = new EmployeeDTO(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@EWORLDES.COM", true, true, new ArrayList<>(), new ArrayList<>());
+
+        Employee expected = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@eworldes.com", true, true, new ArrayList<>());
+        EmployeeDTO expectedDTO = employeeService.convertToDto(expected);
+
+        when(employeeRepository.save(any(Employee.class))).then(AdditionalAnswers.returnsFirstArg());
+
+//        Mockito.doReturn(any(Employee.class)).when(employeeRepository).save(any(Employee.class));
+
+//        Mockito.doReturn(burger).when(employeeRepository).save(expected);
+
+//        doAnswer
+//                (invocation -> {
+//            ReflectionTestUtils.setField((Employee) invocation.getArgument(0), "ID", 6);
+//            return null;
+//        }).when(employeeRepository).save(expected);
+
+        EmployeeDTO actualDTO = employeeService.saveEmployee(expectedDTO);
+
+        System.out.println(actualDTO.getFullName());
+        System.out.println(actualDTO.getEmail());
+
+        Mockito.verify(employeeRepository).save(any(Employee.class));
+        Assert.assertEquals("Buggirl Yogurt Johnson", actualDTO.getFullName()) ;
+        Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
+    }
 
 //    @Test
 //    public void WhenUpdateEmployee_GivenCapitalizedInput_ShouldFormat() {
@@ -80,7 +91,7 @@ public class EmployeeServiceTest {
 //        Mockito.verify(employeeRepository).save(expected);
 //        Assert.assertEquals(expectedDTO, actualDTO);
 //    }
-
+//
 //    @Test
 //    public void WhenUpdateEmployee_GivenEmptyEmail_ShouldUpdateFullNameButNotUpdateEmail() {
 //
@@ -102,8 +113,8 @@ public class EmployeeServiceTest {
 //        Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
 //
 //    }
-
-
+//
+//
 //    @Test(expected = EmptyStringException.class)
 //    public void WhenSaveEmployee_GivenEmptyStrings_ShouldThrowEmptyStringException() throws EmptyStringException {
 //
@@ -113,7 +124,7 @@ public class EmployeeServiceTest {
 //        Mockito.verify(employeeRepository, times(0)).save(expected);
 //
 //    }
-
+//
 //    @Test(expected = InvalidEmailException.class)
 //    public void WhenSaveEmployee_GivenNonEWorldEmail_ShouldThrowInvalidEmailException() throws InvalidEmailException {
 //

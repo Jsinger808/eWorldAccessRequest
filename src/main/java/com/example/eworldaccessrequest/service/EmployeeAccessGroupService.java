@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 // Annotation
 @Service
-
+@Deprecated
 public class EmployeeAccessGroupService {
 
     @Autowired
@@ -33,6 +33,7 @@ public class EmployeeAccessGroupService {
     }
 
     // Save
+    @Deprecated
     public EmployeeAccessGroupDTO saveEmployeeAccessGroup(EmployeeAccessGroup employeeAccessGroup) throws EmptyStringException {
         if (employeeAccessGroup.getEmployee() == null || "".equalsIgnoreCase(employeeAccessGroup.getEmployee().getFullName())
                 || employeeAccessGroup.getAccessGroup() == null || "".equalsIgnoreCase(employeeAccessGroup.getAccessGroup().getName())) {
@@ -45,6 +46,7 @@ public class EmployeeAccessGroupService {
     }
 
     // Read
+    @Deprecated
     public List<EmployeeAccessGroupDTO> fetchEmployeeAccessGroupList() {
 
         List<EmployeeAccessGroup> employeeAccessGroups = employeeAccessGroupRepository.findAll();
@@ -58,6 +60,7 @@ public class EmployeeAccessGroupService {
     }
 
     // Update
+    @Deprecated
     public EmployeeAccessGroupDTO updateEmployeeAccessGroup(EmployeeAccessGroup employeeAccessGroup, Long ID) throws DataIntegrityViolationException {
         EmployeeAccessGroup depDB = employeeAccessGroupRepository.findById(ID).get();
 
@@ -81,6 +84,7 @@ public class EmployeeAccessGroupService {
     }
 
     // Delete
+    @Deprecated
     public void deleteEmployeeAccessGroupById(Long ID) {
         employeeAccessGroupRepository.deleteById(ID);
     }

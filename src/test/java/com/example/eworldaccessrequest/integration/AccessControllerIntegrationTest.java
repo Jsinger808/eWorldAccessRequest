@@ -40,9 +40,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 import static org.junit.Assert.assertTrue;
@@ -521,8 +519,15 @@ public class AccessControllerIntegrationTest {
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void WhenPutEmployee_GivenEmployeeWithUpdatedEmployeeAccessGroup_ShouldUpdateWithStatus200() throws Exception {
 
-        Employee expectedEmployee = new Employee((long) 1,"Johnny Smith", "johnnysmith@eworldes.com",
-                true, true, new ArrayList<>());
+        List<Long> accessGroupIDs1 = Arrays.asList(Long.valueOf(1));
+        List<Long> accessGroupIDs2 = Arrays.asList(Long.valueOf(2));
+
+
+//        Employee expectedEmployee = new Employee((long) 1,"Johnny Smith", "johnnysmith@eworldes.com",
+//                true, true, new ArrayList<>());
+
+        EmployeeDTO expectedEmployeeDTO = new EmployeeDTO(null, "Johnny Smith", "johnnysmith@eworldes.com",
+                true, true, accessGroupIDs1, new ArrayList<>());
 
         AccessGroup expectedAccessGroup = new AccessGroup((long) 1, "Test-DHS_FORM", "DHS_FORM", new ArrayList<>());
         AccessGroup expectedAccessGroup2 = new AccessGroup((long) 2, "Test-AD Group", "AD", new ArrayList<>());
@@ -539,29 +544,23 @@ public class AccessControllerIntegrationTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        LocalDate rightNow = LocalDate.now();
-        rightNow.toString();
-
-        EmployeeAccessGroup expectedEmployeeAccessGroup = new EmployeeAccessGroup((long) 1, expectedEmployee, expectedAccessGroup, rightNow);
-        expectedEmployee.getEmployeeAccessGroups().add(expectedEmployeeAccessGroup);
+//        LocalDate rightNow = LocalDate.now();
+//        rightNow.toString();
 
         mockMvc.perform(post("/api/v1/access/employee")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedEmployee)))
+                        .content(objectMapper.writeValueAsString(expectedEmployeeDTO)))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeAccessGroupDTOs.[0].expiration", Matchers.is(rightNow.toString())));
+                .andExpect(status().isOk());
 
-        EmployeeAccessGroup expectedEmployeeAccessGroup2 = new EmployeeAccessGroup((long) 2, expectedEmployee, expectedAccessGroup2, rightNow);
-        expectedEmployee.getEmployeeAccessGroups().add(expectedEmployeeAccessGroup2);
+        expectedEmployeeDTO.setAccessGroupIDs(accessGroupIDs2);
 
         mockMvc.perform(put("/api/v1/access/employee/" + 1)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedEmployee)))
+                        .content(objectMapper.writeValueAsString(expectedEmployeeDTO)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeAccessGroupDTOs.[1].accessGroupDTO.name", Matchers.is("Test-AD Group")))
-                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeeAccessGroupDTOs.[1].expiration", Matchers.nullValue()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeAccessGroupDTOs.[0].accessGroupDTO.name", Matchers.is("Test-AD Group")));
     }
 
 

@@ -18,6 +18,6 @@ public interface EmployeeAccessGroupRepository extends JpaRepository<EmployeeAcc
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM Employee_Access_Group WHERE id = :id ;", nativeQuery = true)
-    public void deleteEmployeeAccessGroupCustom(@Param("id") Long employeeAccessGroupID);
+    public void deleteEmployeeAccessGroupByIDCustom(@Param("id") Long employeeAccessGroupID);
 
 }
