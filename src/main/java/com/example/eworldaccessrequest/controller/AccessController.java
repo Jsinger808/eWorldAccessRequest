@@ -23,14 +23,11 @@ public class AccessController {
 
     private final EmployeeService employeeService;
     private final AccessGroupService accessGroupService;
-    private final EmployeeAccessGroupService employeeAccessGroupService;
 
     public AccessController(EmployeeService employeeService,
-                            AccessGroupService accessGroupService,
-                            EmployeeAccessGroupService employeeAccessGroupService) {
+                            AccessGroupService accessGroupService) {
         this.employeeService = employeeService;
         this.accessGroupService = accessGroupService;
-        this.employeeAccessGroupService = employeeAccessGroupService;
     }
 
 //EMPLOYEE Table
@@ -59,17 +56,19 @@ public class AccessController {
         return employeeService.fetchEmployeesByAccessGroupID(accessGroupID);
     }
 
-    // Find All Employees with Expired Access Groups
-    @GetMapping("/employee/expired")
-    public List<EmployeeDTO> fetchEmployeesWithExpiredDHSForms() {
-        return employeeService.fetchEmployeesWithExpiredDHSForms();
-    }
-
-    // Find All Employees with Soon-to-Be Expired Access Groups
-    @GetMapping("/employee/soon-expired")
-    public List<EmployeeDTO> fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() {
-        return employeeService.fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth();
-    }
+//    // Find All Employees with Expired Access Groups
+//    @Deprecated
+//    @GetMapping("/employee/expired")
+//    public List<EmployeeDTO> fetchEmployeesWithExpiredDHSForms() {
+//        return employeeService.fetchEmployeesWithExpiredDHSForms();
+//    }
+//
+//    // Find All Employees with Soon-to-Be Expired Access Groups
+//    @Deprecated
+//    @GetMapping("/employee/soon-expired")
+//    public List<EmployeeDTO> fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() {
+//        return employeeService.fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth();
+//    }
     
     // Update operation
     @PutMapping("/employee/{id}")
@@ -114,31 +113,31 @@ public class AccessController {
 //EMPLOYEE_ACCESS_GROUP Table
 
     // Save operation
-    @Deprecated
-    @PostMapping("/employee_access_group")
-    public EmployeeAccessGroupDTO saveEmployeeAccessGroup(@Valid @RequestBody EmployeeAccessGroup employeeAccessGroup) {
-        return employeeAccessGroupService.saveEmployeeAccessGroup(employeeAccessGroup);
-    }
-
-    // Read operation
-    @Deprecated
-    @GetMapping("/employee_access_group")
-    public List<EmployeeAccessGroupDTO> fetchEmployeeAccessGroupList() {
-        return employeeAccessGroupService.fetchEmployeeAccessGroupList();
-    }
-
-    // Update operation
-    @Deprecated
-    @PutMapping("/employee_access_group/{id}")
-    public EmployeeAccessGroupDTO updateEmployeeAccessGroup(@RequestBody EmployeeAccessGroup employeeAccessGroup, @PathVariable("id") Long ID) {
-        return employeeAccessGroupService.updateEmployeeAccessGroup(employeeAccessGroup, ID);
-    }
-
-    // Delete operation
-    @Deprecated
-    @DeleteMapping("/employee_access_group/{id}")
-    public String deleteEmployeeAccessGroupById(@PathVariable("id") Long ID) {
-        employeeAccessGroupService.deleteEmployeeAccessGroupById(ID);
-        return "Deleted Successfully";
-    }
+//    @Deprecated
+//    @PostMapping("/employee_access_group")
+//    public EmployeeAccessGroupDTO saveEmployeeAccessGroup(@Valid @RequestBody EmployeeAccessGroup employeeAccessGroup) {
+//        return employeeAccessGroupService.saveEmployeeAccessGroup(employeeAccessGroup);
+//    }
+//
+//    // Read operation
+//    @Deprecated
+//    @GetMapping("/employee_access_group")
+//    public List<EmployeeAccessGroupDTO> fetchEmployeeAccessGroupList() {
+//        return employeeAccessGroupService.fetchEmployeeAccessGroupList();
+//    }
+//
+//    // Update operation
+//    @Deprecated
+//    @PutMapping("/employee_access_group/{id}")
+//    public EmployeeAccessGroupDTO updateEmployeeAccessGroup(@RequestBody EmployeeAccessGroup employeeAccessGroup, @PathVariable("id") Long ID) {
+//        return employeeAccessGroupService.updateEmployeeAccessGroup(employeeAccessGroup, ID);
+//    }
+//
+//    // Delete operation
+//    @Deprecated
+//    @DeleteMapping("/employee_access_group/{id}")
+//    public String deleteEmployeeAccessGroupById(@PathVariable("id") Long ID) {
+//        employeeAccessGroupService.deleteEmployeeAccessGroupById(ID);
+//        return "Deleted Successfully";
+//    }
 }

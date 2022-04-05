@@ -126,11 +126,12 @@ public class AccessControllerIntegrationTest {
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void WhenPostEmployee_GivenEmployeeWithSameEmail_ShouldThrowDataIntegrityViolationException() throws Exception {
 
-        Employee expected = new Employee("Johnny Smith", "johnnysmith@eworldes.com",
-                true, true, new ArrayList<>());
+        EmployeeDTO expectedEmployeeDTO1 = new EmployeeDTO(null, "Johnny Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>(), new ArrayList<>());
+
         mockMvc.perform(
                         post("/api/v1/access/employee")
-                                .content(asJsonString(expected))
+                                .content(asJsonString(expectedEmployeeDTO1))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
@@ -144,12 +145,12 @@ public class AccessControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].fullName").exists());
 
-        Employee expected2 = new Employee(randomNumber, "Frank Smith", "johnnysmith@eworldes.com",
-                true, true, new ArrayList<>());
+        EmployeeDTO expectedEmployeeDTO2 = new EmployeeDTO(null, "Frank Smith", "johnnysmith@eworldes.com",
+                true, true, new ArrayList<>(), new ArrayList<>());
 
         mockMvc.perform(
                         post("/api/v1/access/employee")
-                                .content(asJsonString(expected2))
+                                .content(asJsonString(expectedEmployeeDTO2))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
