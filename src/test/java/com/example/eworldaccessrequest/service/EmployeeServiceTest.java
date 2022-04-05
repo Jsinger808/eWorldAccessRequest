@@ -46,16 +46,11 @@ public class EmployeeServiceTest {
     @Test
     public void WhenSaveEmployee_GivenUnformattedFullNameAndEmail_ShouldFormatFullNameAndEmail() throws EmptyStringException {
 
-//        EmployeeDTO expected = new EmployeeDTO(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@EWORLDES.COM", true, true, new ArrayList<>(), new ArrayList<>());
-
         Employee expected = new Employee(randomNumber, "BugGirl YOGURT Johnson", "BUGGIRL@eworldes.com", true, true, new ArrayList<>());
         EmployeeDTO expectedDTO = employeeService.convertToDto(expected);
 
         when(employeeRepository.save(any(Employee.class))).then(AdditionalAnswers.returnsFirstArg());
 
-//        Mockito.doReturn(any(Employee.class)).when(employeeRepository).save(any(Employee.class));
-
-//        Mockito.doReturn(burger).when(employeeRepository).save(expected);
 
 //        doAnswer
 //                (invocation -> {
@@ -73,66 +68,52 @@ public class EmployeeServiceTest {
         Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
     }
 
-//    @Test
-//    public void WhenUpdateEmployee_GivenCapitalizedInput_ShouldFormat() {
-//
-//        Employee expected = new Employee(randomNumber, "Bug Girl", "buggirl@eworldes.com", true, true, new ArrayList<>());
-//
-//        Mockito.doReturn(Optional.of(expected)).when(employeeRepository).findById(randomNumber);
-//        Mockito.doReturn(expected).when(employeeRepository).save(expected);
-//        EmployeeDTO expectedDTO = employeeService.convertToDto(expected);
-//
-//        EmployeeDTO actualDTO = employeeService.updateEmployee(new EmployeeDTO(randomNumber, "BUg GIRl", "BUGGIRL@eworldes.com",
-//                true, true);
-//
-//        System.out.println(actualDTO);
-//        System.out.println(expectedDTO);
-//
-//        Mockito.verify(employeeRepository).save(expected);
-//        Assert.assertEquals(expectedDTO, actualDTO);
-//    }
-//
-//    @Test
-//    public void WhenUpdateEmployee_GivenEmptyEmail_ShouldUpdateFullNameButNotUpdateEmail() {
-//
-//        Employee expected = new Employee(randomNumber, "Buggie Girl", "buggirl@eworldes.com",
-//                true, true, new ArrayList<>());
-//
-//        Mockito.doReturn(Optional.of(expected)).when(employeeRepository).findById(randomNumber);
-//        Mockito.doReturn(expected).when(employeeRepository).save(expected);
-//        EmployeeDTO expectedDTO = employeeService.convertToDto(expected);
-//
-//        EmployeeDTO actualDTO = employeeService.updateEmployee(new Employee(randomNumber, "Wonderbug", "", true,
-//                true, new ArrayList<>()), randomNumber);
-//
-//        System.out.println(actualDTO);
-//        System.out.println(expectedDTO);
-//
-//        Mockito.verify(employeeRepository).save(expected);
-//        Assert.assertEquals("Wonderbug", actualDTO.getFullName());
-//        Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
-//
-//    }
-//
-//
-//    @Test(expected = EmptyStringException.class)
-//    public void WhenSaveEmployee_GivenEmptyStrings_ShouldThrowEmptyStringException() throws EmptyStringException {
-//
-//        Employee expected = new Employee(randomNumber, "", "", true, true, new ArrayList<EmployeeAccessGroup>());
-//        employeeService.saveEmployee(expected);
-//
-//        Mockito.verify(employeeRepository, times(0)).save(expected);
-//
-//    }
-//
-//    @Test(expected = InvalidEmailException.class)
-//    public void WhenSaveEmployee_GivenNonEWorldEmail_ShouldThrowInvalidEmailException() throws InvalidEmailException {
-//
-//        Employee expected = new Employee(randomNumber, "Bug Girl", "buggirl@buggirl.com", true, true, new ArrayList<EmployeeAccessGroup>());
-//        employeeService.saveEmployee(expected);
-//
-//        Mockito.verify(employeeRepository, times(0)).save(expected);
-//
-//    }
+    @Test
+    public void WhenUpdateEmployee_GivenEmptyOrCapitalizedInput_ShouldFormat() {
+
+        Employee expected = new Employee(randomNumber, "Buggirl Yogurt Johnson", "buggirl@eworldes.com", true, true, new ArrayList<>());
+        Employee updatedExpected = new Employee(randomNumber, "", "bUGgiRL@eworldes.com", false, true, new ArrayList<>());
+
+        Mockito.doReturn(Optional.of(expected)).when(employeeRepository).findById(randomNumber);
+
+        when(employeeRepository.save(any(Employee.class))).then(AdditionalAnswers.returnsFirstArg());
+
+        EmployeeDTO expectedDTO = employeeService.convertToDto(expected);
+        EmployeeDTO updatedExpectedDTO = employeeService.convertToDto(updatedExpected);
+
+        EmployeeDTO actualDTO = employeeService.updateEmployee(updatedExpectedDTO, randomNumber);
+
+        System.out.println(actualDTO);
+        System.out.println(expectedDTO);
+
+        Mockito.verify(employeeRepository).save(expected);
+        Assert.assertEquals("Buggirl Yogurt Johnson", actualDTO.getFullName()) ;
+        Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
+        Assert.assertEquals(false, actualDTO.isOffshore());
+    }
+
+    @Test(expected = EmptyStringException.class)
+    public void WhenSaveEmployee_GivenEmptyStrings_ShouldThrowEmptyStringException() throws EmptyStringException {
+
+        Employee expected = new Employee(randomNumber, "", "", true, true, new ArrayList<EmployeeAccessGroup>());
+        EmployeeDTO expectedDTO = employeeService.convertToDto(expected);
+
+        employeeService.saveEmployee(expectedDTO);
+
+        Mockito.verify(employeeRepository, times(0)).save(expected);
+
+    }
+
+    @Test(expected = InvalidEmailException.class)
+    public void WhenSaveEmployee_GivenNonEWorldEmail_ShouldThrowInvalidEmailException() throws InvalidEmailException {
+
+        Employee expected = new Employee(randomNumber, "Bug Girl", "buggirl@buggirl.com", true, true, new ArrayList<EmployeeAccessGroup>());
+        EmployeeDTO expectedDTO = employeeService.convertToDto(expected);
+
+        employeeService.saveEmployee(expectedDTO);
+
+        Mockito.verify(employeeRepository, times(0)).save(expected);
+
+    }
 
 }
