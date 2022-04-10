@@ -23,14 +23,11 @@ public class AccessController {
 
     private final EmployeeService employeeService;
     private final AccessGroupService accessGroupService;
-    private final EmployeeAccessGroupService employeeAccessGroupService;
 
     public AccessController(EmployeeService employeeService,
-                            AccessGroupService accessGroupService,
-                            EmployeeAccessGroupService employeeAccessGroupService) {
+                            AccessGroupService accessGroupService) {
         this.employeeService = employeeService;
         this.accessGroupService = accessGroupService;
-        this.employeeAccessGroupService = employeeAccessGroupService;
     }
 
 //EMPLOYEE Table
@@ -59,17 +56,19 @@ public class AccessController {
         return employeeService.fetchEmployeesByAccessGroupID(accessGroupID);
     }
 
-    // Find All Employees with Expired Access Groups
+/*    // Find All Employees with Expired Access Groups
+    @Deprecated
     @GetMapping("/employee/expired")
     public List<EmployeeDTO> fetchEmployeesWithExpiredDHSForms() {
         return employeeService.fetchEmployeesWithExpiredDHSForms();
     }
 
     // Find All Employees with Soon-to-Be Expired Access Groups
+    @Deprecated
     @GetMapping("/employee/soon-expired")
     public List<EmployeeDTO> fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() {
         return employeeService.fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth();
-    }
+    }*/
     
     // Update operation
     @PutMapping("/employee/{id}")
@@ -111,7 +110,7 @@ public class AccessController {
         return "Deleted Successfully";
     }
 
-//EMPLOYEE_ACCESS_GROUP Table
+/*//EMPLOYEE_ACCESS_GROUP Table
 
     // Save operation
     @Deprecated
@@ -140,5 +139,5 @@ public class AccessController {
     public String deleteEmployeeAccessGroupById(@PathVariable("id") Long ID) {
         employeeAccessGroupService.deleteEmployeeAccessGroupById(ID);
         return "Deleted Successfully";
-    }
+    }*/
 }
