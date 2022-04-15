@@ -25,12 +25,6 @@ public class EmployeeAccessGroup {
     @Column(name = "ID")
     private Long ID;
 
-//    @Column(name = "EMPLOYEE_ID")
-//    private Long employeeID;
-//
-//    @Column(name = "ACCESS_GROUP_ID")
-//    private Long accessGroupID;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EMPLOYEE_ID")
     @JsonIgnore
@@ -50,32 +44,5 @@ public class EmployeeAccessGroup {
         this.accessGroup = accessGroup;
         this.expiration = expiration;
     }
-
-//    public EmployeeAccessGroup(Long ID, Employee employee, AccessGroup accessGroup, LocalDate expiration) {
-//        this.ID = ID;
-//        this.employee = employee;
-//        this.accessGroup = accessGroup;
-//        this.expiration = expiration;
-//    }
-
-//    public EmployeeAccessGroup(Long employeeID, Long accessGroupID, LocalDate expiration) {
-//        this.employeeID = employeeID;
-//        this.accessGroupID = accessGroupID;
-//        this.expiration = expiration;
-//    }
-//
-//    public EmployeeAccessGroup(Long ID, Long employeeID, Long accessGroupID, LocalDate expiration) {
-//        this.ID = ID;
-//        this.employeeID = employeeID;
-//        this.accessGroupID = accessGroupID;
-//        this.expiration = expiration;
-//    }
-
-
-//    @Override
-//    public String toString() {
-//        return "ID: " + this.ID + ", Name: " + this.getEmployee().getID() + ", Type: " + this.getAccessGroup().getID();
-//    }
-
 
 }

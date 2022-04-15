@@ -1,14 +1,11 @@
 package com.example.eworldaccessrequest.controller;
 
 import com.example.eworldaccessrequest.dto.AccessGroupDTO;
-import com.example.eworldaccessrequest.dto.EmployeeAccessGroupDTO;
 import com.example.eworldaccessrequest.dto.EmployeeDTO;
-import com.example.eworldaccessrequest.entity.Employee;
 import com.example.eworldaccessrequest.service.EmployeeService;
 import com.example.eworldaccessrequest.entity.AccessGroup;
 import com.example.eworldaccessrequest.service.AccessGroupService;
-import com.example.eworldaccessrequest.entity.EmployeeAccessGroup;
-import com.example.eworldaccessrequest.service.EmployeeAccessGroupService;
+
 
 import java.util.List;
 import javax.validation.Valid;
@@ -109,35 +106,4 @@ public class AccessController {
         accessGroupService.deleteAccessGroupById(ID);
         return "Deleted Successfully";
     }
-
-/*//EMPLOYEE_ACCESS_GROUP Table
-
-    // Save operation
-    @Deprecated
-    @PostMapping("/employee_access_group")
-    public EmployeeAccessGroupDTO saveEmployeeAccessGroup(@Valid @RequestBody EmployeeAccessGroup employeeAccessGroup) {
-        return employeeAccessGroupService.saveEmployeeAccessGroup(employeeAccessGroup);
-    }
-
-    // Read operation
-    @Deprecated
-    @GetMapping("/employee_access_group")
-    public List<EmployeeAccessGroupDTO> fetchEmployeeAccessGroupList() {
-        return employeeAccessGroupService.fetchEmployeeAccessGroupList();
-    }
-
-    // Update operation
-    @Deprecated
-    @PutMapping("/employee_access_group/{id}")
-    public EmployeeAccessGroupDTO updateEmployeeAccessGroup(@RequestBody EmployeeAccessGroup employeeAccessGroup, @PathVariable("id") Long ID) {
-        return employeeAccessGroupService.updateEmployeeAccessGroup(employeeAccessGroup, ID);
-    }
-
-    // Delete operation
-    @Deprecated
-    @DeleteMapping("/employee_access_group/{id}")
-    public String deleteEmployeeAccessGroupById(@PathVariable("id") Long ID) {
-        employeeAccessGroupService.deleteEmployeeAccessGroupById(ID);
-        return "Deleted Successfully";
-    }*/
 }
