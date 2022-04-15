@@ -6,13 +6,24 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 ## Technology
 
 ### Backend
-- Spring Boot (need to fix tests)
+- Spring Boot
 - MySQL (done)
 ### Frontend
 - HTML/CSS (in progress)
 - JavaScript (in progress)
 ### Cloud Services
 - AWS (not started)
+
+### Build & Run for Windows OS
+- Download and install Java
+- Download and install MySQL DB and MySQL Workbench (https://www.simplilearn.com/tutorials/mysql-tutorial/mysql-workbench-installation)
+    - Run Schemas "DB Schema" Folder in MySQL WorkBench
+- Download and install Tomcat 8.5
+- Edit application.properties file to include your own MySQL root username, password, and MySQL port
+- Run EWorldAccessRequestApplicationTest on IntelliJ or another IDE
+
+### To-Do List
+- Look into creating a MySQL Docker Container
 
 ## Screenshots
 ##### POST Request formats fullName & email fields and returns detailed descriptions of assigned Access Groups:
