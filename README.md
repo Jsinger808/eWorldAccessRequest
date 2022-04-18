@@ -7,7 +7,7 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 
 ### Backend
 - Spring Boot
-- MySQL (done)
+- MySQL
 ### Frontend
 - HTML/CSS (in progress)
 - JavaScript (in progress)
