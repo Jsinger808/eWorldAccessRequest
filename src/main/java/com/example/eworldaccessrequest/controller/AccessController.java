@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/access/")
-@CrossOrigin(origins = "http:://localhost:63342")
+@CrossOrigin(origins = "http://localhost:63342", allowedHeaders = "*")
 public class AccessController {
-
 
     private final EmployeeService employeeService;
     private final AccessGroupService accessGroupService;

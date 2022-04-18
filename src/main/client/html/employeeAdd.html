@@ -40,22 +40,22 @@
 </nav>
 
 <div style="margin-top: 200px; margin-left: 100px; margin-right: 100px">
-    <form method="post">
+    <form method="post"; id="myForm">
         <div class="form-group">
-            <label for="exampleFormControlInput1">Full Name</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="John Smith">
+            <label for="full-name">Full Name</label>
+            <input type="text" class="form-control" id="full-name" placeholder="John Smith">
         </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="name@eworldes.com">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="name@eworldes.com">
         </div>
         <div style="margin-top: 20px"; class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="Offshore">
-            <label class="form-check-label" for="Offshore">Offshore</label>
+            <label class="form-check-label" for="offshore">Offshore</label>
+            <input type="checkbox" class="form-check-input" id="offshore">
         </div>
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="BES">
             <label class="form-check-label" for="BES">BES</label>
+            <input type="checkbox" class="form-check-input" id="BES">
         </div>
 
         <div style="margin-top: 20px">
@@ -77,48 +77,7 @@
             </table>
         </div>
 
-<!--        <div class="form-group">-->
-<!--            <label for="AD Groups">AD Groups</label>-->
-<!--            <select multiple class="form-control" id="AD Groups">-->
-<!--                <option>1</option>-->
-<!--                <option>2</option>-->
-<!--                <option>3</option>-->
-<!--                <option>4</option>-->
-<!--                <option>5</option>-->
-<!--            </select>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--            <label for="SecureLink Groups">SecureLink Groups</label>-->
-<!--            <select multiple class="form-control" id="SecureLink Groups">-->
-<!--                <option>1</option>-->
-<!--                <option>2</option>-->
-<!--                <option>3</option>-->
-<!--                <option>4</option>-->
-<!--                <option>5</option>-->
-<!--            </select>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--            <label for="Outlook Email Boxes">Outlook Email Boxes</label>-->
-<!--            <select multiple class="form-control" id="Outlook Email Boxes">-->
-<!--                <option>1</option>-->
-<!--                <option>2</option>-->
-<!--                <option>3</option>-->
-<!--                <option>4</option>-->
-<!--                <option>5</option>-->
-<!--            </select>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--            <label for="DHS Forms">DHS Forms</label>-->
-<!--            <select multiple class="form-control" id="DHS Forms">-->
-<!--                <option>1</option>-->
-<!--                <option>2</option>-->
-<!--                <option>3</option>-->
-<!--                <option>4</option>-->
-<!--                <option>5</option>-->
-<!--            </select>-->
-<!--        </div>-->
-
-        <div style="padding-bottom: 100px; padding-top: 40px"; class="button-right">
+        <div style="padding-bottom: 100px; padding-top: 40px"; class="button-right"; id="submit-button">
         <input type="submit" value="Add/Update Employee">
         </div>
     </form>
@@ -127,11 +86,6 @@
 <script src="../js/scripts.js"></script>
 <script src="../js/employeeAdd.js"></script>
 <script>
-
-
 </script>
-
-
-
 </body>
 </html>
