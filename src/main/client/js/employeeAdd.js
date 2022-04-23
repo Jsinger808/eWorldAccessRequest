@@ -1,24 +1,30 @@
 $(document).ready(function() {
 
 
-    $('#example').DataTable({
+    var table = $('#access-group-table').DataTable({
         ajax: {
             url: "http://localhost:8082/api/v1/access/access_group/",
             dataSrc: ""
         },
         "columnDefs": [
-            { "width": "2%", "targets": 2 }
+            { "width": "2%", "targets": 3 },
+            { "visible": false, "targets": 0 }
         ],
         "columns": [
+            { data : "id"},
             { data : "name"},
             { data : "type"},
             { render : function (data, type, row) {
-                    return '<input type="checkbox";</input>';
-                }}
+                console.log(row);
+                return '<input type="checkbox" row-id="' + row.id + '"> </input>';
+                }
+                }
         ],
     })
 
-    $("#myForm").submit(function(event) {
+
+
+    $("#my-form").submit(function(event) {
         event.preventDefault();
         addData();
     });
@@ -35,11 +41,20 @@ $(document).ready(function() {
             "email": emailInput,
             "bes": BESInput,
             "offshore": offshoreInput,
-            "accessGroupIDs": accessGroupIDsInput
+            "accessGroupIDs": accessGroupIDsArrayCreation()
         }
     }
 
     function accessGroupIDsArrayCreation() {
+
+        // var accessGroupArray = []
+        //
+        // if (accessGroupRow.is((":checked"))) {
+        //     accessGroupArray.push(accessGroupRow.id)
+        // }
+        //
+        //
+        // return accessGroupArray
 
     }
 
