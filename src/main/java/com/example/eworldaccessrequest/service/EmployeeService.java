@@ -45,8 +45,7 @@ public class EmployeeService {
         ArrayList employeeAccessGroupDTOs = new ArrayList();
         if (employee.getEmployeeAccessGroups() == null || employee.getEmployeeAccessGroups().isEmpty()) {
             employeeDTO.setEmployeeAccessGroupDTOs(employeeAccessGroupDTOs);
-        }
-        else {
+        } else {
             for (EmployeeAccessGroup employeeAccessGroup : employee.getEmployeeAccessGroups()) {
                 employeeAccessGroupDTOs.add(EmployeeAccessGroupService.convertToDto(employeeAccessGroup));
             }
@@ -77,8 +76,7 @@ public class EmployeeService {
 
         if (employeeDTO.getID() != null) {
             employee.setID(employeeDTO.getID());
-        }
-        else {
+        } else {
             //Initial save to automatically generate Employee ID necessary for EmployeeAccessGroups
             employeeRepository.save(employee);
         }
@@ -107,7 +105,7 @@ public class EmployeeService {
     }
 
     // List specific employee
-    public EmployeeDTO fetchEmployeeByEmail(String email) throws EmployeeNotFoundException{
+    public EmployeeDTO fetchEmployeeByEmail(String email) throws EmployeeNotFoundException {
         if (email.isEmpty() || Objects.isNull(employeeRepository.findByEmail(email))) {
             throw new EmployeeNotFoundException();
         }
@@ -116,7 +114,7 @@ public class EmployeeService {
 
     // List employees by specific access group
     public List<EmployeeDTO> fetchEmployeesByAccessGroupID(Long accessGroupID) throws EmployeeNotFoundException {
-        if (employeeRepository.findEmployeesByAccessGroupID(accessGroupID).size() == 0){
+        if (employeeRepository.findEmployeesByAccessGroupID(accessGroupID).size() == 0) {
             throw new EmployeeNotFoundException();
         }
         List<Employee> employees = employeeRepository.findEmployeesByAccessGroupID(accessGroupID);
@@ -131,7 +129,7 @@ public class EmployeeService {
     @Deprecated
     public List<EmployeeDTO> fetchEmployeesWithExpiredDHSForms() throws NoEmployeesWithExpiredAccessGroupsException {
         LocalDate rightNow = LocalDate.now();
-        if (employeeRepository.findEmployeesWithExpiredDHSForms(rightNow).size() == 0){
+        if (employeeRepository.findEmployeesWithExpiredDHSForms(rightNow).size() == 0) {
             throw new NoEmployeesWithExpiredAccessGroupsException();
         }
 
@@ -148,7 +146,7 @@ public class EmployeeService {
     public List<EmployeeDTO> fetchEmployeesWithSoonToBeExpiredDHSFormsInOneMonth() throws NoEmployeesWithSoonToBeExpiredAccessGroupsException {
         LocalDate rightNow = LocalDate.now();
         LocalDate oneMonth = rightNow.plusMonths(1);
-        if (employeeRepository.findEmployeesWithSoonToBeExpiredDHSFormsInOneMonth(rightNow, oneMonth).size() == 0){
+        if (employeeRepository.findEmployeesWithSoonToBeExpiredDHSFormsInOneMonth(rightNow, oneMonth).size() == 0) {
             throw new NoEmployeesWithSoonToBeExpiredAccessGroupsException();
         }
 
@@ -181,8 +179,8 @@ public class EmployeeService {
 
         for (EmployeeAccessGroup employeeAccessGroup : DBaccess) {
             if (!employeeDTO.getAccessGroupIDs().contains(employeeAccessGroup.getAccessGroup().getID())) {
-            //Requires a Custom Delete Method w/ @Transactional otherwise deletes don't go through
-            employeeAccessGroupRepository.deleteEmployeeAccessGroupByIDCustom(employeeAccessGroup.getID());
+                //Requires a Custom Delete Method w/ @Transactional otherwise deletes don't go through
+                employeeAccessGroupRepository.deleteEmployeeAccessGroupByIDCustom(employeeAccessGroup.getID());
             }
         }
 

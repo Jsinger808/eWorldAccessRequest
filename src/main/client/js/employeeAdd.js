@@ -1,5 +1,4 @@
-$(document).ready(function() {
-
+$(function() {
 
     var table = $('#access-group-table').DataTable({
         ajax: {
@@ -7,22 +6,30 @@ $(document).ready(function() {
             dataSrc: ""
         },
         "columnDefs": [
-            { "width": "2%", "targets": 3 },
-            { "visible": false, "targets": 0 }
+            { "width": "0%", "targets": 0 },
+            {
+                'targets': 0,
+                'checkboxes': {
+                    'selectRow': true
+                }
+            }
         ],
         "columns": [
-            { data : "id"},
+            {
+                render: function (data, type, row) {
+                    return '<input type="checkbox" data-something="' + row.id + '"> </input>';
+                }
+            },
             { data : "name"},
-            { data : "type"},
-            { render : function (data, type, row) {
-                console.log(row);
-                return '<input type="checkbox" row-id="' + row.id + '"> </input>';
-                }
-                }
+            { data : "type"}
         ],
-    })
+    });
 
-
+    // var accessGroupRows;
+    //
+    // setTimeout(function () {
+    //     accessGroupRows = table.rows().data();
+    // }, 300);
 
     $("#my-form").submit(function(event) {
         event.preventDefault();
@@ -41,22 +48,42 @@ $(document).ready(function() {
             "email": emailInput,
             "bes": BESInput,
             "offshore": offshoreInput,
-            "accessGroupIDs": accessGroupIDsArrayCreation()
+            "accessGroupIDs": accessGroupIDsInput
         }
     }
 
     function accessGroupIDsArrayCreation() {
 
-        // var accessGroupArray = []
-        //
-        // if (accessGroupRow.is((":checked"))) {
-        //     accessGroupArray.push(accessGroupRow.id)
-        // }
-        //
-        //
-        // return accessGroupArray
+        var idArray = []
 
-    }
+        var inputArray = $("#access-group-table input");
+
+
+        $.each(inputArray, function(key, value) {
+                if (($(value).is(':checked'))) {
+                    idArray.push($(value).data("something"))
+                }
+                // console.log($(value).data("something"))
+                // console.log($(value))
+            });
+
+        console.log(idArray);
+        return idArray
+
+            // var CheckedRow = $("#access-group-table tbody tr").filter(function() {
+            //
+            //     if ($(this).find('td:eq(0) > input[type="checkbox"]').is(':checked')) {
+            //         return $(this);
+            //     }
+            // });
+            //
+            // console.log(CheckedRow);
+            //
+            // $.each(CheckedRow, function(key, value) {
+            //     console.log($(value).data("something"))
+            // });
+
+    };
 
     function addData(){// pass your data in method
         console.log(createEmployeeJson());

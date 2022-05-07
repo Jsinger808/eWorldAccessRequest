@@ -1,4 +1,5 @@
 package com.example.eworldaccessrequest.service;
+
 import com.example.eworldaccessrequest.dto.AccessGroupDTO;
 import com.example.eworldaccessrequest.dto.EmployeeAccessGroupDTO;
 import com.example.eworldaccessrequest.dto.EmployeeDTO;
@@ -95,7 +96,7 @@ public class EmployeeAccessGroupServiceTest {
 
         Mockito.verify(employeeAccessGroupRepository).save(actual);
         Assert.assertEquals(accessGroupUpdatedDTO, actualUpdatedDTO.getAccessGroupDTO());
-        Assert.assertEquals(rightNow, actualUpdatedDTO.getExpiration()) ;
+        Assert.assertEquals(rightNow, actualUpdatedDTO.getExpiration());
 
     }
 
@@ -123,7 +124,7 @@ public class EmployeeAccessGroupServiceTest {
 
     }
 
-    @Test (expected = EmptyStringException.class)
+    @Test(expected = EmptyStringException.class)
     public void WhenSaveEmployeeAccessGroup_GivenEmployeeWithEmptyFullName_ShouldThrowEmptyStringException() throws EmptyStringException {
 
         Employee employee = new Employee(randomNumber, "", "BUGGIRL@GMAIL.COM", true, true, new ArrayList<>());

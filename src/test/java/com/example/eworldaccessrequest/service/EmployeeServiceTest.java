@@ -64,7 +64,7 @@ public class EmployeeServiceTest {
         System.out.println(actualDTO.getEmail());
 
         Mockito.verify(employeeRepository).save(any(Employee.class));
-        Assert.assertEquals("Buggirl Yogurt Johnson", actualDTO.getFullName()) ;
+        Assert.assertEquals("Buggirl Yogurt Johnson", actualDTO.getFullName());
         Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
     }
 
@@ -87,7 +87,7 @@ public class EmployeeServiceTest {
         System.out.println(expectedDTO);
 
         Mockito.verify(employeeRepository).save(expected);
-        Assert.assertEquals("Buggirl Yogurt Johnson", actualDTO.getFullName()) ;
+        Assert.assertEquals("Buggirl Yogurt Johnson", actualDTO.getFullName());
         Assert.assertEquals("buggirl@eworldes.com", actualDTO.getEmail());
         Assert.assertEquals(false, actualDTO.isOffshore());
     }

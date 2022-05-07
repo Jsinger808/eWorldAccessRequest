@@ -70,7 +70,6 @@ public class AccessGroupService {
         if (Objects.nonNull(accessGroup.getType()) && !"".equalsIgnoreCase(accessGroup.getType())) {
             depDB.setType(accessGroup.getType());
         }
-
         return convertToDto(accessGroupRepository.save(depDB));
     }
 
