@@ -5,24 +5,18 @@ $(function() {
             url: "http://localhost:8082/api/v1/access/access_group/",
             dataSrc: ""
         },
-        "columnDefs": [
-            { "width": "0%", "targets": 0 },
-            {
-                'targets': 0,
-                'checkboxes': {
-                    'selectRow': true
-                }
-            }
-        ],
         "columns": [
-            {
-                render: function (data, type, row) {
-                    return '<input type="checkbox" data-something="' + row.id + '"> </input>';
-                }
-            },
+            { data : "id"},
             { data : "name"},
             { data : "type"}
         ],
+        'columnDefs': [{
+            'targets': 0,
+            'checkboxes': {
+                'selectRow': true
+            }
+        }],
+        'order': [[2, 'asc']]
     });
 
     // var accessGroupRows;
@@ -54,20 +48,15 @@ $(function() {
 
     function accessGroupIDsArrayCreation() {
 
-        var idArray = []
+            var rows_selected = table.column(0).checkboxes.selected();
 
-        var inputArray = $("#access-group-table input");
+            console.log(rows_selected)
+
+            const idArray = (rows_selected.join(",")).split(",").map(Number);
+
+            console.log(idArray)
 
 
-        $.each(inputArray, function(key, value) {
-                if (($(value).is(':checked'))) {
-                    idArray.push($(value).data("something"))
-                }
-                // console.log($(value).data("something"))
-                // console.log($(value))
-            });
-
-        console.log(idArray);
         return idArray
 
             // var CheckedRow = $("#access-group-table tbody tr").filter(function() {
@@ -82,11 +71,9 @@ $(function() {
             // $.each(CheckedRow, function(key, value) {
             //     console.log($(value).data("something"))
             // });
-
     };
 
     function addData(){// pass your data in method
-        console.log(createEmployeeJson());
         $.ajax({
             type: "POST",
             url: "http://localhost:8082/api/v1/access/employee",

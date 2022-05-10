@@ -5434,6 +5434,10 @@ textarea.form-control-lg {
   filter: invert(1) grayscale(100%) brightness(200%);
 }
 
+input[type="radio"]{
+  margin: 0 10px 0 10px;
+}
+
 .toast {
   width: 350px;
   max-width: 100%;

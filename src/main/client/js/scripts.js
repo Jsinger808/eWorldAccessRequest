@@ -59,3 +59,10 @@ $(function() {
     });
 });
 
+$(function() {
+    $("#accessGroup-btn").on("click",function(){
+        document.location.href ="html/accessGroupEdit.html";
+    });
+});
+
+
