@@ -53,15 +53,15 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
-$(function() {
-    $("#employee-btn").on("click",function(){
-        document.location.href ="html/employee.html";
+$(function () {
+    $("#employee-btn").on("click", function () {
+        document.location.href = "html/employee.html";
     });
 });
 
-$(function() {
-    $("#accessGroup-btn").on("click",function(){
-        document.location.href ="html/accessGroupEdit.html";
+$(function () {
+    $("#accessGroup-btn").on("click", function () {
+        document.location.href = "html/accessGroupEdit.html";
     });
 });
 

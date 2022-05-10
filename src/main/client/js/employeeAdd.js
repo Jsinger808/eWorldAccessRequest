@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
     var table = $('#access-group-table').DataTable({
         ajax: {
@@ -6,9 +6,9 @@ $(function() {
             dataSrc: ""
         },
         "columns": [
-            { data : "id"},
-            { data : "name"},
-            { data : "type"}
+            {data: "id"},
+            {data: "name"},
+            {data: "type"}
         ],
         'columnDefs': [{
             'targets': 0,
@@ -25,7 +25,7 @@ $(function() {
     //     accessGroupRows = table.rows().data();
     // }, 300);
 
-    $("#my-form").submit(function(event) {
+    $("#my-form").submit(function (event) {
         event.preventDefault();
         addData();
     });
@@ -48,32 +48,32 @@ $(function() {
 
     function accessGroupIDsArrayCreation() {
 
-            var rows_selected = table.column(0).checkboxes.selected();
+        var rows_selected = table.column(0).checkboxes.selected();
 
-            console.log(rows_selected)
+        console.log(rows_selected)
 
-            const idArray = (rows_selected.join(",")).split(",").map(Number);
+        const idArray = (rows_selected.join(",")).split(",").map(Number);
 
-            console.log(idArray)
+        console.log(idArray)
 
 
         return idArray
 
-            // var CheckedRow = $("#access-group-table tbody tr").filter(function() {
-            //
-            //     if ($(this).find('td:eq(0) > input[type="checkbox"]').is(':checked')) {
-            //         return $(this);
-            //     }
-            // });
-            //
-            // console.log(CheckedRow);
-            //
-            // $.each(CheckedRow, function(key, value) {
-            //     console.log($(value).data("something"))
-            // });
+        // var CheckedRow = $("#access-group-table tbody tr").filter(function() {
+        //
+        //     if ($(this).find('td:eq(0) > input[type="checkbox"]').is(':checked')) {
+        //         return $(this);
+        //     }
+        // });
+        //
+        // console.log(CheckedRow);
+        //
+        // $.each(CheckedRow, function(key, value) {
+        //     console.log($(value).data("something"))
+        // });
     };
 
-    function addData(){// pass your data in method
+    function addData() {// pass your data in method
         $.ajax({
             type: "POST",
             url: "http://localhost:8082/api/v1/access/employee",
@@ -93,7 +93,7 @@ $(function() {
         });
     }
 
-} );
+});
 
 //
 // $(function AddEmployee(){

@@ -1,37 +1,37 @@
+$(document).ready(function () {
 
-
-$(document).ready(function() {
-
-        $('#example').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print',                 {
-                    text: 'Add New Employee',
-                    action: function ( e, dt, node, config ) {
-                        document.location.href ="../html/employeeAdd.html";
-                    }
+    $('#example').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print', {
+                text: 'Add New Employee',
+                action: function (e, dt, node, config) {
+                    document.location.href = "../html/employeeAdd.html";
                 }
-            ],
-            ajax: {
-                url: "http://localhost:8082/api/v1/access/employee/",
-                dataSrc: ""
-            },
-            "columns": [
-                { data : "fullName"},
-                { data : "email"},
-                { data : "bes"},
-                { data : "offshore"},
-                { data : "employeeAccessGroupDTOs[, ].accessGroupDTO.name"},
-                { render : function (data, type, row) {
+            }
+        ],
+        ajax: {
+            url: "http://localhost:8082/api/v1/access/employee/",
+            dataSrc: ""
+        },
+        "columns": [
+            {data: "fullName"},
+            {data: "email"},
+            {data: "bes"},
+            {data: "offshore"},
+            {data: "employeeAccessGroupDTOs[, ].accessGroupDTO.name"},
+            {
+                render: function (data, type, row) {
                     return '<button class="employee-addbtn" onclick="document.location.href=\'employeeAdd.html\';" >Update</button>';
-                    }}
-            ],
-        })
+                }
+            }
+        ],
+    })
 
-} );
+});
 
-$(".employee-addbtn").on("click",function(){
-    document.location.href ="/html/employeeAdd.html";
+$(".employee-addbtn").on("click", function () {
+    document.location.href = "/html/employeeAdd.html";
 });
 
 

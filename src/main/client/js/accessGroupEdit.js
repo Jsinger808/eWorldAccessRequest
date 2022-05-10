@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
     var table = $('#access-group-table').DataTable({
         ajax: {
@@ -6,8 +6,8 @@ $(function() {
             dataSrc: ""
         },
         "columns": [
-            { data : "name"},
-            { data : "type"}
+            {data: "name"},
+            {data: "type"}
         ],
         'order': [[1, 'asc']]
     });
@@ -18,7 +18,7 @@ $(function() {
     //     accessGroupRows = table.rows().data();
     // }, 300);
 
-    $("#my-form").submit(function(event) {
+    $("#my-form").submit(function (event) {
         event.preventDefault();
         addData();
 
@@ -38,7 +38,7 @@ $(function() {
 
     }
 
-    function addData(){// pass your data in method
+    function addData() {// pass your data in method
         $.ajax({
             type: "POST",
             url: "http://localhost:8082/api/v1/access/access_group",
@@ -58,4 +58,4 @@ $(function() {
         });
     }
 
-} );
+});
