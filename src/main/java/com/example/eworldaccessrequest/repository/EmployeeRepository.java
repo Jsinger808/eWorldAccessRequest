@@ -18,6 +18,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     public Employee findByEmail(@Param("EMAIL") String email);
 
+    public Employee findByID(@Param("id") Long employeeID);
 
     @Query(value = "SELECT EMPLOYEE.*\n" +
             "FROM EMPLOYEE_ACCESS_GROUP\n" +

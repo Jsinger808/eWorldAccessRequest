@@ -40,7 +40,13 @@ public class AccessController {
         return employeeService.fetchEmployeeList();
     }
 
-    //Read specific employee operation
+    //Read specific employee operation by ID
+    @GetMapping("/employee/id/{employeeID}")
+    public EmployeeDTO fetchEmployeeByID(@PathVariable("employeeID") Long employeeID) {
+        return employeeService.fetchEmployeeByID(employeeID);
+    }
+
+    //Read specific employee operation by email
     @GetMapping("/employee/{email}")
     public EmployeeDTO fetchEmployeeByEmail(@PathVariable("email") String email) {
         return employeeService.fetchEmployeeByEmail(email);

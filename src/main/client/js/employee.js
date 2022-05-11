@@ -20,19 +20,24 @@ $(document).ready(function () {
             {data: "bes"},
             {data: "offshore"},
             {data: "employeeAccessGroupDTOs[, ].accessGroupDTO.name"},
-            {
-                render: function (data, type, row) {
-                    return '<button class="employee-addbtn" onclick="document.location.href=\'employeeAdd.html\';" >Update</button>';
+            /* EDIT */ {
+                mRender: function (data, type, row) {
+                    return '<button class="changeButton" id="' + row.id + '" onclick="editClick(this)">Edit</button>'
                 }
-            }
+            },
+            /* DELETE */ {
+                mRender: function (data, type, row) {
+                    return '<button id="delete-btn"  data-id="' + row[0] + '">DELETE</button>'
+                }
+            },
         ],
     })
 
+
+
 });
 
-$(".employee-addbtn").on("click", function () {
-    document.location.href = "/html/employeeAdd.html";
-});
+
 
 
 // {

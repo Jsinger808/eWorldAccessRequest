@@ -104,7 +104,15 @@ public class EmployeeService {
         return employeeDTOs;
     }
 
-    // List specific employee
+    // List specific employee by ID
+    public EmployeeDTO fetchEmployeeByID(Long employeeID) throws EmployeeNotFoundException {
+        if (Objects.isNull(employeeRepository.findByID(employeeID))) {
+            throw new EmployeeNotFoundException();
+        }
+        return convertToDto(employeeRepository.findByID(employeeID));
+    }
+
+    // List specific employee by email
     public EmployeeDTO fetchEmployeeByEmail(String email) throws EmployeeNotFoundException {
         if (email.isEmpty() || Objects.isNull(employeeRepository.findByEmail(email))) {
             throw new EmployeeNotFoundException();

@@ -9,8 +9,6 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/108d4e902d.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
     <link href="../css/styles.css" rel="stylesheet"/>
 
     <link rel="stylesheet" type="text/css"
@@ -55,12 +53,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Portfolio</a>
-                </li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a>
-                </li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                                     href="#contact">Contact</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="employee.html">Employee</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="accessGroupEdit.html">Access Group</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="profile.html">Profile (Under Construction)</a></li>
             </ul>
         </div>
     </div>
@@ -76,6 +71,7 @@
             <th>Offshore</th>
             <th>Access Groups</th>
             <th>Update</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tfoot>
@@ -86,6 +82,7 @@
             <th>Offshore</th>
             <th>Access Groups</th>
             <th>Update</th>
+            <th>Delete</th>
         </tr>
         </tfoot>
     </table>
@@ -95,16 +92,13 @@
 >
 <script src="../js/scripts.js"></script>
 <script src="../js/employee.js"></script>
-
-<!--        <script>-->
-
-<!--            async function getEmployee() {-->
-<!--                const response = await fetch('http://localhost:8082/api/v1/access/employee/');-->
-<!--                const myJson = await response.json(); //extract JSON from the http response-->
-<!--                console.log(myJson);-->
-<!--            }-->
-
-<!--            getEmployee();-->
-<!--        </script>-->
+<script>
+    function editClick (obj) {
+        var rowID = $(obj).attr('id');
+        console.log(rowID)
+        alert("button");
+        document.location.href = "./employeeAdd.html?id=" + rowID
+    }
+</script>
 </body>
 </html>
