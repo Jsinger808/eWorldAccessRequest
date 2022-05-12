@@ -5,12 +5,12 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 
 ## Technology
 
-### Backend
+### Backend -- FINISHED
 - Spring Boot
 - MySQL
-### Frontend
-- HTML/CSS (in progress)
-- JavaScript (in progress)
+### Frontend -- FINISHED
+- HTML/CSS 
+- JavaScript
 ### Cloud Services
 - AWS (not started)
 
@@ -22,10 +22,31 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 - Edit application.properties file to include your own MySQL root username, password, and MySQL port
 - Run EWorldAccessRequestApplicationTest on IntelliJ or another IDE
 
-### To-Do List
-- Look into creating a MySQL Docker Container
+### Extra Features To-Do List
+- Create a MySQL Docker Container
+- Add Authentication Screen that possibly uses Bearer Tokens
+- Add an "admin" account that can edit/delete Access Groups
+- Add more frontend functionality to connect with more of my APIs (e.g, possibly re-enable findEmployeeByExpiration APIs)
+- Make website look better
 
-## Screenshots
+## Screenshots of Frontend
+##### Index Page:
+
+##### Main Employee Page (Read):
+
+##### Add/Update Employee Page:
+
+##### Adding an Employee (Create):
+
+##### Updating an Employee (Update):
+
+##### Deleting an Employee (Delete):
+
+##### Access Group Page (Read):
+
+##### Adding an Access Group (Create):
+
+## Screenshots of Backend
 ##### POST Request formats fullName & email fields and returns detailed descriptions of assigned Access Groups:
   
 * Response Body is a GET of Access Groups, which shows Name and Type fields. Notice how Employee's JSON Body only lists Access Group IDs.
