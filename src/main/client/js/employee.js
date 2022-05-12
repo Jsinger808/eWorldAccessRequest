@@ -27,7 +27,7 @@ $(document).ready(function () {
             },
             /* DELETE */ {
                 mRender: function (data, type, row) {
-                    return '<button id="delete-btn"  data-id="' + row[0] + '">DELETE</button>'
+                    return '<button class="deleteButton" id="' + row.id + '" onclick="deleteClick(this)">Delete</button>'
                 }
             },
         ],
@@ -38,71 +38,3 @@ $(document).ready(function () {
 });
 
 
-
-
-// {
-//     data: null,
-//     className: "dt-center editor-edit",
-//     defaultContent: '<i class="fa fa-pencil"/>',
-//     orderable: false
-// },
-// {
-//     data: null,
-//     className: "dt-center editor-delete",
-//     defaultContent: '<i class="fa fa-trash"/>',
-//     orderable: false
-// }
-// var table = $('#myTable').DataTable();
-//
-// table.rows( { selected: true } ).data();
-// table.cells( { selected: true } ).data();
-//
-// $('#example').on( 'click', 'tbody tr', function () {
-//     if ( table.row( this, { selected: true } ).any() ) {
-//         table.row( this ).deselect();
-//     }
-//     else {
-//         table.row( this ).select();
-//     }
-// } );
-//
-//
-//
-// $(function() {
-//     alert("HELLO EMPLOYEE PAGE");
-//
-//     async function getEmployee() {
-//         const response = await fetch('http://localhost:8082/api/v1/access/employee/');
-//         const data = await response.json(); //extract JSON from the http response
-//
-//         console.log(data);
-//
-//         $('#myTable').DataTable( {
-//             ajax : '../data/data.json',
-//             columns : [
-//                     { data : 'name' },
-//                     { data : 'gender' },
-//                     { data : 'designation' }
-//             ]
-//
-//             // "columns" : [
-//             //         { data : 'fullName' },
-//             //         { data: 'email' },
-//             //         { data: 'bes' },
-//             //         { data: 'offshore' }
-//             // ]
-//             // ajax: {
-//             //     url: '/api/v1/access/employee',
-//             //     dataSrc: 'employee'
-//             // },
-//             // columns: [
-//             //     { employee: 'fullName' },
-//             //     { employee: 'email' },
-//             //     { employee: 'bes' },
-//             //     { employee: 'offshore' }
-//             //     ]
-//         })
-//     }
-//
-//     getEmployee();
-// });

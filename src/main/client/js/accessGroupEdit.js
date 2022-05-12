@@ -47,7 +47,8 @@ $(function () {
             crossDomain: true,
             dataType: "json",
             success: function (data, status, jqXHR) {
-                alert("success");// write success in " "
+                alert("success");
+                $('#access-group-table').DataTable().ajax.reload();
             },
 
             error: function (jqXHR, status) {

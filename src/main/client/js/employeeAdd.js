@@ -56,7 +56,6 @@ $(function () {
                     'selectRow': true
                 },
                 'createdCell':  function (td, cellData, rowData, row, col){
-                    console.log(rowData.id)
                     if(employeeAccessGroupIDArray.includes(rowData.id)) {
                         this.api().cell(td).checkboxes.select();
                     }
@@ -65,7 +64,6 @@ $(function () {
             'order': [[2, 'asc']]
         });
     }
-
 
     // var accessGroupRows;
     //
@@ -76,7 +74,6 @@ $(function () {
     // if (employee != null) {
     //         $('#full-name').val(employee.fullName)
     // }
-
 
 
     $("#my-form").submit(function (event) {
@@ -123,7 +120,8 @@ $(function () {
             crossDomain: true,
             dataType: "json",
             success: function (data, status, jqXHR) {
-                alert("success");// write success in " "
+                alert("success");
+                window.location=document.referrer;
             },
             error: function (jqXHR, status) {
                 // error handler
@@ -143,7 +141,8 @@ $(function () {
             crossDomain: true,
             dataType: "json",
             success: function (data, status, jqXHR) {
-                alert("success");// write success in " "
+                alert("success");
+                window.location=document.referrer;
             },
             error: function (jqXHR, status) {
                 // error handler
@@ -154,20 +153,3 @@ $(function () {
     }
 
 });
-
-//
-// $(function AddEmployee(){
-//     return $.ajax({
-//         type: "POST",
-//         url: `http://localhost:8082/api/v1/access/access_group/`,
-//         contentType : 'application/json',
-//         dataType : "json",
-//         data: JSON.stringify(buildUpdatedApplicationVO(applicationVO, 'appFinAcctsTransferInd')),
-//         success: function(response) {
-//             openSavedSuccessAlert();
-//         },
-//         error: function() {
-//             openSavedFailureAlert();
-//         }
-//     })
-// )};

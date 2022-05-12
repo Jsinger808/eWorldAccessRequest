@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
-    <meta name="author" content=""/>
+    <meta name="author" content="Joshua Singer"/>
     <title>Employee Page</title>
 
 
@@ -38,6 +38,10 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.3.0-beta.1/pdfmake.min.js"></script>
     <script type="text/javascript" charSet="utf8"
             src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.3.0-beta.1/fonts/Roboto.min.js"></script>
+
+<!-- Confirm Popup Dependencies-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 </head>
 <body id="page-top">
@@ -96,8 +100,39 @@
     function editClick (obj) {
         var rowID = $(obj).attr('id');
         console.log(rowID)
-        alert("button");
         document.location.href = "./employeeAdd.html?id=" + rowID
+    }
+
+    function deleteClick (obj) {
+        var rowID = $(obj).attr('id');
+        console.log(rowID)
+
+        $.confirm({
+            title: 'Are you sure you want to delete?',
+            content: 'This action cannot be undone',
+            buttons: {
+                confirm: function () {
+                    $.alert('User Deleted');
+                    $.ajax({
+                        type: "DELETE",
+                        url: "http://localhost:8082/api/v1/access/employee/" + rowID,
+                        success: function (data, status, jqXHR) {
+                            $('#example').DataTable().ajax.reload();
+                        },
+                        error: function (jqXHR, status) {
+                            // error handler
+                            alert('fail' + status.code);
+                        }
+                    });
+
+                },
+                cancel: function () {
+                },
+            }
+        });
+
+
+
     }
 </script>
 </body>
