@@ -17,7 +17,7 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 ### Build & Run for Windows OS
 - Download and install Java
 - Download and install MySQL DB and MySQL Workbench (https://www.simplilearn.com/tutorials/mysql-tutorial/mysql-workbench-installation)
-    - Run Schemas "DB Schema" Folder in MySQL WorkBench
+    - Run Schemas "DB Schema" (Need to create) Folder in MySQL WorkBench
 - Download and install Tomcat 8.5
 - Edit application.properties file to include your own MySQL root username, password, and MySQL port
 - Run EWorldAccessRequestApplicationTest on IntelliJ or another IDE
