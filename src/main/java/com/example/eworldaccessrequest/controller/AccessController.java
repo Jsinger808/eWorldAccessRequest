@@ -2,15 +2,23 @@ package com.example.eworldaccessrequest.controller;
 
 import com.example.eworldaccessrequest.dto.AccessGroupDTO;
 import com.example.eworldaccessrequest.dto.EmployeeDTO;
+import com.example.eworldaccessrequest.dto.AppUserDTO;
+import com.example.eworldaccessrequest.entity.AppUser;
+import com.example.eworldaccessrequest.entity.Role;
 import com.example.eworldaccessrequest.service.EmployeeService;
 import com.example.eworldaccessrequest.entity.AccessGroup;
 import com.example.eworldaccessrequest.service.AccessGroupService;
+import com.example.eworldaccessrequest.service.AppUserService;
 
 
+import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
 
+import lombok.Data;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/v1/access/")
@@ -19,12 +27,52 @@ public class AccessController {
 
     private final EmployeeService employeeService;
     private final AccessGroupService accessGroupService;
+    private final AppUserService appUserService;
 
     public AccessController(EmployeeService employeeService,
-                            AccessGroupService accessGroupService) {
+                            AccessGroupService accessGroupService, AppUserService appUserService) {
         this.employeeService = employeeService;
         this.accessGroupService = accessGroupService;
+        this.appUserService = appUserService;
     }
+
+//USER Table
+
+    @PostMapping("/user")
+    public ResponseEntity<AppUserDTO> saveUser(@Valid @RequestBody AppUserDTO appUserDTO) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/access/user").toUriString());
+        return ResponseEntity.created(uri).body(appUserService.saveUser(appUserDTO));
+    }
+
+    @PostMapping("/role")
+    public ResponseEntity<Role> saveRole(@Valid @RequestBody Role role) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/access/role").toUriString());
+        return ResponseEntity.created(uri).body(appUserService.saveRole(role));
+    }
+
+    @PostMapping("/role/user")
+    public ResponseEntity<?> addRoleToUser(@Valid @RequestBody RoleToUserForm form) {
+        appUserService.addRoleToUser(form.getUsername(), form.getRoleName());
+        return ResponseEntity.ok().build();
+    }
+
+    @Data
+    class RoleToUserForm {
+        private String username;
+        private String roleName;
+    }
+
+//    @GetMapping("/user")
+//    public void checkUserPassword(@Valid @RequestBody AppUserDTO appUserDTO) throws Exception {
+//        appUserService.checkUserPassword(appUserDTO);
+//    }
+
+    @GetMapping("/user/{username}")
+    public void fetchUserByUsername(@PathVariable("username") String username) {
+        appUserService.fetchUserByUsername(username);
+    }
+
+
 
 //EMPLOYEE Table
 

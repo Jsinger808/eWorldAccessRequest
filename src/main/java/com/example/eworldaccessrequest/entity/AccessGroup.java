@@ -20,7 +20,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 @Table (name = "Access_Group")
 public class AccessGroup {
 
@@ -36,10 +35,6 @@ public class AccessGroup {
     private String type;
 
     @OneToMany(mappedBy = "accessGroup", cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "accessGroup")
-//    @JsonIgnore
-//    @JsonBackReference
-//    @JsonManagedReference
     List<EmployeeAccessGroup> employeeAccessGroups;
 
     public AccessGroup(String name, String type, List<EmployeeAccessGroup> employeeAccessGroups) {

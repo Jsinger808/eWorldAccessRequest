@@ -51,10 +51,8 @@ $(function () {
                 $('#access-group-table').DataTable().ajax.reload();
             },
 
-            error: function (jqXHR, status) {
-                // error handler
-                console.log(jqXHR);
-                alert('fail' + status.code);
+            error: function (request, status, error) {
+                alert("Error Code: " + request.status + " - " + request.responseText);
             }
         });
     }

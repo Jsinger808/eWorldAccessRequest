@@ -35,7 +35,6 @@ public class EmployeeService {
 
     // DTO Converter
     public EmployeeDTO convertToDto(Employee employee) {
-
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setID(employee.getID());
         employeeDTO.setFullName(employee.getFullName());
@@ -52,8 +51,6 @@ public class EmployeeService {
             employeeDTO.setEmployeeAccessGroupDTOs(employeeAccessGroupDTOs);
         }
         return employeeDTO;
-
-
     }
 
     // Save

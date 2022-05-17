@@ -15,17 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class AccessGroupService {
 
     @Autowired
     private AccessGroupRepository accessGroupRepository;
-
-//    private final AccessGroupRepository accessGroupRepository;
-//
-//    public AccessGroupService(AccessGroupRepository accessGroupRepository) {
-//        this.accessGroupRepository = accessGroupRepository;
-//    }
 
     // DTO Converter
     public static AccessGroupDTO convertToDto(AccessGroup accessGroup) {

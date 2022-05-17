@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 // Annotation
 @Service
-@Deprecated
 public class EmployeeAccessGroupService {
 
     @Autowired

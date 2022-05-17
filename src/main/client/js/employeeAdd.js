@@ -17,10 +17,10 @@ $(function () {
                     employee = res;
                     $('#full-name').val(employee.fullName)
                     $('#email').val(employee.email)
-                    if (employee.bes == true) {
+                    if (employee.bes) {
                         $('#BES').prop('checked', true);
                     }
-                    if (employee.offshore == true) {
+                    if (employee.offshore) {
                         $('#offshore').prop('checked', true);
                     }
                     $.each(employee.employeeAccessGroupDTOs, function(key, val) {
@@ -106,6 +106,9 @@ $(function () {
 
     function accessGroupIDsArrayCreation() {
         var rows_selected = table.column(0).checkboxes.selected();
+        if (rows_selected.length == 0) {
+            return null
+        }
         const idArray = (rows_selected.join(",")).split(",").map(Number);
         console.log("idArray " + idArray)
         return idArray
@@ -123,10 +126,8 @@ $(function () {
                 alert("success");
                 window.location=document.referrer;
             },
-            error: function (jqXHR, status) {
-                // error handler
-                console.log(jqXHR);
-                alert('fail' + status.code);
+            error: function (request, status, error) {
+                alert("Error Code: " + request.status + " - " + request.responseText);
             }
         });
     }
@@ -144,10 +145,8 @@ $(function () {
                 alert("success");
                 window.location=document.referrer;
             },
-            error: function (jqXHR, status) {
-                // error handler
-                console.log(jqXHR);
-                alert('fail' + status.code);
+            error: function (request, status, error) {
+                alert("Error Code: " + request.status + " - " + request.responseText);
             }
         });
     }

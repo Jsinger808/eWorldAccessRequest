@@ -40,10 +40,6 @@ public class Employee {
     private boolean bes;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "employee")
-//    @JsonIgnore
-//    @JsonBackReference
-//    @JsonManagedReference
     List<EmployeeAccessGroup> employeeAccessGroups;
 
     public Employee(String fullName, String email, boolean offshore, boolean bes, List<EmployeeAccessGroup> employeeAccessGroups) {
