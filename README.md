@@ -13,6 +13,8 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 - JavaScript
 ### Cloud Services
 - AWS (not started)
+### Extra Features
+- Spring Security (in progress)
 
 ### Build & Run for Windows OS
 - Download and install Java
