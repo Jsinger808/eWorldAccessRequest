@@ -33,20 +33,33 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 
 ## Screenshots of Frontend
 ##### Index Page:
+![INDEX_PAGE](screenshots/INDEX_PAGE.png)
 
 ##### Main Employee Page (Read):
+![EMPLOYEE_PAGE](screenshots/EMPLOYEE_PAGE.jpg)
 
 ##### Add/Update Employee Page:
+![EMPLOYEE_ADD_PAGE](screenshots/EMPLOYEE_ADD_PAGE.jpg)
 
 ##### Adding an Employee (Create):
+![EMPLOYEE_POST1](screenshots/EMPLOYEE_POST1.jpg)
+
+![EMPLOYEE_POST2](screenshots/EMPLOYEE_POST2.jpg)
+
 
 ##### Updating an Employee (Update):
+![EMPLOYEE_PUT1](screenshots/EMPLOYEE_PUT1.jpg)
+![EMPLOYEE_PUT2](screenshots/EMPLOYEE_PUT2.jpg)
+![EMPLOYEE_PUT3](screenshots/EMPLOYEE_PUT3.jpg)
+
 
 ##### Deleting an Employee (Delete):
-
-##### Access Group Page (Read):
+![EMPLOYEE_DELETE1](screenshots/EMPLOYEE_DELETE1.jpg)
+![EMPLOYEE_DELETE2](screenshots/EMPLOYEE_DELETE2.jpg)
 
 ##### Adding an Access Group (Create):
+![ACCESS_GROUP_POST1](screenshots/ACCESS_GROUP_POST1.jpg)
+![ACCESS_GROUP_POST2](screenshots/ACCESS_GROUP_POST2.jpg)
 
 ## Screenshots of Backend
 ##### POST Request formats fullName & email fields and returns detailed descriptions of assigned Access Groups:
