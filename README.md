@@ -51,7 +51,7 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 * After a confirmation prompt, the user is deleted from the DB, and the table is refreshed.
 ![EMPLOYEE_DELETE1](screenshots/EMPLOYEE_DELETE1.jpg)
 ![EMPLOYEE_DELETE2](screenshots/EMPLOYEE_DELETE2.jpg)
-#### Adding an Access Group (Create):
+#### Adding an Access Group (Create/Read):
 * Adding access groups is as easy as typing a name and selecting its type. In theory, access groups will neither be edited nor deleted, but I plan to add those features once I finish the authentication feature. 
 ![ACCESS_GROUP_POST1](screenshots/ACCESS_GROUP_POST1.jpg)
 ![ACCESS_GROUP_POST2](screenshots/ACCESS_GROUP_POST2.jpg)
