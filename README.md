@@ -15,6 +15,7 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 - AWS (not started)
 ### Extra Features
 - Spring Security (in progress)
+- Uses JWT Authentication
 
 ### Build & Run for Windows OS
 - Download and install Java
