@@ -33,31 +33,31 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 
 ## Screenshots of Frontend
 ##### Index Page:
+* Main page is built from a Bootstrap template. Buttons go to separate Employee and Access Group pages.
 ![INDEX_PAGE](screenshots/INDEX_PAGE.png)
 
 ##### Main Employee Page (Read):
+* Table is created w/ jQuery DataTables API
 ![EMPLOYEE_PAGE](screenshots/EMPLOYEE_PAGE.jpg)
 
-##### Add/Update Employee Page:
-![EMPLOYEE_ADD_PAGE](screenshots/EMPLOYEE_ADD_PAGE.jpg)
-
 ##### Adding an Employee (Create):
+* Adding an Employee is as easy as filling in a few fields and checking off their appropriate Access Groups. After adding, you are sent back to the main Employee page.
 ![EMPLOYEE_POST1](screenshots/EMPLOYEE_POST1.jpg)
-
 ![EMPLOYEE_POST2](screenshots/EMPLOYEE_POST2.jpg)
 
-
 ##### Updating an Employee (Update):
+* Updating an Employee is as easy as unchecking removed Access Groups and adding new ones. You're also able to change name, email, offshore, and BES values. After updating, you are sent back to the main Employee page.
+![EMPLOYEE_POST1](screenshots/EMPLOYEE_POST1.jpg)
 ![EMPLOYEE_PUT1](screenshots/EMPLOYEE_PUT1.jpg)
 ![EMPLOYEE_PUT2](screenshots/EMPLOYEE_PUT2.jpg)
-![EMPLOYEE_PUT3](screenshots/EMPLOYEE_PUT3.jpg)
-
 
 ##### Deleting an Employee (Delete):
+* After a confirmation prompt, the user is deleted from the DB, and the table is refreshed.
 ![EMPLOYEE_DELETE1](screenshots/EMPLOYEE_DELETE1.jpg)
 ![EMPLOYEE_DELETE2](screenshots/EMPLOYEE_DELETE2.jpg)
 
 ##### Adding an Access Group (Create):
+* Adding access groups is as easy as determining a name and clicking its type. In theory, access groups will not be edited nor deleted, but I am planning to add those features once I finish the authentication as an "Admin" functionality. 
 ![ACCESS_GROUP_POST1](screenshots/ACCESS_GROUP_POST1.jpg)
 ![ACCESS_GROUP_POST2](screenshots/ACCESS_GROUP_POST2.jpg)
 
