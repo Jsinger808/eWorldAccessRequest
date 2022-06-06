@@ -13,7 +13,7 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 - JavaScript
 ### Cloud Services
 - AWS (not started)
-### Extra Features
+### Authentication & Authorization
 - Spring Security (in progress)
 - Uses JWT Authentication
 
@@ -27,7 +27,6 @@ A CRUD web app to help DHS Internal Access Coordinators, Project Managers, and B
 
 ### Extra Features To-Do List
 - Create a MySQL Docker Container
-- Add Authentication Screen that possibly uses Bearer Tokens
 - Add an "admin" account that can edit/delete Access Groups
 - Add more frontend functionality to connect with more of my APIs (e.g, possibly re-enable findEmployeeByExpiration APIs)
 - Make website look better
