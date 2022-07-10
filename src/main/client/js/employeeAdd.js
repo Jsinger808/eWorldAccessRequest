@@ -65,17 +65,6 @@ $(function () {
         });
     }
 
-    // var accessGroupRows;
-    //
-    // setTimeout(function () {
-    //     accessGroupRows = table.rows().data();
-    // }, 300);
-
-    // if (employee != null) {
-    //         $('#full-name').val(employee.fullName)
-    // }
-
-
     $("#my-form").submit(function (event) {
         event.preventDefault();
         console.log(employee)

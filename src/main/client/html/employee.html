@@ -39,7 +39,7 @@
     <script type="text/javascript" charSet="utf8"
             src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.3.0-beta.1/fonts/Roboto.min.js"></script>
 
-<!-- Confirm Popup Dependencies-->
+    <!-- Confirm Popup Dependencies-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
@@ -57,9 +57,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="employee.html">Employee</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="accessGroupEdit.html">Access Group</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="profile.html">Profile (Under Construction)</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="employee.html">Employee</a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                     href="accessGroupEdit.html">Access Group</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="profile.html">Profile
+                    (Under Construction)</a></li>
             </ul>
         </div>
     </div>
@@ -97,13 +100,13 @@
 <script src="../js/scripts.js"></script>
 <script src="../js/employee.js"></script>
 <script>
-    function editClick (obj) {
+    function editClick(obj) {
         var rowID = $(obj).attr('id');
         console.log(rowID)
         document.location.href = "./employeeAdd.html?id=" + rowID
     }
 
-    function deleteClick (obj) {
+    function deleteClick(obj) {
         var rowID = $(obj).attr('id');
         console.log(rowID)
 
@@ -130,7 +133,6 @@
                 },
             }
         });
-
 
 
     }

@@ -32,9 +32,6 @@ $(document).ready(function () {
             },
         ],
     })
-
-
-
 });
 
 

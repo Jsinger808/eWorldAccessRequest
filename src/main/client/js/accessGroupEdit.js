@@ -12,12 +12,6 @@ $(function () {
         'order': [[1, 'asc']]
     });
 
-    // var accessGroupRows;
-    //
-    // setTimeout(function () {
-    //     accessGroupRows = table.rows().data();
-    // }, 300);
-
     $("#my-form").submit(function (event) {
         event.preventDefault();
         addData();
@@ -34,8 +28,6 @@ $(function () {
             "name": nameInput,
             "type": typeInput,
         }
-
-
     }
 
     function addData() {// pass your data in method
